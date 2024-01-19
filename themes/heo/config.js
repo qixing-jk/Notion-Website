@@ -9,6 +9,11 @@ const CONFIG = {
     { title: '欢迎来七行的TG小仓库和博客玩♥️', url: 'https://t.me/storage_qi' }
   ],
 
+  // 英雄区左右侧组件颠倒位置
+  HEO_HERO_REVERSE: false,
+  // 博客主体区左右侧组件颠倒位置
+  HEO_HERO_BODY_REVERSE: false,
+
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '分享实用教程',
   HEO_HERO_TITLE_2: '与疑难杂症',
