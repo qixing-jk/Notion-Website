@@ -6,6 +6,7 @@ import { mapImgUrl } from '@/lib/notion/mapImage'
 import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
 import { NotionRenderer } from 'react-notion-x'
+import BLOG from '@/blog.config'
 
 // Notion渲染
 // const NotionRenderer = dynamic(() => import('react-notion-x').then(async (m) => {
@@ -92,7 +93,6 @@ const NotionPage = ({ post, className }) => {
         }
       }, 800)
     }
-
     /**
      * 处理页面内连接跳转
      * 如果链接就是当前网站，则不打开新窗口访问
@@ -131,7 +131,7 @@ const NotionPage = ({ post, className }) => {
         Tweet
       }} />
 
-      <PrismMac/>
+    <PrismMac />
 
   </div>
 }
@@ -159,7 +159,7 @@ const autoScrollToTarget = () => {
  */
 const mapPageUrl = id => {
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
-  return '/' + id.replace(/-/g, '')
+  return '/' + BLOG.POST_URL_PREFIX + '/' + id
 }
 
 /**
