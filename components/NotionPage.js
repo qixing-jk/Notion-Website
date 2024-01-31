@@ -80,8 +80,8 @@ const NotionPage = ({ post, className }) => {
     // if (post.category.includes('教程')) {
     // 静态导入导航页面专用样式
     // console.log(post)
-    Promise.all([loadExternalResource('/css/navigation.css', 'css')]).then(() => {
-      console.log('导航页面专用样式加载完成')
+    Promise.all([loadExternalResource('/css/gallery.css', 'css')]).then(() => {
+      console.log('gallery样式加载完成')
     })
     // 当前页面
     const currentPageId = post.id

@@ -53,6 +53,12 @@ img.notion-page-icon, svg.notion-page-icon {
     overflow: hidden;
 }
 
+#article-wrapper .notion-gallery .notion-page-description-text .notion-property-text {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 #article-wrapper .notion-gallery .notion-page-icon-inline {
     width: 3rem;
     height: 3rem;
