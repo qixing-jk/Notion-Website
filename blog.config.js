@@ -392,7 +392,9 @@ const BLOG = {
     category: process.env.NEXT_PUBLIC_NOTION_PROPERTY_CATEGORY || 'category',
     date: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DATE || 'date',
     tags: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TAGS || 'tags',
-    icon: process.env.NEXT_PUBLIC_NOTION_PROPERTY_ICON || 'icon'
+    icon: process.env.NEXT_PUBLIC_NOTION_PROPERTY_ICON || 'icon',
+    description: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DESCRIPTION || 'description',
+    url: process.env.NEXT_PUBLIC_NOTION_PROPERTY_URL || 'url'
   },
 
   // RSS订阅
@@ -414,6 +416,8 @@ const BLOG = {
   IMG_SHADOW: process.env.NEXT_PUBLIC_IMG_SHADOW || false, // 文章图片是否自动添加阴影
   IMG_COMPRESS_WIDTH: process.env.NEXT_PUBLIC_IMG_COMPRESS_WIDTH || 800, // Notion图片压缩宽度
 
+  // Icon代理获取相关
+  GET_FAVICON_URL: process.env.GET_FAVICON_URL || 'https://www.google.com/s2/favicons?domain=',
   // 开发相关
   NOTION_ACCESS_TOKEN: process.env.NOTION_ACCESS_TOKEN || '', // Useful if you prefer not to make your database public
   DEBUG: process.env.NEXT_PUBLIC_DEBUG || false, // 是否显示调试按钮
