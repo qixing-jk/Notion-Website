@@ -275,6 +275,7 @@ function addIcon(allBlock, pageIds, urlColumnIndex) {
       continue
     }
     const rawProperties = Object.entries(value?.properties || [])
+    // eslint-disable-next-line no-unused-vars
     const [key, val] = rawProperties[urlColumnIndex]
     const urlColumnValue = val?.[0]?.[0]
     if (!allBlock[pageId].value.format?.page_icon) {
