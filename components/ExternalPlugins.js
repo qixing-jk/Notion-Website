@@ -104,6 +104,8 @@ const ExternalPlugin = (props) => {
         loadExternalResource(url, 'css')
       }
     }
+
+    loadExternalResource('/css/gallery.css', 'css')
   }
 
   if (DISABLE_PLUGIN) {

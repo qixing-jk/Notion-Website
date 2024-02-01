@@ -393,8 +393,8 @@ const BLOG = {
     date: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DATE || 'date',
     tags: process.env.NEXT_PUBLIC_NOTION_PROPERTY_TAGS || 'tags',
     icon: process.env.NEXT_PUBLIC_NOTION_PROPERTY_ICON || 'icon',
-    description: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DESCRIPTION || 'description',
-    url: process.env.NEXT_PUBLIC_NOTION_PROPERTY_URL || 'url'
+    description: process.env.NEXT_PUBLIC_NOTION_PROPERTY_DESCRIPTION || ['description', '描述'],
+    url: process.env.NEXT_PUBLIC_NOTION_PROPERTY_URL || ['url', '网址', '链接']
   },
 
   // RSS订阅
