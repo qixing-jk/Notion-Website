@@ -76,7 +76,9 @@ const NotionPage = ({ post, className }) => {
   const zoomRef = useRef(zoom ? zoom.clone() : null)
 
   useEffect(() => {
-    GalleryBeautification(post)
+    if (siteConfig('GALLERY_BEAUTIFICATION')) {
+      GalleryBeautification(post)
+    }
     // 将相册gallery下的图片加入放大功能
     if (siteConfig('POST_DISABLE_GALLERY_CLICK')) {
       setTimeout(() => {
