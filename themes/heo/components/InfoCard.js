@@ -9,7 +9,7 @@ import Announcement from './Announcement'
 import Card from './Card'
 
 /**
- * 社交信息卡
+ * 社交信息卡和公告栏
  * @param {*} props
  * @returns
  */

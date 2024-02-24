@@ -6,6 +6,8 @@ import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
 import { isBrowser } from '@/lib/utils'
 import { siteConfig } from '@/lib/config'
 import { NotionRenderer } from 'react-notion-x'
+import BLOG from '@/blog.config'
+import { GalleryBeautification } from '@/lib/GalleryBeautification'
 
 const Code = dynamic(() =>
   import('react-notion-x/build/third-party/code').then(async (m) => {
@@ -74,6 +76,9 @@ const NotionPage = ({ post, className }) => {
   useEffect(() => {
     if (!isBrowser) return;
 
+    if (siteConfig('GALLERY_BEAUTIFICATION')) {
+      GalleryBeautification(post)
+    }
     // 将相册gallery下的图片加入放大功能
     if (siteConfig('POST_DISABLE_GALLERY_CLICK')) {
       setTimeout(() => {
@@ -147,15 +152,10 @@ const NotionPage = ({ post, className }) => {
       mapPageUrl={mapPageUrl}
       mapImageUrl={mapImgUrl}
       components={{
-        Code,
-        Collection,
-        Equation,
-        Modal,
-        Pdf,
-        Tweet
+        Code, Collection, Equation, Modal, Pdf, Tweet
       }} />
 
-      <PrismMac/>
+    <PrismMac />
 
   </div>
 }
@@ -183,7 +183,7 @@ const autoScrollToTarget = () => {
  */
 const mapPageUrl = id => {
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
-  return '/' + id.replace(/-/g, '')
+  return '/' + BLOG.POST_URL_PREFIX + '/' + id
 }
 
 /**
@@ -207,4 +207,5 @@ function getMediumZoomMargin() {
     return 72
   }
 }
+
 export default NotionPage
