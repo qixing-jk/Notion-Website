@@ -62,6 +62,8 @@ const ShareButtons = ({ post }) => {
   const shareUrl = siteConfig('LINK') + router.asPath
   const title = post.title || siteConfig('TITLE')
   const image = post.pageCover
+  const tags = post.tags || []
+  const hashTags = tags.map(tag => `#${tag}`).join(',')
   const body = post?.title + ' | ' + title + ' ' + shareUrl + ' ' + post?.summary
 
   const services = siteConfig('POSTS_SHARE_SERVICES').split(',')
@@ -89,6 +91,7 @@ const ShareButtons = ({ post }) => {
                         <FacebookShareButton
                             key={singleService}
                             url={shareUrl}
+                            hashtag={hashTags}
                             className="mx-1"
                         >
                             <FacebookIcon size={32} round />
@@ -151,6 +154,7 @@ const ShareButtons = ({ post }) => {
                             key={singleService}
                             url={shareUrl}
                             title={titleWithSiteInfo}
+                            hashtags={tags}
                             className="mx-1"
                         >
                             <TwitterIcon size={32} round />
@@ -235,6 +239,7 @@ const ShareButtons = ({ post }) => {
                             key={singleService}
                             url={shareUrl}
                             title={titleWithSiteInfo}
+                            tags={tags}
                             className="mx-1"
                         >
                             <TumblrIcon size={32} round />
@@ -284,6 +289,7 @@ const ShareButtons = ({ post }) => {
                             key={singleService}
                             url={shareUrl}
                             quote={titleWithSiteInfo}
+                            hashtag={hashTags}
                             className="mx-1"
                         >
                             <WorkplaceIcon size={32} round />
