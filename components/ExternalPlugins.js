@@ -80,6 +80,7 @@ const ExternalPlugin = (props) => {
   const GLOBAL_JS = siteConfig('GLOBAL_JS')
   const CLARITY_ID = siteConfig('CLARITY_ID')
   const IMG_SHADOW = siteConfig('IMG_SHADOW')
+  const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL')
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
 
   // 自定义样式css和js引入
@@ -97,6 +98,10 @@ const ExternalPlugin = (props) => {
     // 画册视图美化
     if (GALLERY_BEAUTIFICATION) {
       loadExternalResource('/css/gallery.css', 'css')
+    }
+
+    if (ANIMATE_CSS_URL) {
+      loadExternalResource(ANIMATE_CSS_URL, 'css')
     }
 
     // 导入外部自定义脚本
