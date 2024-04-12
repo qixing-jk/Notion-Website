@@ -1,53 +1,52 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import copy from 'copy-to-clipboard'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
-  FacebookShareButton,
-  FacebookIcon,
-  FacebookMessengerShareButton,
-  FacebookMessengerIcon,
-  RedditShareButton,
-  RedditIcon,
-  LineShareButton,
-  LineIcon,
-  EmailShareButton,
   EmailIcon,
-  TwitterShareButton,
-  TwitterIcon,
-  TelegramShareButton,
-  TelegramIcon,
-  WhatsappShareButton,
-  WhatsappIcon,
-  LinkedinShareButton,
+  EmailShareButton,
+  FacebookIcon,
+  FacebookMessengerIcon,
+  FacebookMessengerShareButton,
+  FacebookShareButton,
+  HatenaIcon,
+  HatenaShareButton,
+  InstapaperIcon,
+  InstapaperShareButton,
+  LineIcon,
+  LineShareButton,
   LinkedinIcon,
-  PinterestShareButton,
-  PinterestIcon,
-  VKIcon,
-  VKShareButton,
-  OKShareButton,
-  OKIcon,
-  TumblrShareButton,
-  TumblrIcon,
+  LinkedinShareButton,
   LivejournalIcon,
   LivejournalShareButton,
-  MailruShareButton,
   MailruIcon,
+  MailruShareButton,
+  OKIcon,
+  OKShareButton,
+  PinterestIcon,
+  PinterestShareButton,
+  PocketIcon,
+  PocketShareButton,
+  RedditIcon,
+  RedditShareButton,
+  TelegramIcon,
+  TelegramShareButton,
+  TumblrIcon,
+  TumblrShareButton,
+  TwitterIcon,
+  TwitterShareButton,
+  VKIcon,
+  VKShareButton,
   ViberIcon,
   ViberShareButton,
-  WorkplaceShareButton,
-  WorkplaceIcon,
-  WeiboShareButton,
   WeiboIcon,
-  PocketShareButton,
-  PocketIcon,
-  InstapaperShareButton,
-  InstapaperIcon,
-  HatenaShareButton,
-  HatenaIcon
+  WeiboShareButton,
+  WhatsappIcon,
+  WhatsappShareButton,
+  WorkplaceIcon,
+  WorkplaceShareButton
 } from 'react-share'
 
 const QrCode = dynamic(() => import('@/components/QrCode'), { ssr: false })
@@ -59,12 +58,13 @@ const QrCode = dynamic(() => import('@/components/QrCode'), { ssr: false })
  */
 const ShareButtons = ({ post }) => {
   const router = useRouter()
-  const shareUrl = siteConfig('LINK') + router.asPath
+  const [shareUrl, setShareUrl] = useState(siteConfig('LINK') + router.asPath)
   const title = post.title || siteConfig('TITLE')
   const image = post.pageCover
+  const body =
+    post?.title + ' | ' + title + ' ' + shareUrl + ' ' + post?.summary
   const tags = post.tags || []
   const hashTags = tags.map(tag => `#${tag}`).join(',')
-  const body = post?.title + ' | ' + title + ' ' + shareUrl + ' ' + post?.summary
 
   const services = siteConfig('POSTS_SHARE_SERVICES').split(',')
   const titleWithSiteInfo = title + ' | ' + siteConfig('TITLE')
@@ -72,8 +72,8 @@ const ShareButtons = ({ post }) => {
   const [qrCodeShow, setQrCodeShow] = useState(false)
 
   const copyUrl = () => {
-    copy(shareUrl)
-    alert(locale.COMMON.URL_COPIED)
+    navigator?.clipboard?.writeText(shareUrl)
+    alert(locale.COMMON.URL_COPIED + ' \n' + shareUrl)
   }
 
   const openPopover = () => {
@@ -82,6 +82,10 @@ const ShareButtons = ({ post }) => {
   const closePopover = () => {
     setQrCodeShow(false)
   }
+
+  useEffect(() => {
+    setShareUrl(window.location.href)
+  }, [])
 
   return (
         <>
