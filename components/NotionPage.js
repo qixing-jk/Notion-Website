@@ -9,79 +9,31 @@ import { NotionRenderer } from 'react-notion-x'
 import BLOG from '@/blog.config'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
 
-const Code = dynamic(
-  () =>
-    import('react-notion-x/build/third-party/code').then(async m => {
-      return m.Code
-    }),
-  { ssr: false }
-)
-
-// 公式
-const Equation = dynamic(
-  () =>
-    import('@/components/Equation').then(async m => {
-      // 化学方程式
-      await import('@/lib/plugins/mhchem')
-      return m.Equation
-    }),
-  { ssr: false }
-)
-
-const Pdf = dynamic(() => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf), {
-  ssr: false
-})
-
-// https://github.com/txs
-// import PrismMac from '@/components/PrismMac'
-const PrismMac = dynamic(() => import('@/components/PrismMac'), {
-  ssr: false
-})
-
 /**
- * tweet嵌入
- */
-const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
-  ssr: false
-})
-
-/**
- * 文内google广告
- */
-const AdEmbed = dynamic(() => import('@/components/GoogleAdsense').then(m => m.AdEmbed), { ssr: true })
-
-const Collection = dynamic(() => import('react-notion-x/build/third-party/collection').then(m => m.Collection), {
-  ssr: true
-})
-
-const Modal = dynamic(() => import('react-notion-x/build/third-party/modal').then(m => m.Modal), { ssr: false })
-
-const Tweet = ({ id }) => {
-  return <TweetEmbed tweetId={id} />
-}
-
-/**
- * Notin渲染成网页的核心组件
+ * 整个站点的核心组件
+ * 将Notion数据渲染成网页
  * @param {*} param0
  * @returns
  */
 const NotionPage = ({ post, className }) => {
-  useEffect(() => {
-    autoScrollToTarget()
-  }, [])
+  // 是否关闭数据库和画册的点击跳转
+  const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
+  const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
 
   const zoom =
-    typeof window !== 'undefined' &&
+    isBrowser &&
     mediumZoom({
-      container: '.notion-viewport',
+      //   container: '.notion-viewport',
       background: 'rgba(0, 0, 0, 0.2)',
       margin: getMediumZoomMargin()
     })
+
   const zoomRef = useRef(zoom ? zoom.clone() : null)
 
+  // 页面首次打开时执行的勾子
   useEffect(() => {
-    if (!isBrowser) return
-
+    // 检测当前的url并自动滚动到对应目标
+    autoScrollToTarget()
     if (siteConfig('GALLERY_BEAUTIFICATION')) {
       GalleryBeautification(post)
     }
@@ -103,59 +55,64 @@ const NotionPage = ({ post, className }) => {
         }
       }, 800)
     }
+  }, [])
 
-    /**
-     * 处理页面内连接跳转
-     * 如果链接就是当前网站，则不打开新窗口访问
-     */
-    if (isBrowser) {
-      const currentURL = window.location.origin + window.location.pathname
-      const allAnchorTags = document.getElementsByTagName('a') // 或者使用 document.querySelectorAll('a') 获取 NodeList
-      for (const anchorTag of allAnchorTags) {
-        if (anchorTag?.target === '_blank') {
-          const hrefWithoutQueryHash = anchorTag.href.split('?')[0].split('#')[0]
-          const hrefWithRelativeHash = currentURL.split('#')[0] + anchorTag.href.split('#')[1]
-
-          if (currentURL === hrefWithoutQueryHash || currentURL === hrefWithRelativeHash) {
-            anchorTag.target = '_self'
-          }
-        }
-      }
+  // 页面文章发生变化时会执行的勾子
+  useEffect(() => {
+    // 相册视图点击禁止跳转，只能放大查看图片
+    if (POST_DISABLE_GALLERY_CLICK) {
+      // 针对页面中的gallery视图，点击后是放大图片还是跳转到gallery的内部页面
+      processGalleryImg(zoomRef?.current)
     }
 
-    // 放大图片：调整图片质量
+    // 页内数据库点击禁止跳转，只能查看
+    if (POST_DISABLE_DATABASE_CLICK) {
+      processDisableDatabaseUrl()
+    }
+
+    /**
+     * 放大查看图片时替换成高清图像
+     */
     const observer = new MutationObserver((mutationsList, observer) => {
       mutationsList.forEach(mutation => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class'
+        ) {
           if (mutation.target.classList.contains('medium-zoom-image--opened')) {
             // 等待动画完成后替换为更高清的图像
             setTimeout(() => {
               // 获取该元素的 src 属性
               const src = mutation?.target?.getAttribute('src')
               //   替换为更高清的图像
-              mutation?.target?.setAttribute('src', compressImage(src, siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)))
+              mutation?.target?.setAttribute(
+                'src',
+                compressImage(src, siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200))
+              )
             }, 800)
           }
         }
       })
     })
 
-    // 监视整个文档中的元素和属性的变化
-    observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] })
+    // 监视页面元素和属性变化
+    observer.observe(document.body, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ['class']
+    })
 
     return () => {
       observer.disconnect()
     }
-  }, [])
-
-  if (!post || !post.blockMap) {
-    return <>{post?.summary || ''}</>
-  }
+  }, [post])
 
   return (
-    <div id='notion-article' className={`mx-auto overflow-hidden ${className || ''}`}>
+    <div
+      id='notion-article'
+      className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
-        recordMap={post.blockMap}
+        recordMap={post?.blockMap}
         mapPageUrl={mapPageUrl}
         mapImageUrl={mapImgUrl}
         components={{
@@ -172,6 +129,41 @@ const NotionPage = ({ post, className }) => {
       <PrismMac />
     </div>
   )
+}
+
+/**
+ * 页面的数据库链接禁止跳转，只能查看
+ */
+const processDisableDatabaseUrl = () => {
+  if (isBrowser) {
+    const links = document.querySelectorAll('.notion-table a')
+    for (const e of links) {
+      e.removeAttribute('href')
+    }
+  }
+}
+
+/**
+ * gallery视图，点击后是放大图片还是跳转到gallery的内部页面
+ */
+const processGalleryImg = zoom => {
+  setTimeout(() => {
+    if (isBrowser) {
+      const imgList = document?.querySelectorAll(
+        '.notion-collection-card-cover img'
+      )
+      if (imgList && zoom) {
+        for (let i = 0; i < imgList.length; i++) {
+          zoom.attach(imgList[i])
+        }
+      }
+
+      const cards = document.getElementsByClassName('notion-collection-card')
+      for (const e of cards) {
+        e.removeAttribute('href')
+      }
+    }
+  }, 800)
 }
 
 /**
@@ -221,4 +213,72 @@ function getMediumZoomMargin() {
     return 72
   }
 }
+
+// 代码
+const Code = dynamic(
+  () =>
+    import('react-notion-x/build/third-party/code').then(async m => {
+      return m.Code
+    }),
+  { ssr: false }
+)
+
+// 公式
+const Equation = dynamic(
+  () =>
+    import('@/components/Equation').then(async m => {
+      // 化学方程式
+      await import('@/lib/plugins/mhchem')
+      return m.Equation
+    }),
+  { ssr: false }
+)
+
+// 文档
+const Pdf = dynamic(
+  () => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf),
+  {
+    ssr: false
+  }
+)
+
+// 美化代码 from: https://github.com/txs
+const PrismMac = dynamic(() => import('@/components/PrismMac'), {
+  ssr: false
+})
+
+/**
+ * tweet嵌入
+ */
+const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
+  ssr: false
+})
+
+/**
+ * 文内google广告
+ */
+const AdEmbed = dynamic(
+  () => import('@/components/GoogleAdsense').then(m => m.AdEmbed),
+  { ssr: true }
+)
+
+const Collection = dynamic(
+  () =>
+    import('react-notion-x/build/third-party/collection').then(
+      m => m.Collection
+    ),
+  {
+    ssr: true
+  }
+)
+
+const Modal = dynamic(
+  () => import('react-notion-x/build/third-party/modal').then(m => m.Modal),
+  { ssr: false }
+)
+
+const Tweet = ({ id }) => {
+  return <TweetEmbed tweetId={id} />
+}
+
 export default NotionPage
