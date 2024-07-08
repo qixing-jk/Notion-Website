@@ -33,7 +33,7 @@ const NotionPage = ({ post, className }) => {
   // 页面首次打开时执行的勾子
   useEffect(() => {
     // 检测当前的url并自动滚动到对应目标
-    autoScrollToTarget()
+    autoScrollToHash()
     if (siteConfig('GALLERY_BEAUTIFICATION')) {
       GalleryBeautification(post)
     }
@@ -167,9 +167,9 @@ const processGalleryImg = zoom => {
 }
 
 /**
- * 根据url参数自动滚动到指定区域
+ * 根据url参数自动滚动到锚位置
  */
-const autoScrollToTarget = () => {
+const autoScrollToHash = () => {
   setTimeout(() => {
     // 跳转到指定标题
     const needToJumpToTitle = window.location.hash

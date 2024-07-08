@@ -42,7 +42,14 @@ const CONFIG = {
     '🤖️ 数码科技爱好者',
     '🧱 团队小组发动机'
   ],
-  HEO_INFO_CARD_URL: 'https://t.me/storage_qi', // 个人资料底部按钮链接
+
+  // 个人资料底部按钮
+  HEO_INFO_CARD_URL1: '/about',
+  HEO_INFO_CARD_ICON1: 'fas fa-user',
+  HEO_INFO_CARD_URL2: 'https://t.me/storage_qi',
+  HEO_INFO_CARD_ICON2: 'fab fa-telegram',
+  HEO_INFO_CARD_URL3: 'https://moments.qixing1217.top/',
+  HEO_INFO_CARD_TEXT3: '我的朋友圈',
 
   // 用户技能图标
   HEO_GROUP_ICONS: [
