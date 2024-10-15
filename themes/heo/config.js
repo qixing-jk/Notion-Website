@@ -24,6 +24,8 @@ const CONFIG = {
   HEO_HERO_TITLE_4: '更多内容',
   HEO_HERO_TITLE_5: '更多小知识与有趣日常尽在七行的TG小仓库和博客',
   HEO_HERO_TITLE_LINK: 'https://t.me/storage_qi',
+  // 英雄区遮罩文字
+  HEO_HERO_COVER_TITLE: '随便逛逛',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '必看精选', url: '/tag/推荐' },
