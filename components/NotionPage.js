@@ -6,7 +6,6 @@ import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
-import BLOG from '@/blog.config'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
 
 /**
@@ -189,7 +188,7 @@ const autoScrollToHash = () => {
  */
 const mapPageUrl = id => {
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
-  return '/' + BLOG.POST_URL_PREFIX + '/' + id
+  return '/' + id.replace(/-/g, '')
 }
 
 /**
