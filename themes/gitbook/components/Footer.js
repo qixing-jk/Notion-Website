@@ -1,4 +1,4 @@
-import { GongAnBeiAn } from '@/components/GongAnBeiAn'
+import { BeiAnGongAn } from '@/components/BeiAnGongAn'
 import { siteConfig } from '@/lib/config'
 import SocialButton from './SocialButton'
 /**
@@ -36,7 +36,7 @@ const Footer = ({ siteInfo }) => {
           <a href={'https://icp.gov.moe/?keyword=' + siteConfig('BEI_AN').match(/\d+/g)} target='_blank' rel='noreferrer' className='mr-2'>
             {siteConfig('BEI_AN')}
           </a>
-          <GongAnBeiAn />
+          <BeiAnGongAn />
           <br />
         </>
       )}
