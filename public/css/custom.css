@@ -6,3 +6,7 @@
 .fa-info:before {
     content: "\f05a";
 }
+
+.notion-gallery .nested-form-link{
+    text-decoration: none;
+}
