@@ -158,7 +158,7 @@ const LayoutSlug = props => {
           <div id='container-inner' className='w-full p-4'>
             {lock && <ArticleLock validPassword={validPassword} />}
 
-            {!lock && (
+            {!lock && post && (
               <div id='article-wrapper' className='mx-auto'>
                 <NotionPage {...props} />
                 <Comment frontMatter={post} />
