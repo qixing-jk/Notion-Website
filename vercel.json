@@ -1,6 +1,177 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "headers": [],
-  "regions": ["hkg1"]
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=3600, stale-while-revalidate=600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=604800, stale-while-revalidate=86400"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=604800"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=604800"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(zh|en)/404",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=86400, stale-while-revalidate=3600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=86400"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=86400"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(zh|en)/tag/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=86400, stale-while-revalidate=600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=86400"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=86400"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(zh|en)/category/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=86400, stale-while-revalidate=600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=86400"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=86400"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(zh|en)/article/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=3600, stale-while-revalidate=600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/(zh|en)/links",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=3600, stale-while-revalidate=600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/_next/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=3600, stale-while-revalidate=600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=3600"
+        }
+      ]
+    }
+  ],
+  "regions": [
+    "hkg1"
+  ]
 }
