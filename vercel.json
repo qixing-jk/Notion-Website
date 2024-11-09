@@ -3,27 +3,6 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "s-maxage=3600, stale-while-revalidate=600"
-        },
-        {
-          "key": "CDN-Cache-Control",
-          "value": "max-age=3600"
-        },
-        {
-          "key": "Vercel-CDN-Cache-Control",
-          "value": "max-age=3600"
-        },
-        {
-          "key": "Cloudflare-CDN-Cache-Control",
-          "value": "max-age=3600"
-        }
-      ]
-    },
-    {
       "source": "/images/(.*)",
       "headers": [
         {
@@ -188,6 +167,27 @@
         {
           "key": "Cloudflare-CDN-Cache-Control",
           "value": "max-age=31536000"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=3600, stale-while-revalidate=600"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=3600"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=3600"
         }
       ]
     }
