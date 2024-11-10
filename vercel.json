@@ -129,7 +129,7 @@
       ]
     },
     {
-      "source": "/_next/data/(.*)",
+      "source": "/_next/data/(.*?)/article/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -146,6 +146,27 @@
         {
           "key": "Cloudflare-CDN-Cache-Control",
           "value": "max-age=3600"
+        }
+      ]
+    },
+    {
+      "source": "/_next/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=600, stale-while-revalidate=100"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "max-age=600"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "max-age=600"
+        },
+        {
+          "key": "Cloudflare-CDN-Cache-Control",
+          "value": "max-age=600"
         }
       ]
     },
