@@ -47,6 +47,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           }}
           className='coverdiv lg:opacity-80 lg:translate-x-96 lg:rotate-12'>
           <LazyImage
+            priority
             id='post-cover'
             className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]'
             src={headerImage}
