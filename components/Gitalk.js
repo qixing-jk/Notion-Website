@@ -18,8 +18,11 @@ const Gitalk = ({ frontMatter }) => {
   const distractionFreeMode = siteConfig('COMMENT_GITALK_DISTRACTION_FREE_MODE')
 
   const loadGitalk = async() => {
-    await loadExternalResource(gitalkCSSCDN, 'css')
-    await loadExternalResource(gitalkJSCDN, 'js')
+    await Promise.all([
+      loadExternalResource(gitalkCSSCDN, 'css'),
+      loadExternalResource(gitalkJSCDN, 'js')
+    ]);
+
     const Gitalk = window.Gitalk
     if (!Gitalk) {
       // 可以加入延时重试

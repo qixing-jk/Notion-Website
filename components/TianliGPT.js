@@ -28,12 +28,14 @@ const TianLiGPT = () => {
     if (!tianliKey) {
       return
     }
-    await loadExternalResource(tianliCss, 'css')
 
     window.tianliGPT_postSelector = '#notion-article';
     window.tianliGPT_key = tianliKey;
 
-    await loadExternalResource(tianliJs, 'js')
+    await Promise.all([
+      loadExternalResource(tianliCss, 'css'),
+      loadExternalResource(tianliJs, 'js')
+    ]);
   }
   return <></>
 }

@@ -17,8 +17,10 @@ const CusdisComponent = ({ frontMatter }) => {
   }, [isDarkMode, lang])
 
   const loadCusdis = async () => {
-    await loadExternalResource(langCDN, 'js')
-    await loadExternalResource(src, 'js')
+    await Promise.all([
+      loadExternalResource(langCDN, 'js'),
+      loadExternalResource(src, 'js')
+    ]);
 
     window?.CUSDIS?.initial()
   }
