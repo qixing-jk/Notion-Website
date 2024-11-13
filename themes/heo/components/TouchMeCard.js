@@ -27,7 +27,7 @@ export default function TouchMeCard() {
               className='absolute left-0 top-0 w-full h-full'
               style={{
                 background:
-                  'url(https://bu.dusays.com/2023/05/16/64633c4cd36a9.png) center center no-repeat'
+                  'url(/images/heo/touch-me-card.webp) center center no-repeat'
               }}></div>
           </div>
         }
