@@ -42,9 +42,6 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
         {/* 文章背景图 */}
         <div
           id='post-cover-wrapper'
-          style={{
-            filter: 'blur(15px)'
-          }}
           className='coverdiv lg:opacity-80 lg:translate-x-96 lg:rotate-12'>
           <LazyImage
             priority
