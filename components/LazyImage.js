@@ -98,6 +98,7 @@ export default function LazyImage({
     ref: imageRef,
     src: currentSrc,
     alt: alt,
+    loading: priority ? 'eager' : 'lazy', // 动态设置 loading 属性
     onLoad: handleThumbnailLoaded, // 缩略图加载完成
     onError: handleImageError // 添加onError处理函数
   }
