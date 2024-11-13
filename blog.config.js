@@ -539,7 +539,7 @@ const BLOG = {
   // 统一的 JSCDN 资源CDN地址，例如：https://s4.zstatic.net/
   CDNJS_CDN_BASE: process.env.NEXT_PUBLIC_CDNJS_CDN_BASE || '',
   // 统一的 JSCDN 资源CDN地址，例如：https://cdn.jsdmirror.com/
-  CDNJS_CDN_BASE: process.env.NEXT_PUBLIC_JSDELIVR_CDN_BASE || '',
+  JSDELIVR_CDN_BASE: process.env.NEXT_PUBLIC_JSDELIVR_CDN_BASE || '',
 
   // 作废配置
   AVATAR: process.env.NEXT_PUBLIC_AVATAR || '/avatar.svg', // 作者头像，被notion中的ICON覆盖。若无ICON则取public目录下的avatar.png
