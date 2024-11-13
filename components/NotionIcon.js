@@ -5,13 +5,13 @@ import LazyImage from './LazyImage'
  * 可能是emoji 可能是 svg 也可能是 图片
  * @returns
  */
-const NotionIcon = ({ icon }) => {
+const NotionIcon = ({ icon, priority }) => {
   if (!icon) {
     return <></>
   }
 
   if (icon.startsWith('http') || icon.startsWith('data:')) {
-    return <LazyImage src={icon} className='w-8 h-8 my-auto inline mr-1'/>
+    return <LazyImage src={icon} priority={priority} className='w-8 h-8 my-auto inline mr-1' />
   }
 
   return <span className='mr-1'>{icon}</span>
