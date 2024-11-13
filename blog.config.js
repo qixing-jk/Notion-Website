@@ -536,9 +536,9 @@ const BLOG = {
 
   // 统一的 NPM 资源CDN地址，例如：https://registry.npmmirror.com/
   NPM_CDN_BASE: process.env.NEXT_PUBLIC_NPM_CDN_BASE || '',
-  // 统一的 JSCDN 资源CDN地址，例如：https://s4.zstatic.net/
+  // 统一的 CDNJS 资源CDN地址，例如：https://s4.zstatic.net/
   CDNJS_CDN_BASE: process.env.NEXT_PUBLIC_CDNJS_CDN_BASE || '',
-  // 统一的 JSCDN 资源CDN地址，例如：https://cdn.jsdmirror.com/
+  // 统一的 JSDELIVR 资源CDN地址，例如：https://cdn.jsdmirror.com/
   JSDELIVR_CDN_BASE: process.env.NEXT_PUBLIC_JSDELIVR_CDN_BASE || '',
 
   // 作废配置
