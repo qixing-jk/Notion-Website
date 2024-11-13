@@ -534,6 +534,9 @@ const BLOG = {
   // Icon代理获取相关
   GET_FAVICON_URL: process.env.GET_FAVICON_URL || 'https://www.google.com/s2/favicons?domain=',
 
+  // 统一的静态资源CDN地址，例如：https://cdnjs.cloudflare.com/ajax/libs/
+  STATIC_RESOURCE_CDN: process.env.NEXT_PUBLIC_STATIC_RESOURCE_CDN || '',
+
   // 作废配置
   AVATAR: process.env.NEXT_PUBLIC_AVATAR || '/avatar.svg', // 作者头像，被notion中的ICON覆盖。若无ICON则取public目录下的avatar.png
   TITLE: process.env.NEXT_PUBLIC_TITLE || 'NotionNext BLOG', // 站点标题 ，被notion中的页面标题覆盖；此处请勿留空白，否则服务器无法编译
