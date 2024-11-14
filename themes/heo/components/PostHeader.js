@@ -1,11 +1,13 @@
 import { HashTag } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import NotionIcon from '@/components/NotionIcon'
-import WordCount from '@/components/WordCount'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import Link from 'next/link'
-import WavesArea from './WavesArea'
+import dynamic from 'next/dynamic'
+
+const WavesArea = dynamic(() => import('./WavesArea'), { ssr: false })
+const WordCount = dynamic(() => import('@/components/WordCount'), { ssr: false })
 
 /**
  * 文章页头
