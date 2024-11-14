@@ -89,9 +89,9 @@ const LayoutBase = props => {
   const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
 
   // 加载wow动画
-  // useEffect(() => {
-  //   loadWowJS()
-  // }, [])
+  useEffect(() => {
+    loadWowJS()
+  }, [])
 
   return (
     <div
@@ -127,7 +127,7 @@ const LayoutBase = props => {
       {/* 页脚 */}
       <Footer />
 
-      {HEO_LOADING_COVER ? <LoadingCover isLoadWowJS /> : loadWowJS()}
+      {HEO_LOADING_COVER && <LoadingCover />}
     </div>
   )
 }
