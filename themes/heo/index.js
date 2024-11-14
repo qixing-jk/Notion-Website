@@ -10,7 +10,6 @@ import dynamic from 'next/dynamic'
 import { HashTag } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import LoadingCover from '@/components/LoadingCover'
-import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
@@ -22,28 +21,28 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
-import BlogPostListScroll from './components/BlogPostListScroll'
 import CategoryBar from './components/CategoryBar'
-import Header from './components/Header'
-import Hero from './components/Hero'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import { NoticeBar } from './components/NoticeBar'
-import PostAdjacent from './components/PostAdjacent'
 import PostHeader from './components/PostHeader'
 import { PostLock } from './components/PostLock'
-import SearchNav from './components/SearchNav'
-import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
 
-
 const AdSlot = dynamic(() => import('@/components/GoogleAdsense').then(mod => mod.AdSlot), { ssr: false })
 const WWAds = dynamic(() => import('@/components/WWAds'))
+const replaceSearchResult = dynamic(() => import('@/components/Mark'))
+const PostAdjacent = dynamic(() => import('./components/PostAdjacent'), { ssr: false })
+const BlogPostListScroll = dynamic(() => import('./components/BlogPostListScroll'), { ssr: false })
+const SearchNav = dynamic(() => import('./components/SearchNav'))
+const SideRight = dynamic(() => import('./components/SideRight'))
 const PostRecommend = dynamic(() => import('./components/PostRecommend'))
 const PostCopyright = dynamic(() => import('./components/PostCopyright'), { ssr: false })
 const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
-const ShareBar = dynamic(() => import('@/components/ShareBar'))
+const ShareBar = dynamic(() => import('@/components/ShareBar'), { ssr: false })
 const Footer = dynamic(() => import('./components/Footer'))
+const Header = dynamic(() => import('./components/Header'))
+const Hero = dynamic(() => import('./components/Hero'))
 const FloatTocButton = dynamic(() => import('./components/FloatTocButton'), { ssr: false })
 
 /**
@@ -97,6 +96,7 @@ const LayoutBase = props => {
     <div
       id='theme-heo'
       className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      {HEO_LOADING_COVER && <LoadingCover />}
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -126,8 +126,6 @@ const LayoutBase = props => {
 
       {/* 页脚 */}
       <Footer />
-
-      {HEO_LOADING_COVER && <LoadingCover />}
     </div>
   )
 }

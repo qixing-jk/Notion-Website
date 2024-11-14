@@ -5,8 +5,9 @@ import mediumZoom from '@fisch0920/medium-zoom'
 import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
-import { NotionRenderer } from 'react-notion-x'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
+
+const NotionRenderer = dynamic(() => import('react-notion-x').then(mod => mod.NotionRenderer))
 
 /**
  * 整个站点的核心组件
