@@ -133,7 +133,8 @@ const GlobalHead = props => {
       <meta name='twitter:title' content={title} />
 
       <link rel='icon' href={BLOG_FAVICON} />
-      <link rel="preconnect" href="https://www.notion.so" />
+      <link rel="preconnect" href="https://img.notionusercontent.com" />
+      <link rel="dns-prefetch" href="https://www.notion.so" />
       {NPM_CDN_BASE && (
         <link rel="dns-prefetch" href={NPM_CDN_BASE} />
       )}
