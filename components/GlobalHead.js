@@ -66,6 +66,9 @@ const GlobalHead = props => {
     null,
     NOTION_CONFIG
   )
+  const NPM_CDN_BASE = siteConfig('NPM_CDN_BASE')
+  const CDNJS_CDN_BASE = siteConfig('CDNJS_CDN_BASE')
+  const JSDELIVR_CDN_BASE = siteConfig('JSDELIVR_CDN_BASE')
 
   const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
   // SEO关键词
@@ -130,7 +133,16 @@ const GlobalHead = props => {
       <meta name='twitter:title' content={title} />
 
       <link rel='icon' href={BLOG_FAVICON} />
-
+      <link rel="preconnect" href="https://www.notion.so" />
+      {NPM_CDN_BASE && (
+        <link rel="dns-prefetch" href={NPM_CDN_BASE} />
+      )}
+      {CDNJS_CDN_BASE && (
+        <link rel="dns-prefetch" href={CDNJS_CDN_BASE} />
+      )}
+      {JSDELIVR_CDN_BASE && (
+        <link rel="dns-prefetch" href={JSDELIVR_CDN_BASE} />
+      )}
       {COMMENT_WEBMENTION_ENABLE && (
         <>
           <link
