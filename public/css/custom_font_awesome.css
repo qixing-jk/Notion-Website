@@ -1,0 +1,133 @@
+/* 基础字体定义 */
+@font-face {
+    font-family: 'Font Awesome 6 Brands';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.ttf") format("truetype");
+}
+
+
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("../webfonts/fa-regular-400.woff2") format("woff2"), url("../webfonts/fa-regular-400.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype");
+}
+
+.fa,
+.fa-classic,
+.fa-sharp,
+.fas,
+.fa-solid,
+.far,
+.fa-regular,
+.fab,
+.fa-brands {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: var(--fa-display, inline-block);
+  font-style: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-rendering: auto; }
+
+.fas,
+.fa-classic,
+.fa-solid,
+.far,
+.fa-regular {
+  font-family: 'Font Awesome 6 Free'; }
+
+.fab,
+.fa-brands {
+  font-family: 'Font Awesome 6 Brands'; }
+
+.fas,
+.fa-solid {
+  font-weight: 900; }
+
+.far,
+.fa-regular {
+  font-weight: 400; }
+
+.fab,
+.fa-brands {
+  font-weight: 400; }
+
+/* 图标 */
+/* 图标样式 */
+
+/* Info Circle */
+.fa-info-circle::before {
+  content: "\f05a";
+}
+
+/* Link */
+.fa-link::before {
+  content: "\f0c1";
+}
+
+/* Home */
+.fa-home::before {
+  content: "\f015";
+}
+
+/* Search */
+.fa-search::before {
+  content: "\f002";
+}
+
+/* Archive */
+.fa-archive::before {
+  content: "\f187";
+}
+
+/* Clock Rotate Left */
+.fa-clock-rotate-left::before {
+  content: "\f1da";
+}
+
+/* Th */
+.fa-th::before {
+  content: "\f00a";
+}
+
+/* Tag */
+.fa-tag::before {
+  content: "\f02b";
+}
+
+/* Info */
+.fa-info::before {
+  content: "\f129";
+}
+
+/* Train Subway */
+.fa-train-subway::before {
+  content: "\f239";
+}
+
+/* Regular 图标 - Comments */
+.fa-comments::before {
+  content: "\f086";
+}
+
+/* Regular 图标 - Calendar Check */
+.fa-calendar-check::before {
+  content: "\f274";
+}
+
+/* Brand 图标 - Telegram */
+.fa-telegram::before {
+  content: "\f2c6";
+}
