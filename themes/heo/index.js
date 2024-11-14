@@ -6,15 +6,12 @@
  *  2. 更多说明参考此[文档](https://docs.tangly1024.com/article/notionnext-heo)
  */
 
-import Comment from '@/components/Comment'
-import { AdSlot } from '@/components/GoogleAdsense'
+import dynamic from 'next/dynamic'
 import { HashTag } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import LoadingCover from '@/components/LoadingCover'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
-import ShareBar from '@/components/ShareBar'
-import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
@@ -27,21 +24,27 @@ import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import CategoryBar from './components/CategoryBar'
-import FloatTocButton from './components/FloatTocButton'
-import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import { NoticeBar } from './components/NoticeBar'
 import PostAdjacent from './components/PostAdjacent'
-import PostCopyright from './components/PostCopyright'
 import PostHeader from './components/PostHeader'
 import { PostLock } from './components/PostLock'
-import PostRecommend from './components/PostRecommend'
 import SearchNav from './components/SearchNav'
 import SideRight from './components/SideRight'
 import CONFIG from './config'
 import { Style } from './style'
+
+
+const AdSlot = dynamic(() => import('@/components/GoogleAdsense').then(mod => mod.AdSlot), { ssr: false })
+const WWAds = dynamic(() => import('@/components/WWAds'))
+const PostRecommend = dynamic(() => import('./components/PostRecommend'))
+const PostCopyright = dynamic(() => import('./components/PostCopyright'), { ssr: false })
+const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
+const ShareBar = dynamic(() => import('@/components/ShareBar'))
+const Footer = dynamic(() => import('./components/Footer'))
+const FloatTocButton = dynamic(() => import('./components/FloatTocButton'), { ssr: false })
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
