@@ -29,21 +29,33 @@ import { PostLock } from './components/PostLock'
 import CONFIG from './config'
 import { Style } from './style'
 
-const AdSlot = dynamic(() => import('@/components/GoogleAdsense').then(mod => mod.AdSlot), { ssr: false })
+const AdSlot = dynamic(
+  () => import('@/components/GoogleAdsense').then(mod => mod.AdSlot),
+  { ssr: false }
+)
 const WWAds = dynamic(() => import('@/components/WWAds'))
 const replaceSearchResult = dynamic(() => import('@/components/Mark'))
-const PostAdjacent = dynamic(() => import('./components/PostAdjacent'), { ssr: false })
-const BlogPostListScroll = dynamic(() => import('./components/BlogPostListScroll'), { ssr: false })
+const PostAdjacent = dynamic(() => import('./components/PostAdjacent'), {
+  ssr: false
+})
+const BlogPostListScroll = dynamic(
+  () => import('./components/BlogPostListScroll'),
+  { ssr: false }
+)
 const SearchNav = dynamic(() => import('./components/SearchNav'))
 const SideRight = dynamic(() => import('./components/SideRight'))
 const PostRecommend = dynamic(() => import('./components/PostRecommend'))
-const PostCopyright = dynamic(() => import('./components/PostCopyright'), { ssr: false })
+const PostCopyright = dynamic(() => import('./components/PostCopyright'), {
+  ssr: false
+})
 const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
 const ShareBar = dynamic(() => import('@/components/ShareBar'), { ssr: false })
 const Footer = dynamic(() => import('./components/Footer'))
 const Header = dynamic(() => import('./components/Header'))
 const Hero = dynamic(() => import('./components/Hero'))
-const FloatTocButton = dynamic(() => import('./components/FloatTocButton'), { ssr: false })
+const FloatTocButton = dynamic(() => import('./components/FloatTocButton'), {
+  ssr: false
+})
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -257,16 +269,6 @@ const LayoutSlug = props => {
     setHasCode(hasCode)
   }, [])
 
-  const commentEnable =
-    siteConfig('COMMENT_TWIKOO_ENV_ID') ||
-    siteConfig('COMMENT_WALINE_SERVER_URL') ||
-    siteConfig('COMMENT_VALINE_APP_ID') ||
-    siteConfig('COMMENT_GISCUS_REPO') ||
-    siteConfig('COMMENT_CUSDIS_APP_ID') ||
-    siteConfig('COMMENT_UTTERRANCES_REPO') ||
-    siteConfig('COMMENT_GITALK_CLIENT_ID') ||
-    siteConfig('COMMENT_WEBMENTION_ENABLE')
-
   const router = useRouter()
   useEffect(() => {
     // 404
@@ -306,43 +308,43 @@ const LayoutSlug = props => {
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
               >
-                <WWAds orientation='horizontal' className='w-full' />
+                  <WWAds orientation='horizontal' className='w-full' />
                 {<NotionPage post={post} />}
-                <WWAds orientation='horizontal' className='w-full' />
+                  <WWAds orientation='horizontal' className='w-full' />
               </section>
 
-              {/* 上一篇\下一篇文章 */}
-              <PostAdjacent {...props} />
+                  {/* 上一篇\下一篇文章 */}
+                  <PostAdjacent {...props} />
 
-              {/* 分享 */}
-              <ShareBar post={post} />
-              {post.type === 'Post' && (
-                <div className='px-5'>
-                  {/* 版权 */}
-                  <PostCopyright {...props} />
-                  {/* 文章推荐 */}
-                  <PostRecommend {...props} />
-                </div>
+                  {/* 分享 */}
+                  <ShareBar post={post} />
+                  {post.type === 'Post' && (
+                    <div className='px-5'>
+                      {/* 版权 */}
+                      <PostCopyright {...props} />
+                      {/* 文章推荐 */}
+                      <PostRecommend {...props} />
+                    </div>
               )}
             </article>
 
-            {/* 评论区 */}
-            {fullWidth ? null : (
-              <div className={`${commentEnable ? '' : 'hidden'}`}>
-                <hr className='my-4 border-dashed' />
-                {/* 评论区上方广告 */}
-                <div className='py-2'>
-                  <AdSlot />
-                </div>
-                {/* 评论互动 */}
-                <div className='duration-200 overflow-x-auto px-5'>
-                  <div className='text-2xl dark:text-white'>
-                    <i className='fas fa-comment mr-1' />
-                    {locale.COMMON.COMMENTS}
+                {/* 评论区 */}
+                {fullWidth ? null : (
+                  <div>
+                    <hr className='my-4 border-dashed' />
+                    {/* 评论区上方广告 */}
+                    <div className='py-2'>
+                      <AdSlot />
+                    </div>
+                    {/* 评论互动 */}
+                    <div className='duration-200 overflow-x-auto px-5'>
+                      <div className='text-2xl dark:text-white'>
+                        <i className='fas fa-comment mr-1' />
+                        {locale.COMMON.COMMENTS}
+                      </div>
+                      <Comment frontMatter={post} className='' />
+                    </div>
                   </div>
-                  <Comment frontMatter={post} className='' />
-                </div>
-              </div>
             )}
           </div>
         )}
