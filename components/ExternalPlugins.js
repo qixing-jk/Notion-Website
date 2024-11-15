@@ -68,10 +68,24 @@ const ExternalPlugin = props => {
   const COZE_BOT_ID = siteConfig('COZE_BOT_ID')
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
 
-  // 自定义样式css和js引入
-  if (isBrowser) {
-    // 初始化AOS动画
-    // 静态导入本地自定义样式
+
+  const router = useRouter()
+  useEffect(() => {
+    // 异步渲染谷歌广告
+    if (ADSENSE_GOOGLE_ID) {
+      setTimeout(() => {
+        initGoogleAdsense(ADSENSE_GOOGLE_ID)
+      }, 3000)
+    }
+
+    setTimeout(() => {
+      // 映射url
+      convertInnerUrl(props?.allNavPages)
+    }, 500)
+  }, [router])
+
+  useEffect(() => {
+    // 自定义样式css和js引入
     loadExternalResource('/css/custom.css', 'css')
     loadExternalResource('/js/custom.js', 'js')
 
@@ -102,24 +116,6 @@ const ExternalPlugin = props => {
         loadExternalResource(url, 'css')
       }
     }
-  }
-
-  const router = useRouter()
-  useEffect(() => {
-    // 异步渲染谷歌广告
-    if (ADSENSE_GOOGLE_ID) {
-      setTimeout(() => {
-        initGoogleAdsense(ADSENSE_GOOGLE_ID)
-      }, 3000)
-    }
-
-    setTimeout(() => {
-      // 映射url
-      convertInnerUrl(props?.allNavPages)
-    }, 500)
-  }, [router])
-
-  useEffect(() => {
     // 执行注入脚本
     // eslint-disable-next-line no-eval
     eval(GLOBAL_JS)
