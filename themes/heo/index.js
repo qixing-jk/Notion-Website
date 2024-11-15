@@ -307,7 +307,7 @@ const LayoutSlug = props => {
                 className='wow fadeInUp p-5 justify-center mx-auto'
               >
                 <WWAds orientation='horizontal' className='w-full' />
-                {post && <NotionPage post={post} />}
+                {<NotionPage post={post} />}
                 <WWAds orientation='horizontal' className='w-full' />
               </section>
 
@@ -316,7 +316,7 @@ const LayoutSlug = props => {
 
               {/* 分享 */}
               <ShareBar post={post} />
-              {post?.type === 'Post' && (
+              {post.type === 'Post' && (
                 <div className='px-5'>
                   {/* 版权 */}
                   <PostCopyright {...props} />
@@ -328,7 +328,7 @@ const LayoutSlug = props => {
 
             {/* 评论区 */}
             {fullWidth ? null : (
-              <div className={`${commentEnable && post ? '' : 'hidden'}`}>
+              <div className={`${commentEnable ? '' : 'hidden'}`}>
                 <hr className='my-4 border-dashed' />
                 {/* 评论区上方广告 */}
                 <div className='py-2'>
