@@ -205,8 +205,8 @@ const AdEmbed = () => {
           element?.parentNode?.replaceChild(newInsElement, element)
         }
       })
-
-      requestAd()
+      const ads = document.getElementsByClassName('adsbygoogle')
+      requestAd(ads)
     }, 1000)
   }, [])
   return <></>
