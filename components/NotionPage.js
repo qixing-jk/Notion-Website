@@ -7,7 +7,9 @@ import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
 
-const NotionRenderer = dynamic(() => import('react-notion-x').then(mod => mod.NotionRenderer))
+const NotionRenderer = dynamic(() =>
+  import('react-notion-x').then(mod => mod.NotionRenderer)
+)
 
 /**
  * 整个站点的核心组件
@@ -17,6 +19,7 @@ const NotionRenderer = dynamic(() => import('react-notion-x').then(mod => mod.No
  */
 const NotionPage = ({ post, className }) => {
   // 是否关闭数据库和画册的点击跳转
+  const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
 
@@ -29,26 +32,30 @@ const NotionPage = ({ post, className }) => {
     })
 
   const zoomRef = useRef(zoom ? zoom.clone() : null)
-
+  const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
   // 页面首次打开时执行的勾子
   useEffect(() => {
     // 检测当前的url并自动滚动到对应目标
     autoScrollToHash()
-    if (siteConfig('GALLERY_BEAUTIFICATION')) {
+    if (GALLERY_BEAUTIFICATION) {
       GalleryBeautification(post)
     }
     // 将相册gallery下的图片加入放大功能
-    if (siteConfig('POST_DISABLE_GALLERY_CLICK')) {
+    if (POST_DISABLE_GALLERY_CLICK) {
       setTimeout(() => {
         if (isBrowser) {
-          const imgList = document?.querySelectorAll('.notion-collection-card-cover img')
+          const imgList = document?.querySelectorAll(
+            '.notion-collection-card-cover img'
+          )
           if (imgList && zoomRef.current) {
             for (let i = 0; i < imgList.length; i++) {
               zoomRef.current.attach(imgList[i])
             }
           }
 
-          const cards = document.getElementsByClassName('notion-collection-card')
+          const cards = document.getElementsByClassName(
+            'notion-collection-card'
+          )
           for (const e of cards) {
             e.removeAttribute('href')
           }
@@ -87,7 +94,7 @@ const NotionPage = ({ post, className }) => {
               //   替换为更高清的图像
               mutation?.target?.setAttribute(
                 'src',
-                compressImage(src, siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200))
+                compressImage(src, IMAGE_ZOOM_IN_WIDTH)
               )
             }, 800)
           }
