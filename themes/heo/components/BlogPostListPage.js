@@ -4,6 +4,7 @@ import CONFIG from '../config'
 import BlogPostCard from './BlogPostCard'
 import BlogPostListEmpty from './BlogPostListEmpty'
 import PaginationNumber from './PaginationNumber'
+import { AdSlot } from '@/components/GoogleAdsense'
 
 /**
  * 文章列表分页表格
@@ -24,6 +25,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
   } else {
     return (
       <div id='container' className='w-full'>
+        <AdSlot type='flow'/>
         {/* 文章列表 */}
         <div
           className={`${POST_TWO_COLS && '2xl:grid 2xl:grid-cols-2'} grid-cols-1 gap-5`}>
@@ -36,6 +38,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
             />
           ))}
         </div>
+        <AdSlot type='flow'/>
 
         {showPagination && (
           <PaginationNumber page={page} totalPage={totalPage} />
