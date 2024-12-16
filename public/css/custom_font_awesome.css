@@ -124,10 +124,14 @@
 
 /* Regular 图标 - Calendar Check */
 .fa-calendar-check::before {
-  content: "\f274";
+    content: "\f274";
 }
 
 /* Brand 图标 - Telegram */
 .fa-telegram::before {
-  content: "\f2c6";
+    content: "\f2c6";
+}
+
+.fa-language::before {
+    content: "\f1ab";
 }
