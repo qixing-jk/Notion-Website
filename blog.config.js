@@ -536,11 +536,11 @@ const BLOG = {
   GET_FAVICON_URL: process.env.GET_FAVICON_URL || 'https://www.google.com/s2/favicons?domain=',
 
   // 统一的 NPM 资源CDN地址，例如：https://registry.npmmirror.com/
-  NPM_CDN_BASE: process.env.NEXT_PUBLIC_NPM_CDN_BASE || '',
+  NPM_CDN_BASE: process.env.NEXT_PUBLIC_NPM_CDN_BASE || 'https://registry.npmjs.org/',
   // 统一的 CDNJS 资源CDN地址，例如：https://s4.zstatic.net/
-  CDNJS_CDN_BASE: process.env.NEXT_PUBLIC_CDNJS_CDN_BASE || '',
+  CDNJS_CDN_BASE: process.env.NEXT_PUBLIC_CDNJS_CDN_BASE || 'https://cdnjs.cloudflare.com/',
   // 统一的 JSDELIVR 资源CDN地址，例如：https://cdn.jsdmirror.com/
-  JSDELIVR_CDN_BASE: process.env.NEXT_PUBLIC_JSDELIVR_CDN_BASE || '',
+  JSDELIVR_CDN_BASE: process.env.NEXT_PUBLIC_JSDELIVR_CDN_BASE || 'https://cdn.jsdelivr.net/',
 
   // 作废配置
   AVATAR: process.env.NEXT_PUBLIC_AVATAR || '/avatar.svg', // 作者头像，被notion中的ICON覆盖。若无ICON则取public目录下的avatar.png
