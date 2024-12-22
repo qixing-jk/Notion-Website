@@ -28,6 +28,7 @@ import PostHeader from './components/PostHeader'
 import { PostLock } from './components/PostLock'
 import CONFIG from './config'
 import { Style } from './style'
+import AISummary from '@/components/AISummary'
 
 const AdSlot = dynamic(
   () => import('@/components/GoogleAdsense').then(mod => mod.AdSlot),
@@ -309,6 +310,7 @@ const LayoutSlug = props => {
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
               >
+                <AISummary aiSummary={post.aiSummary}/>
                   <WWAds orientation='horizontal' className='w-full' />
                 {<NotionPage post={post} />}
                   <WWAds orientation='horizontal' className='w-full' />
