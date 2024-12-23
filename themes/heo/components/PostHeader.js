@@ -5,9 +5,9 @@ import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
+import WordCount from '@/components/WordCount'
 
 const WavesArea = dynamic(() => import('./WavesArea'), { ssr: false })
-const WordCount = dynamic(() => import('@/components/WordCount'), { ssr: false })
 
 /**
  * 文章页头
@@ -33,9 +33,8 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           height: 100%;
           top: 0;
           left: 0;
-          box-shadow: 110px -130px 500px 100px ${isDarkMode
-              ? '#CA8A04'
-              : '#0060e0'} inset;
+          box-shadow: 110px -130px 500px 100px
+            ${isDarkMode ? '#CA8A04' : '#0060e0'} inset;
         }
       `}</style>
 
@@ -105,7 +104,10 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
             <div className='flex justify-center '>
               <div className='mr-2'>
-                <WordCount />
+                <WordCount
+                  wordCount={post.wordCount}
+                  readTime={post.readTime}
+                />
               </div>
               {post?.type !== 'Page' && (
                 <>
