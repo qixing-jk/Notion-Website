@@ -135,3 +135,17 @@
 .fa-language::before {
     content: "\f1ab";
 }
+
+/* 文章字数图标 */
+.fa-file-word::before {
+    content: "\f1c2";
+}
+
+/* 阅读时长图标 */
+.fa-clock::before {
+    content: "\f017";
+}
+/* 文章时间 */
+.fa-calendar::before {
+    content: "\f133";
+}
