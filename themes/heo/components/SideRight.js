@@ -3,7 +3,6 @@ import Card from './Card'
 import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import TouchMeCard from './TouchMeCard'
-import { siteConfig } from '@/lib/config'
 
 const TagGroups = dynamic(() => import('./TagGroups'))
 const AnalyticsCard = dynamic(() =>
@@ -62,8 +61,8 @@ export default function SideRight(props) {
 
         {rightAreaSlot}
 
-        {siteConfig('FACEBOOK_PAGE') && <FaceBookPage />}
-        {siteConfig('WIDGET_PET') && <Live2D />}
+        <FaceBookPage />
+        <Live2D />
 
         {/* 标签和成绩 */}
         <Card
