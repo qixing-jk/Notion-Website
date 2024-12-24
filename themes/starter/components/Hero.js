@@ -87,6 +87,8 @@ export const Hero = props => {
                         null,
                         config
                       )}
+                      fetchPriority='high'
+                      loading='eager'
                       alt={siteConfig('TITLE', null, config)}
                       title={siteConfig('TITLE', null, config)}
                       className='mx-auto max-w-full rounded-t-xl rounded-tr-xl'
