@@ -22,7 +22,6 @@ import { useEffect, useState } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import CategoryBar from './components/CategoryBar'
-import LatestPostsGroup from './components/LatestPostsGroup'
 import { NoticeBar } from './components/NoticeBar'
 import PostHeader from './components/PostHeader'
 import { PostLock } from './components/PostLock'
@@ -30,9 +29,9 @@ import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
 
-const AdSlot = dynamic(
-  () => import('@/components/GoogleAdsense').then(mod => mod.AdSlot),
-  { ssr: false }
+const LatestPostsGroup = dynamic(() => import('./components/LatestPostsGroup'))
+const AdSlot = dynamic(() =>
+  import('@/components/GoogleAdsense').then(mod => mod.AdSlot)
 )
 const WWAds = dynamic(() => import('@/components/WWAds'))
 const replaceSearchResult = dynamic(() => import('@/components/Mark'))
@@ -40,23 +39,18 @@ const PostAdjacent = dynamic(() => import('./components/PostAdjacent'), {
   ssr: false
 })
 const BlogPostListScroll = dynamic(
-  () => import('./components/BlogPostListScroll'),
-  { ssr: false }
+  () => import('./components/BlogPostListScroll')
 )
 const SearchNav = dynamic(() => import('./components/SearchNav'))
 const SideRight = dynamic(() => import('./components/SideRight'))
 const PostRecommend = dynamic(() => import('./components/PostRecommend'))
-const PostCopyright = dynamic(() => import('./components/PostCopyright'), {
-  ssr: false
-})
-const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
-const ShareBar = dynamic(() => import('@/components/ShareBar'), { ssr: false })
+const PostCopyright = dynamic(() => import('./components/PostCopyright'))
+const Comment = dynamic(() => import('@/components/Comment'))
+const ShareBar = dynamic(() => import('@/components/ShareBar'))
 const Footer = dynamic(() => import('./components/Footer'))
 const Header = dynamic(() => import('./components/Header'))
 const Hero = dynamic(() => import('./components/Hero'))
-const FloatTocButton = dynamic(() => import('./components/FloatTocButton'), {
-  ssr: false
-})
+const FloatTocButton = dynamic(() => import('./components/FloatTocButton'))
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
