@@ -21,7 +21,7 @@ const CONFIG = {
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
 
   // 英雄区配图，如需隐藏，改为空值即可 ''
-  STARTER_HERO_PREVIEW_IMAGE: 'images/starter/product.png', // 产品预览图 ，默认读取public目录下图片
+  STARTER_HERO_PREVIEW_IMAGE: 'images/starter/product.webp', // 产品预览图 ，默认读取public目录下图片
   STARTER_HERO_BANNER_IMAGE: '', // hero区下方的全宽图
 
   // 顶部右侧导航暗流
@@ -66,8 +66,8 @@ const CONFIG = {
     'NoTrans是一款智能内容翻译工具，专为Notion用户设计。<br /> <br />支持Notion内的所有块类型，无论是文本、表格、数据库、列表、页面，还是嵌入式媒体，均可实现自动翻译与同步，帮助个人与团队实现无障碍多语言沟通与管理。',
   STARTER_ABOUT_BUTTON_TEXT: '了解更多',
   STARTER_ABOUT_BUTTON_URL: '/about',
-  STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.jpg',
-  STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.jpg',
+  STARTER_ABOUT_IMAGE_1: '/images/starter/about/about-image-01.webp',
+  STARTER_ABOUT_IMAGE_2: '/images/starter/about/about-image-02.webp',
   STARTER_ABOUT_TIPS_1: '200+',
   STARTER_ABOUT_TIPS_2: 'Notion页面',
   STARTER_ABOUT_TIPS_3: '已被翻译',
@@ -208,7 +208,7 @@ const CONFIG = {
   STARTER_TEAM_ITEMS: [
     {
       STARTER_TEAM_ITEM_AVATAR:
-        '/avatar.png',
+        '/avatar.webp',
       STARTER_TEAM_ITEM_NICKNAME: 'Qi Xing',
       STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
     },
