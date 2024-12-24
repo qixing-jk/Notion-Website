@@ -1,7 +1,6 @@
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import algoliasearch from 'algoliasearch'
 import throttle from 'lodash.throttle'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -48,7 +47,10 @@ export default function AlgoliaSearchModal({ cRef }) {
 
   const inputRef = useRef(null)
   const router = useRouter()
-
+  const ALGOLIA_APP_ID = siteConfig('ALGOLIA_APP_ID')
+  const ALGOLIA_SEARCH_ONLY_APP_KEY = siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
+  const ALGOLIA_INDEX = siteConfig('ALGOLIA_INDEX')
+  let algoliasearch, index
   /**
    * 快捷键设置
    */
@@ -149,12 +151,6 @@ export default function AlgoliaSearchModal({ cRef }) {
     }
   })
 
-  const client = algoliasearch(
-    siteConfig('ALGOLIA_APP_ID'),
-    siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
-  )
-  const index = client.initIndex(siteConfig('ALGOLIA_INDEX'))
-
   /**
    * 搜索
    * @param {*} query
@@ -209,9 +205,18 @@ export default function AlgoliaSearchModal({ cRef }) {
   const searchTimer = useRef(null)
 
   // 修改input的onChange事件处理函数
-  const handleInputChange = e => {
+  const handleInputChange = async e => {
     const query = e.target.value
-
+    if (algoliasearch) {
+      if (!index) {
+        index = algoliasearch(
+          ALGOLIA_APP_ID,
+          ALGOLIA_SEARCH_ONLY_APP_KEY
+        ).initIndex(ALGOLIA_INDEX)
+      }
+    } else {
+      algoliasearch = (await import('algoliasearch')).default
+    }
     // 如果已经有计时器在等待搜索，先清除之前的计时器
     if (searchTimer.current) {
       clearTimeout(searchTimer.current)
@@ -238,7 +243,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     setIsModalOpen(false)
   }
 
-  if (!siteConfig('ALGOLIA_APP_ID')) {
+  if (!ALGOLIA_APP_ID) {
     return <></>
   }
   return (
