@@ -1,15 +1,15 @@
 import dynamic from 'next/dynamic'
-import { AnalyticsCard } from './AnalyticsCard'
 import Card from './Card'
 import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
-import TagGroups from './TagGroups'
 import TouchMeCard from './TouchMeCard'
-import { siteConfig } from '@/lib/config'
 
-
+const TagGroups = dynamic(() => import('./TagGroups'))
+const AnalyticsCard = dynamic(() =>
+  import('./AnalyticsCard').then(m => m.AnalyticsCard)
+)
 const Live2D = dynamic(() => import('@/components/Live2D'), { ssr: false })
-const LatestPostsGroupMini = dynamic(() => import('./LatestPostsGroupMini'), { ssr: false })
+const LatestPostsGroupMini = dynamic(() => import('./LatestPostsGroupMini'))
 const FaceBookPage = dynamic(
   () => {
     let facebook = <></>
@@ -61,8 +61,8 @@ export default function SideRight(props) {
 
         {rightAreaSlot}
 
-        {siteConfig('FACEBOOK_PAGE') && <FaceBookPage />}
-        {siteConfig('WIDGET_PET') && <Live2D />}
+        <FaceBookPage />
+        <Live2D />
 
         {/* 标签和成绩 */}
         <Card

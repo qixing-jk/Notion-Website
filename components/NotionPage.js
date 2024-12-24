@@ -2,7 +2,6 @@ import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
 import { isBrowser } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
-import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
@@ -237,7 +236,10 @@ const Equation = dynamic(
   () =>
     import('@/components/Equation').then(async m => {
       // 化学方程式
-      await import('@/lib/plugins/mhchem')
+      await Promise.all([
+        import('katex/dist/katex.min.css'),
+        import('@/lib/plugins/mhchem')
+      ])
       return m.Equation
     }),
   { ssr: false }

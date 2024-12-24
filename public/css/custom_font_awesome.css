@@ -149,3 +149,8 @@
 .fa-calendar::before {
     content: "\f133";
 }
+
+/* 公告区域个人简介 */
+.fa-user::before {
+    content: "\f007";
+}

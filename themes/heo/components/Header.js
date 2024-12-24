@@ -9,7 +9,9 @@ import { MenuListTop } from './MenuListTop'
 import RandomPostButton from './RandomPostButton'
 import ReadingProgress from './ReadingProgress'
 import SearchButton from './SearchButton'
-import SlideOver from './SlideOver'
+import dynamic from 'next/dynamic'
+
+const SlideOver = dynamic(() => import('./SlideOver'))
 
 /**
  * 页头：顶部导航
