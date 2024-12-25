@@ -303,6 +303,7 @@ const LayoutSlug = props => {
               {/* Notion文章主体 */}
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
+                data-wow-delay='.2s'
               >
                 <AISummary aiSummary={post.aiSummary}/>
                   <WWAds orientation='horizontal' className='w-full' />
