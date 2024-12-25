@@ -1,5 +1,5 @@
 import { useGlobal } from '@/lib/global'
-import { useImperativeHandle } from 'react'
+import { memo, useImperativeHandle } from 'react'
 import { Moon, Sun } from './HeroIcons'
 
 /**
@@ -33,4 +33,4 @@ const DarkModeButton = props => {
     </div>
   )
 }
-export default DarkModeButton
+export default memo(DarkModeButton)

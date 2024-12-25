@@ -3,6 +3,7 @@ import Card from './Card'
 import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import TouchMeCard from './TouchMeCard'
+import { memo } from 'react'
 
 // const TagGroups = dynamic(() => import('./TagGroups'))
 const AnalyticsCard = dynamic(() =>
@@ -28,7 +29,7 @@ const FaceBookPage = dynamic(
  * @param {*} props
  * @returns
  */
-export default function SideRight(props) {
+export default memo(function SideRight(props) {
   const { post, rightAreaSlot } = props
 
   return (
@@ -73,4 +74,4 @@ export default function SideRight(props) {
       </div>
     </div>
   )
-}
+})
