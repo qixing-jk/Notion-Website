@@ -121,7 +121,6 @@ const NotionPage = ({ post, className }) => {
       className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
-        mapPageUrl={mapPageUrl}
         mapImageUrl={mapImgUrl}
         components={{
           nextImage: Image,
@@ -192,16 +191,6 @@ const autoScrollToHash = () => {
       }
     }
   }, 180)
-}
-
-/**
- * 将id映射成博文内部链接。
- * @param {*} id
- * @returns
- */
-const mapPageUrl = id => {
-  // return 'https://www.notion.so/' + id.replace(/-/g, '')
-  return '/' + id.replace(/-/g, '')
 }
 
 /**
