@@ -4,7 +4,7 @@ import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import TouchMeCard from './TouchMeCard'
 
-const TagGroups = dynamic(() => import('./TagGroups'))
+// const TagGroups = dynamic(() => import('./TagGroups'))
 const AnalyticsCard = dynamic(() =>
   import('./AnalyticsCard').then(m => m.AnalyticsCard)
 )
@@ -29,10 +29,7 @@ const FaceBookPage = dynamic(
  * @returns
  */
 export default function SideRight(props) {
-  const { post, tagOptions, currentTag, rightAreaSlot } = props
-
-  // 只摘取标签的前60个，防止右侧过长
-  const sortedTags = tagOptions?.slice(0, 60) || []
+  const { post, rightAreaSlot } = props
 
   return (
     <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
@@ -69,7 +66,7 @@ export default function SideRight(props) {
           className={
             'bg-white dark:bg-[#1e1e1e] dark:text-white hover:border-indigo-600  dark:hover:border-yellow-600 duration-200'
           }>
-          <TagGroups tags={sortedTags} currentTag={currentTag} />
+          {/*<TagGroups tags={sortedTags} currentTag={currentTag} />*/}
           <hr className='mx-1 flex border-dashed relative my-4' />
           <AnalyticsCard {...props} />
         </Card>
