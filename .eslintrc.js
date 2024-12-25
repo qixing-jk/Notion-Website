@@ -24,7 +24,6 @@ module.exports = {
   },
   plugins: [
     'react',
-    'react-hooks',
     'prettier',
     '@typescript-eslint' // 添加 TypeScript 插件
   ],
