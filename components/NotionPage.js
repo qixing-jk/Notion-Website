@@ -5,6 +5,8 @@ import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
+import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
+import Link from 'next/link'
 
 const NotionRenderer = dynamic(() =>
   import('react-notion-x').then(mod => mod.NotionRenderer)
@@ -119,9 +121,10 @@ const NotionPage = ({ post, className }) => {
       className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
-        mapPageUrl={mapPageUrl}
         mapImageUrl={mapImgUrl}
         components={{
+          nextImage: Image,
+          nextLink: Link,
           Code,
           Collection,
           Equation,
@@ -188,16 +191,6 @@ const autoScrollToHash = () => {
       }
     }
   }, 180)
-}
-
-/**
- * 将id映射成博文内部链接。
- * @param {*} id
- * @returns
- */
-const mapPageUrl = id => {
-  // return 'https://www.notion.so/' + id.replace(/-/g, '')
-  return '/' + id.replace(/-/g, '')
 }
 
 /**

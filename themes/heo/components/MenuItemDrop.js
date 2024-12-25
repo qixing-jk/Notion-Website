@@ -11,8 +11,8 @@ export const MenuItemDrop = ({ link }) => {
 
   return (
     <div
-      onMouseOver={() => changeShow(true)}
-      onMouseOut={() => changeShow(false)}>
+      onMouseOver={() => hasSubMenu && changeShow(true)}
+      onMouseOut={() => hasSubMenu && changeShow(false)}>
       {/* 不含子菜单 */}
       {!hasSubMenu && (
         <Link
