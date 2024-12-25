@@ -1,14 +1,8 @@
 import styles from './AISummary.module.css'
-import { useEffect, useState } from 'react'
 import { useGlobal } from '@/lib/global'
 
 const AISummary = ({ aiSummary }) => {
   const { locale } = useGlobal()
-  const [summary, setSummary] = useState(aiSummary)
-
-  useEffect(() => {
-    showAiSummaryAnimation(aiSummary, setSummary)
-  }, [])
 
   return (
     aiSummary && (
@@ -31,68 +25,12 @@ const AISummary = ({ aiSummary }) => {
             <div className={styles['ai-tag']}>GPT</div>
           </div>
           <div className={styles['ai-content']}>
-            <div className={styles['ai-explanation']}>
-              {summary}
-              {summary !== aiSummary && (
-                <span className={styles['blinking-cursor']}></span>
-              )}
-            </div>
+            <div className={styles['ai-explanation']}>{aiSummary}</div>
           </div>
         </div>
       </div>
     )
   )
-}
-
-const showAiSummaryAnimation = (rawSummary, setSummary) => {
-  if (!rawSummary) return
-  let currentIndex = 0
-  const typingDelay = 20
-  const punctuationDelayMultiplier = 6
-  let animationRunning = true
-  let lastUpdateTime = performance.now()
-  const animate = () => {
-    if (currentIndex < rawSummary.length && animationRunning) {
-      const currentTime = performance.now()
-      const timeDiff = currentTime - lastUpdateTime
-
-      const letter = rawSummary.slice(currentIndex, currentIndex + 1)
-      const isPunctuation = /[，。！、？,.!?]/.test(letter)
-      const delay = isPunctuation
-        ? typingDelay * punctuationDelayMultiplier
-        : typingDelay
-
-      if (timeDiff >= delay) {
-        setSummary(rawSummary.slice(0, currentIndex + 1))
-        lastUpdateTime = currentTime
-        currentIndex++
-
-        if (currentIndex < rawSummary.length) {
-          setSummary(rawSummary.slice(0, currentIndex))
-        } else {
-          setSummary(rawSummary)
-          observer.disconnect()
-        }
-      }
-      requestAnimationFrame(animate)
-    }
-  }
-  animate(rawSummary)
-  const observer = new IntersectionObserver(
-    entries => {
-      animationRunning = entries[0].isIntersecting
-      if (animationRunning && currentIndex === 0) {
-        setTimeout(() => {
-          requestAnimationFrame(animate)
-        }, 200)
-      }
-    },
-    { threshold: 0 }
-  )
-  let post_ai = document.querySelector('.post-ai')
-  if (post_ai) {
-    observer.observe(post_ai)
-  }
 }
 
 export default AISummary
