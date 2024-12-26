@@ -1960,8 +1960,7 @@ svg + .notion-page-title-text {
 .notion-quote {
   display: block;
   border-radius: 5px;
-  border-color: var(--notion-blue);
-  border-left-color: var(--notion-blue);
+  border-color: var(--select-color-0);
   background-color: var(--notion-blue_background_co);
   width: 100%;
   white-space: pre-wrap;
