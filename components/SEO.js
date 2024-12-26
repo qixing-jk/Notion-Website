@@ -24,22 +24,24 @@ const SEO = props => {
   const webFontUrl = siteConfig('FONT_URL')
 
   useEffect(() => {
-    // 使用WebFontLoader字体加载
-    loadExternalResource(
-      'https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js',
-      'js'
-    ).then(url => {
-      const WebFont = window?.WebFont
-      if (WebFont) {
-        // console.log('LoadWebFont', webFontUrl)
-        WebFont.load({
-          custom: {
-            // families: ['"LXGW WenKai"'],
-            urls: webFontUrl
-          }
-        })
-      }
-    })
+    if (webFontUrl.length) {
+      // 使用WebFontLoader字体加载
+      loadExternalResource(
+        'https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js',
+        'js'
+      ).then(url => {
+        const WebFont = window?.WebFont
+        if (WebFont) {
+          // console.log('LoadWebFont', webFontUrl)
+          WebFont.load({
+            custom: {
+              // families: ['"LXGW WenKai"'],
+              urls: webFontUrl
+            }
+          })
+        }
+      })
+    }
   }, [])
 
   // SEO关键词
