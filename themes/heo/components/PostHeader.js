@@ -55,9 +55,11 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
         {/* 文章文字描述 */}
         <div
           id='post-info'
-          className='absolute top-48 z-10 flex flex-col space-y-4 lg:-mt-12 w-full max-w-[86rem] px-5'>
+          className='absolute top-38 z-10 flex flex-col space-y-4 lg:-mt-10 w-full max-w-[86rem] px-5'>
           {/* 分类+标签 */}
-          <div className='flex justify-center md:justify-start items-center gap-4'>
+          <div
+            style={{ fontSize: '95%' }}
+            className='flex justify-center md:justify-start items-center gap-4'>
             {post.category && (
               <>
                 <Link
@@ -82,7 +84,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                     className={
                       'cursor-pointer inline-block text-gray-50 hover:text-white duration-200 py-0.5 px-1 whitespace-nowrap '
                     }>
-                    <div className='font-light flex items-center'>
+                    <div className='hover:bg-opacity-20 hover:bg-white rounded-xl py-1 px-2 font-light flex items-center'>
                       <HashTag className='text-gray-200 stroke-2 mr-0.5 w-3 h-3' />{' '}
                       {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
                     </div>
@@ -97,11 +99,15 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
             {siteConfig('POST_TITLE_ICON') && (
               <NotionIcon icon={post.pageIcon} priority />
             )}
-            <span className='ml-3'>{post.title}</span>
+            <span className='ml-3 line-clamp-4 leading-tight'>
+              {post.title}
+            </span>
           </div>
 
           {/* 标题底部补充信息 */}
-          <section className='flex-wrap dark:text-gray-200 text-opacity-70 shadow-text-md flex text-sm  justify-center md:justify-start mt-4 text-white font-light leading-8'>
+          <section
+            style={{ fontSize: '95%' }}
+            className='flex-wrap dark:text-gray-200 text-opacity-80 shadow-text-md flex justify-center md:justify-start mt-4 text-white font-light leading-8'>
             <div className='flex justify-center '>
               <div className='mr-2'>
                 <WordCount
