@@ -570,6 +570,7 @@ summary > .notion-h {
   background-size: 0 0.1rem;
 }
 
+/*https://github.com/transitive-bullshit/nextjs-notion-starter-kit/blob/b8581108b15f4e18047df2733128ed1a66c60e10/styles/notion.css#L237*/
 .notion-link:focus,
 .notion-link:hover {
   border-bottom-color: transparent;
