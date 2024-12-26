@@ -454,6 +454,10 @@ summary > .notion-h {
   fill: var(--fg-color-icon);
 }
 
+.notion-hash-link svg {
+  display: inline;
+}
+
 .notion-page-cover {
   display: block;
   object-fit: cover;
@@ -540,17 +544,6 @@ summary > .notion-h {
   font-size: 14px;
 }
 
-.notion-quote {
-  display: block;
-  width: 100%;
-  white-space: pre-wrap;
-  word-break: break-word;
-  border-left: 3px solid currentcolor;
-  padding: 0.2em 0.9em;
-  margin: 6px 0;
-  font-size: 1.2em;
-}
-
 .notion-hr {
   width: 100%;
   margin: 6px 0;
@@ -559,20 +552,29 @@ summary > .notion-h {
 }
 
 .notion-link {
-  color: inherit;
-  word-break: break-word;
-  text-decoration: inherit;
-  border-bottom: 0.05em solid !important;
-  border-color: var(--fg-color-2);
-  opacity: 0.7;
-  transition:
-    border-color 100ms ease-in,
-    opacity 100ms ease-in;
+  position: relative;
+  transition: unset;
+  opacity: 1;
+  border-bottom-width: 0.1rem;
+  background: transparent;
+  background-origin: border-box;
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
+  background-size: 0 0.1rem;
 }
 
+/*https://github.com/transitive-bullshit/nextjs-notion-starter-kit/blob/b8581108b15f4e18047df2733128ed1a66c60e10/styles/notion.css#L237*/
+.notion-link:focus,
 .notion-link:hover {
-  border-color: var(--fg-color-6);
-  opacity: 1;
+  border-bottom-color: transparent;
+
+  background-image: linear-gradient(90.68deg, #b439df 0.26%, #e5337e 102.37%);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 0.1rem;
+
+  transition-property: background-position, background-size;
+  transition-duration: 300ms;
 }
 
 .notion-blank {
@@ -824,6 +826,11 @@ code[class*='language-'] {
   display: flex;
   overflow: hidden;
   user-select: none;
+}
+
+.notion-bookmark:hover {
+    border-image: linear-gradient(90.68deg, #b439df .26%, #e5337e 102.37%);
+    border-image-slice: 1;
 }
 
 .notion-bookmark > div:first-child {
@@ -1689,12 +1696,6 @@ svg + .notion-page-title-text {
   @apply border-b-0;
 }
 
-.notion-bookmark {
-  @apply border-2;
-  @apply border-gray-100;
-  color: inherit;
-}
-
 .notion-bookmark .notion-bookmark-title,
 .notion-bookmark .notion-bookmark-link div {
   @apply text-gray-900 dark:text-gray-200;
@@ -1716,9 +1717,6 @@ svg + .notion-page-title-text {
   @apply dark:text-black;
 }
 
-.notion-bookmark:hover {
-  @apply border-blue-400;
-}
 .notion-asset-caption {
   @apply text-center;
 }
@@ -1728,9 +1726,6 @@ svg + .notion-page-title-text {
 .notion-page {
   @apply w-auto;
   @apply px-0;
-}
-.notion-quote {
-  padding: 0.2em 0.9em;
 }
 
 .notion-collection {
@@ -1965,13 +1960,12 @@ svg + .notion-page-title-text {
 .notion-quote {
   display: block;
   border-radius: 5px;
-  border-color: var(--notion-blue);
-  border-left-color: var(--notion-blue);
+  border-color: var(--select-color-0);
   background-color: var(--notion-blue_background_co);
   width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
-  border-left: 10px solid;
+  /*border-left: 10px solid;*/
   padding: 0.2em 0.9em;
   margin: 6px 0;
   font-size: 1em;

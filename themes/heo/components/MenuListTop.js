@@ -49,7 +49,7 @@ export default memo(function MenuListTop(props) {
     <>
       <nav
         id='nav-mobile'
-        className='leading-8 justify-center font-light w-full flex'>
+        className='leading-8 justify-center font-normal w-full flex'>
         {links?.map(
           (link, index) =>
             link && link.show && <MenuItemDrop key={index} link={link} />

@@ -13,7 +13,7 @@ const Logo = props => {
           width={24}
           height={24}
           alt={siteConfig('AUTHOR')}
-          className='mr-4 hidden md:block'
+          className='mr-3 hidden md:block'
           priority
         />
         <div id='logo-text' className='group rounded-2xl flex-none relative'>
