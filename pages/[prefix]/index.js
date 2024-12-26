@@ -4,7 +4,6 @@ import OpenWrite from '@/components/OpenWrite'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
-import { getPageTableOfContents } from '@/lib/notion/getPageTableOfContents'
 import { getPasswordQuery } from '@/lib/password'
 import { checkSlugHasNoSlash, processPostData } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
@@ -66,20 +65,6 @@ const Slug = props => {
       }
     }
   }, [post])
-
-  // 文章加载
-  useEffect(() => {
-    if (lock) {
-      return
-    }
-    // 文章解锁后生成目录与内容
-    if (post?.blockMap?.block) {
-      post.content = Object.keys(post.blockMap.block).filter(
-        key => post.blockMap.block[key]?.value?.parent_id === post.id
-      )
-      post.toc = getPageTableOfContents(post, post.blockMap)
-    }
-  }, [router, lock])
 
   props = { ...props, lock, validPassword }
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
