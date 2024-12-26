@@ -454,6 +454,10 @@ summary > .notion-h {
   fill: var(--fg-color-icon);
 }
 
+.notion-hash-link svg {
+  display: inline;
+}
+
 .notion-page-cover {
   display: block;
   object-fit: cover;
