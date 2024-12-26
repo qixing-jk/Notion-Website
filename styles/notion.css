@@ -544,17 +544,6 @@ summary > .notion-h {
   font-size: 14px;
 }
 
-.notion-quote {
-  display: block;
-  width: 100%;
-  white-space: pre-wrap;
-  word-break: break-word;
-  border-left: 3px solid currentcolor;
-  padding: 0.2em 0.9em;
-  margin: 6px 0;
-  font-size: 1.2em;
-}
-
 .notion-hr {
   width: 100%;
   margin: 6px 0;
@@ -1742,9 +1731,6 @@ svg + .notion-page-title-text {
   @apply w-auto;
   @apply px-0;
 }
-.notion-quote {
-  padding: 0.2em 0.9em;
-}
 
 .notion-collection {
   align-self: center;
@@ -1984,7 +1970,7 @@ svg + .notion-page-title-text {
   width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
-  border-left: 10px solid;
+  /*border-left: 10px solid;*/
   padding: 0.2em 0.9em;
   margin: 6px 0;
   font-size: 1em;
