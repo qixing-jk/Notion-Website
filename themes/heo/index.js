@@ -307,7 +307,7 @@ const LayoutSlug = props => {
               >
                 <AISummary aiSummary={post.aiSummary}/>
                   <WWAds orientation='horizontal' className='w-full' />
-                {<NotionPage post={post} />}
+                {<NotionPage post={post} allNavPages={props.allNavPages} uuidSlugMap={props.uuidSlugMap}/>}
                   <WWAds orientation='horizontal' className='w-full' />
               </section>
 
