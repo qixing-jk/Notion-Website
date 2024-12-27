@@ -18,7 +18,7 @@ const NotionRenderer = dynamic(() =>
  * @param {*} param0
  * @returns
  */
-const NotionPage = ({ post, className, allNavPages }) => {
+const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   // 是否关闭数据库和画册的点击跳转
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
@@ -35,10 +35,17 @@ const NotionPage = ({ post, className, allNavPages }) => {
   const zoomRef = useRef(zoom ? zoom.clone() : null)
   const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
 
-  const customMapPageUrl = allNavPages => pageId => {
-    const slugPage = allNavPages?.find(page => {
-      return pageId.indexOf(page.short_id) === 14
-    })
+  const customMapPageUrl = (allNavPages, uuidSlugMap) => pageId => {
+    let slugPage
+    if (uuidSlugMap) {
+      slugPage = uuidSlugMap?.find(page => {
+        return pageId.indexOf(page.id) === 0
+      })
+    } else {
+      slugPage = allNavPages?.find(page => {
+        return pageId.indexOf(page.short_id) === 14
+      })
+    }
     if (slugPage) {
       return getLastPartOfUrl(slugPage?.slug)
     }
@@ -130,7 +137,7 @@ const NotionPage = ({ post, className, allNavPages }) => {
     <div id='notion-article' className={`mx-auto ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
-        mapPageUrl={customMapPageUrl(allNavPages)}
+        mapPageUrl={customMapPageUrl(allNavPages, uuidSlugMap)}
         mapImageUrl={mapImgUrl}
         components={{
           nextImage: Image,
