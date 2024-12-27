@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
 import OpenWrite from '@/components/OpenWrite'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPost, handleDataBeforeReturn } from '@/lib/db/getSiteData'
+import { getGlobalData, getPost } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
 import { getPasswordQuery } from '@/lib/password'
 import { checkSlugHasNoSlash, processPostData } from '@/lib/utils/post'
@@ -102,7 +102,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { prefix }, locale }) {
   let fullSlug = prefix
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale ,cleanData: false})
+  const props = await getGlobalData({ from, locale })
   if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
@@ -130,7 +130,6 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     props.post = null
   } else {
     await processPostData(props, from)
-    handleDataBeforeReturn(props)
   }
   return {
     props,
