@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPost } from '@/lib/db/getSiteData'
+import { getGlobalData, getPost, handleDataBeforeReturn } from '@/lib/db/getSiteData'
 import { checkSlugHasOneSlash, processPostData } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
 import Slug from '..'
@@ -47,7 +47,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
   const fullSlug = prefix + '/' + slug
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale })
+  const props = await getGlobalData({ from, locale ,cleanData: false})
 
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
@@ -74,6 +74,7 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
     props.post = null
   } else {
     await processPostData(props, from)
+    handleDataBeforeReturn(props)
   }
   return {
     props,
