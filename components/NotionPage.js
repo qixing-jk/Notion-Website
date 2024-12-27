@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
-import { isBrowser } from '@/lib/utils'
+import { getLastPartOfUrl, isBrowser } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
@@ -18,7 +18,7 @@ const NotionRenderer = dynamic(() =>
  * @param {*} param0
  * @returns
  */
-const NotionPage = ({ post, className }) => {
+const NotionPage = ({ post, className, allNavPages }) => {
   // 是否关闭数据库和画册的点击跳转
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
@@ -34,6 +34,17 @@ const NotionPage = ({ post, className }) => {
 
   const zoomRef = useRef(zoom ? zoom.clone() : null)
   const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
+
+  const customMapPageUrl = allNavPages => pageId => {
+    const slugPage = allNavPages?.find(page => {
+      return pageId.indexOf(page.short_id) === 14
+    })
+    if (slugPage) {
+      return getLastPartOfUrl(slugPage?.slug)
+    }
+    return `/${pageId}`
+  }
+
   // 页面首次打开时执行的勾子
   useEffect(() => {
     // 检测当前的url并自动滚动到对应目标
@@ -119,6 +130,7 @@ const NotionPage = ({ post, className }) => {
     <div id='notion-article' className={`mx-auto ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
+        mapPageUrl={customMapPageUrl(allNavPages)}
         mapImageUrl={mapImgUrl}
         components={{
           nextImage: Image,
