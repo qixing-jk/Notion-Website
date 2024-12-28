@@ -84,8 +84,8 @@ const ExternalPlugin = props => {
 
   useEffect(() => {
     // 自定义样式css和js引入
-    loadExternalResource('/css/custom.css', 'css')
-    loadExternalResource('/js/custom.js', 'js')
+    // loadExternalResource('/css/custom.css', 'css')
+    // loadExternalResource('/js/custom.js', 'js')
 
     // 自动添加图片阴影
     if (IMG_SHADOW) {
