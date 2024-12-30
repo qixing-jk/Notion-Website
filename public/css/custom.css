@@ -10,18 +10,20 @@
 /* Spoiler text styles */
 .spoiler-text {
     color: transparent;  /* 文字透明 */
-    background-color: black;  /* 背景为黑色 */
-    border-color: black;
-    text-decoration-color: black;
-    text-emphasis-color: black;
-    /*opacity: 0;  !* 初始透明度为 0，文字不可见 *!*/
+    background-color: #808080; /* 背景为黑色 */
+    border-color: #808080;
+    text-decoration-color: #808080;
+    text-emphasis-color: #808080;
+    border-radius: 8px;
     filter: blur(1px);  /* 初始模糊 */
-    transition: opacity 0.5s ease-out, filter 0.5s ease-out, color 0.5s ease-out, background-color 0.5s ease-out;
+    --hide-transition: 0.3s ease-out;
+    transition: opacity var(--hide-transition),
+    filter var(--hide-transition);
 }
 
 .spoiler-text:hover {
-    color: black;  /* 鼠标悬停时恢复文字颜色 */
-    background-color: white;  /* 鼠标悬停时恢复背景颜色 */
+    color: inherit; /* 鼠标悬停时恢复文字颜色 */
+    background-color: inherit; /* 鼠标悬停时恢复背景颜色 */
     border-color: inherit;
     text-decoration-color: inherit;
     text-emphasis-color: inherit;
