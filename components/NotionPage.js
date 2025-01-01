@@ -1,6 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
-import { getLastPartOfUrl, isBrowser } from '@/lib/utils'
+import { getLastPartOfUrl, isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
@@ -20,6 +20,7 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
+  const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
 
   const zoom =
     isBrowser &&
@@ -53,35 +54,13 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   useEffect(() => {
     // 检测当前的url并自动滚动到对应目标
     autoScrollToHash()
-    if (GALLERY_BEAUTIFICATION) {
-      GalleryBeautification(post)
-    }
-    // 将相册gallery下的图片加入放大功能
-    if (POST_DISABLE_GALLERY_CLICK) {
-      setTimeout(() => {
-        if (isBrowser) {
-          const imgList = document?.querySelectorAll(
-            '.notion-collection-card-cover img'
-          )
-          if (imgList && zoomRef.current) {
-            for (let i = 0; i < imgList.length; i++) {
-              zoomRef.current.attach(imgList[i])
-            }
-          }
-
-          const cards = document.getElementsByClassName(
-            'notion-collection-card'
-          )
-          for (const e of cards) {
-            e.removeAttribute('href')
-          }
-        }
-      }, 800)
-    }
   }, [])
 
   // 页面文章发生变化时会执行的勾子
   useEffect(() => {
+    if (GALLERY_BEAUTIFICATION) {
+      GalleryBeautification(post)
+    }
     // 相册视图点击禁止跳转，只能放大查看图片
     if (POST_DISABLE_GALLERY_CLICK) {
       // 针对页面中的gallery视图，点击后是放大图片还是跳转到gallery的内部页面
@@ -127,6 +106,21 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
 
     return () => {
       observer.disconnect()
+    }
+  }, [post])
+
+  useEffect(() => {
+    // Spoiler文本功能
+    if (SPOILER_TEXT_TAG) {
+      import('lodash/escapeRegExp').then(escapeRegExp => {
+        Promise.all([
+          loadExternalResource('/js/spoilerText.js', 'js'),
+          loadExternalResource('/css/spoiler-text.css', 'css')
+        ]).then(() => {
+          window.textToSpoiler &&
+            window.textToSpoiler(escapeRegExp.default(SPOILER_TEXT_TAG))
+        })
+      })
     }
   }, [post])
 
