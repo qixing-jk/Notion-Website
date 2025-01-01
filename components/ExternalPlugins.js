@@ -1,6 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { convertInnerUrl } from '@/lib/notion/convertInnerUrl'
-import { isBrowser, loadExternalResource } from '@/lib/utils'
+import { loadExternalResource } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -68,7 +67,6 @@ const ExternalPlugin = props => {
   const COZE_BOT_ID = siteConfig('COZE_BOT_ID')
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
 
-
   const router = useRouter()
   useEffect(() => {
     // 异步渲染谷歌广告
@@ -78,16 +76,16 @@ const ExternalPlugin = props => {
       }, 3000)
     }
 
-    setTimeout(() => {
-      // 映射url
-      convertInnerUrl(props?.allNavPages)
-    }, 500)
+    // setTimeout(() => {
+    //   // 映射url
+    //   convertInnerUrl(props?.allNavPages)
+    // }, 500)
   }, [router])
 
   useEffect(() => {
     // 自定义样式css和js引入
-    loadExternalResource('/css/custom.css', 'css')
-    loadExternalResource('/js/custom.js', 'js')
+    // loadExternalResource('/css/custom.css', 'css')
+    // loadExternalResource('/js/custom.js', 'js')
 
     // 自动添加图片阴影
     if (IMG_SHADOW) {

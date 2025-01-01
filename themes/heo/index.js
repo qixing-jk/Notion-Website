@@ -103,7 +103,6 @@ const LayoutBase = props => {
     <div
       id='theme-heo'
       className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
-      {HEO_LOADING_COVER && <LoadingCover />}
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -133,6 +132,8 @@ const LayoutBase = props => {
 
       {/* 页脚 */}
       <Footer />
+
+      {HEO_LOADING_COVER && <LoadingCover />}
     </div>
   )
 }
@@ -264,6 +265,16 @@ const LayoutSlug = props => {
     setHasCode(hasCode)
   }, [])
 
+  const commentEnable =
+    siteConfig('COMMENT_TWIKOO_ENV_ID') ||
+    siteConfig('COMMENT_WALINE_SERVER_URL') ||
+    siteConfig('COMMENT_VALINE_APP_ID') ||
+    siteConfig('COMMENT_GISCUS_REPO') ||
+    siteConfig('COMMENT_CUSDIS_APP_ID') ||
+    siteConfig('COMMENT_UTTERRANCES_REPO') ||
+    siteConfig('COMMENT_GITALK_CLIENT_ID') ||
+    siteConfig('COMMENT_WEBMENTION_ENABLE')
+
   const router = useRouter()
   const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
   useEffect(() => {
@@ -307,7 +318,7 @@ const LayoutSlug = props => {
               >
                 <AISummary aiSummary={post.aiSummary}/>
                   <WWAds orientation='horizontal' className='w-full' />
-                {<NotionPage post={post} />}
+                {<NotionPage post={post} allNavPages={props.allNavPages} uuidSlugMap={props.uuidSlugMap}/>}
                   <WWAds orientation='horizontal' className='w-full' />
               </section>
 
@@ -326,23 +337,23 @@ const LayoutSlug = props => {
               )}
             </article>
 
-                {/* 评论区 */}
-                {fullWidth ? null : (
-                  <div>
-                    <hr className='my-4 border-dashed' />
-                    {/* 评论区上方广告 */}
-                    <div className='py-2'>
-                      <AdSlot />
-                    </div>
-                    {/* 评论互动 */}
-                    <div className='duration-200 overflow-x-auto px-5'>
-                      <div className='text-2xl dark:text-white'>
-                        <i className='fas fa-comment mr-1' />
-                        {locale.COMMON.COMMENTS}
-                      </div>
-                      <Comment frontMatter={post} className='' />
-                    </div>
+            {/* 评论区 */}
+            {fullWidth ? null : (
+              <div className={`${commentEnable && post ? '' : 'hidden'}`}>
+                <hr className='my-4 border-dashed' />
+                {/* 评论区上方广告 */}
+                <div className='py-2'>
+                  <AdSlot />
+                </div>
+                {/* 评论互动 */}
+                <div className='duration-200 overflow-x-auto px-5'>
+                  <div className='text-2xl dark:text-white'>
+                    <i className='fas fa-comment mr-1' />
+                    {locale.COMMON.COMMENTS}
                   </div>
+                  <Comment frontMatter={post} className='' />
+                </div>
+              </div>
             )}
           </div>
         )}

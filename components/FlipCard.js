@@ -14,10 +14,10 @@ export default function FlipCard(props) {
 
   return (
         <div className={`flip-card ${isFlipped ? 'flipped' : ''}`} >
-            <div className={`flip-card-front ${props.className || ''}`} onMouseEnter={handleCardFlip}>
+            <div className={`flip-card-front overflow-clip ${props.className || ''}`} onMouseEnter={handleCardFlip}>
                 {props.frontContent}
             </div>
-            <div className={`flip-card-back ${props.className || ''}`} onMouseLeave={handleCardFlip}>
+            <div className={`flip-card-back overflow-clip ${props.className || ''}`} onMouseLeave={handleCardFlip}>
                 {props.backContent}
             </div>
             <style jsx>{`

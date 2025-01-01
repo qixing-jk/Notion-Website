@@ -1,16 +1,13 @@
 import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
-import { isBrowser } from '@/lib/utils'
+import { getLastPartOfUrl, isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
+import { NotionRenderer } from 'react-notion-x'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
 import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
 import Link from 'next/link'
-
-const NotionRenderer = dynamic(() =>
-  import('react-notion-x').then(mod => mod.NotionRenderer)
-)
 
 /**
  * 整个站点的核心组件
@@ -18,11 +15,12 @@ const NotionRenderer = dynamic(() =>
  * @param {*} param0
  * @returns
  */
-const NotionPage = ({ post, className }) => {
+const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   // 是否关闭数据库和画册的点击跳转
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
+  const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
 
   const zoom =
     isBrowser &&
@@ -34,39 +32,35 @@ const NotionPage = ({ post, className }) => {
 
   const zoomRef = useRef(zoom ? zoom.clone() : null)
   const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
+
+  const customMapPageUrl = (allNavPages, uuidSlugMap) => pageId => {
+    let slugPage
+    if (uuidSlugMap) {
+      slugPage = uuidSlugMap?.find(page => {
+        return pageId.indexOf(page.id) === 0
+      })
+    } else {
+      slugPage = allNavPages?.find(page => {
+        return pageId.indexOf(page.short_id) === 14
+      })
+    }
+    if (slugPage) {
+      return getLastPartOfUrl(slugPage?.slug)
+    }
+    return `/${pageId}`
+  }
+
   // 页面首次打开时执行的勾子
   useEffect(() => {
     // 检测当前的url并自动滚动到对应目标
     autoScrollToHash()
-    if (GALLERY_BEAUTIFICATION) {
-      GalleryBeautification(post)
-    }
-    // 将相册gallery下的图片加入放大功能
-    if (POST_DISABLE_GALLERY_CLICK) {
-      setTimeout(() => {
-        if (isBrowser) {
-          const imgList = document?.querySelectorAll(
-            '.notion-collection-card-cover img'
-          )
-          if (imgList && zoomRef.current) {
-            for (let i = 0; i < imgList.length; i++) {
-              zoomRef.current.attach(imgList[i])
-            }
-          }
-
-          const cards = document.getElementsByClassName(
-            'notion-collection-card'
-          )
-          for (const e of cards) {
-            e.removeAttribute('href')
-          }
-        }
-      }, 800)
-    }
   }, [])
 
   // 页面文章发生变化时会执行的勾子
   useEffect(() => {
+    if (GALLERY_BEAUTIFICATION) {
+      GalleryBeautification(post)
+    }
     // 相册视图点击禁止跳转，只能放大查看图片
     if (POST_DISABLE_GALLERY_CLICK) {
       // 针对页面中的gallery视图，点击后是放大图片还是跳转到gallery的内部页面
@@ -115,10 +109,26 @@ const NotionPage = ({ post, className }) => {
     }
   }, [post])
 
+  useEffect(() => {
+    // Spoiler文本功能
+    if (SPOILER_TEXT_TAG) {
+      import('lodash/escapeRegExp').then(escapeRegExp => {
+        Promise.all([
+          loadExternalResource('/js/spoilerText.js', 'js'),
+          loadExternalResource('/css/spoiler-text.css', 'css')
+        ]).then(() => {
+          window.textToSpoiler &&
+            window.textToSpoiler(escapeRegExp.default(SPOILER_TEXT_TAG))
+        })
+      })
+    }
+  }, [post])
+
   return (
     <div id='notion-article' className={`mx-auto ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
+        mapPageUrl={customMapPageUrl(allNavPages, uuidSlugMap)}
         mapImageUrl={mapImgUrl}
         components={{
           nextImage: Image,
@@ -180,7 +190,7 @@ const autoScrollToHash = () => {
   setTimeout(() => {
     // 跳转到指定标题
     const hash = window?.location?.hash
-    const needToJumpToTitle = hash && hash > 0
+    const needToJumpToTitle = hash && hash.length > 0
     if (needToJumpToTitle) {
       console.log('jump to hash', hash)
       const tocNode = document.getElementById(hash.substring(1))

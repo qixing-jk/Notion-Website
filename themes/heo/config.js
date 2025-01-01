@@ -24,6 +24,7 @@ const CONFIG = {
   HEO_HERO_TITLE_4: '更多内容',
   HEO_HERO_TITLE_5: '更多小知识与有趣日常尽在七行的TG小仓库和博客',
   HEO_HERO_TITLE_LINK: 'https://t.me/storage_qi',
+  HEO_HERO_TITLE_COVER: '/images/starter/product.webp',
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随便逛逛',
 
@@ -121,6 +122,12 @@ const CONFIG = {
   HEO_SOCIAL_CARD_TITLE_2: '加入我们的社群讨论分享',
   HEO_SOCIAL_CARD_TITLE_3: '点击加入社群',
   HEO_SOCIAL_CARD_URL: 'https://t.me/storage_qi',
+
+  // 底部统计面板文案
+  HEO_POST_COUNT_TITLE: '文章数:',
+  HEO_SITE_TIME_TITLE: '建站天数:',
+  HEO_SITE_VISIT_TITLE: '访问量:',
+  HEO_SITE_VISITOR_TITLE: '访客数:',
 
   // 底部统计面板文案
   HEO_POST_COUNT_TITLE: '文章数:',
