@@ -66,6 +66,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               <div
                 className={`flex mb-2 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
                 <Link
+                  prefetch={false}
                   passHref
                   href={`/category/${post.category}`}
                   className='cursor-pointer text-xs font-normal menu-link  px-3 py-1 rounded-lg  text-white bg-blue-500 hover:border-indigo-600 '>
