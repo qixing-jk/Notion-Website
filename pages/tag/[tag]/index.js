@@ -45,7 +45,7 @@ export async function getStaticProps({ params: { tag }, locale }) {
           'NEXT_REVALIDATE_SECOND',
           BLOG.NEXT_REVALIDATE_SECOND,
           props.NOTION_CONFIG
-        )
+        ) * 3
   }
 }
 

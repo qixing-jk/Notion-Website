@@ -26,6 +26,6 @@ export async function getStaticProps({ locale }) {
           'NEXT_REVALIDATE_SECOND',
           BLOG.NEXT_REVALIDATE_SECOND,
           props.NOTION_CONFIG
-        )
+        ) * 2
   }
 }
