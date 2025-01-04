@@ -66,6 +66,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               <div
                 className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
                 <Link
+                  prefetch={false}
                   passHref
                   href={`/category/${post.category}`}
                   className='cursor-pointer text-xs font-normal menu-link '>
@@ -83,9 +84,9 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               }>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon
-                icon={post.pageIcon}
-                className="heo-icon w-6 h-6 mr-1 align-middle transform translate-y-[-8%]" // 专门为 Heo 主题的图标设置样式
-              />
+                  icon={post.pageIcon}
+                  className='heo-icon w-6 h-6 mr-1 align-middle transform translate-y-[-8%]' // 专门为 Heo 主题的图标设置样式
+                />
               )}
               <span className='menu-link '>{post.title}</span>
             </Link>
