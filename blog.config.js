@@ -40,6 +40,7 @@ const BLOG = {
   ...require('./conf/plugin.config'), // 其他第三方插件 algolia全文索引
 
   // 高级用法
+  ...require('./conf/cdn.config'),
   ...require('./conf/layout-map.config'), // 路由与布局映射自定义，例如自定义特定路由的页面布局
   ...require('./conf/notion.config'), // 读取notion数据库相关的扩展配置，例如自定义表头
   ...require('./conf/dev.config'), // 开发、调试时需要关注的配置
