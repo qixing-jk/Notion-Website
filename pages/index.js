@@ -2,9 +2,10 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
-import { generateRss } from '@/lib/rss'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
+import { isNotVercelProduction } from '@/lib/utils'
+import { generateRss } from '@/lib/rss'
 import { generateRedirectJson } from '@/lib/redirect'
 
 /**
@@ -55,15 +56,17 @@ export async function getStaticProps(req) {
     }
   }
 
-  // 生成robotTxt
-  generateRobotsTxt(props)
-  // 生成Feed订阅
-  generateRss(props)
-  // 生成
-  generateSitemapXml(props)
-  if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
-    // 生成重定向 JSON
-    generateRedirectJson(props)
+  if (isNotVercelProduction) {
+    // 生成robotTxt
+    generateRobotsTxt(props)
+    // 生成Feed订阅
+    generateRss(props)
+    // 生成
+    generateSitemapXml(props)
+    if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
+      // 生成重定向 JSON
+      generateRedirectJson(props)
+    }
   }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
