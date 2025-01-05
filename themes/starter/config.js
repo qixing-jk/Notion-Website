@@ -328,7 +328,7 @@ const CONFIG = {
   STARTER_CTA_ENABLE: true,
   STARTER_CTA_TITLE: '你还在等待什么呢？',
   STARTER_CTA_TITLE_2: '现在开始吧',
-  STARTER_CTA_DESCRIOTN:
+  STARTER_CTA_DESCRIPTION:
     '访问的NoTrans 操作文档，我们提供了详细的教程，帮助你即刻翻译您的内容',
   STARTER_CTA_BUTTON: true, // 是否显示按钮
   STARTER_CTA_BUTTON_URL:
