@@ -7,10 +7,6 @@
 const Style = () => {
   return (
     <style jsx global>{`
-      body {
-        background-color: #f7f9fe;
-      }
-
       // 公告栏中的字体固定白色
       #theme-heo #announcement-content .notion {
         color: white;
