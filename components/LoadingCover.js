@@ -1,6 +1,7 @@
-'user client'
+// 'use client'
 import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
+
 /**
  * @see https://css-loaders.com/
  * @returns 加载动画
@@ -22,53 +23,51 @@ export default function LoadingCover() {
     setOnLoading(false) // 强行关闭 LoadingCover
   }
 
-  if (typeof window === 'undefined') {
-    return null // 避免在服务端渲染时渲染出这个组件
-  }
-
   return isVisible ? (
     <div
       id='loading-cover'
       onClick={handleClick}
       className={`dark:text-white text-black bg-white dark:bg-black animate__animated animate__faster ${
-        onLoading ? 'animate__fadeIn' : (isVisible ? '' : 'animate__fadeOut')
+        onLoading ? 'animate__fadeIn' : isVisible ? '' : 'animate__fadeOut'
       } flex flex-col justify-center z-50 w-full h-screen fixed top-0 left-0`}>
       <div className='mx-auto'>
-        <style global>
+        <style jsx global>
           {`
-          .loader {
-            width: 20px;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background: #000;
-            box-shadow: 0 0 0 0 #0004;
-            animation: l2 1.5s infinite linear;
-            position: relative;
-          }
-          .loader:before,
-          .loader:after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            box-shadow: 0 0 0 0 #0004;
-            animation: inherit;
-            animation-delay: -0.5s;
-          }
-          .loader:after {
-            animation-delay: -1s;
-          }
-            /* 深色模式下的样式 */
-          .dark .loader {
-            background: #fff; /* 白色或灰色 */
-            box-shadow: 0 0 0 0 #fff4; /* 使用白色阴影 */
-          }
-          @keyframes l2 {
-            100% {
-              box-shadow: 0 0 0 40px #0000;
+            .loader {
+              width: 20px;
+              aspect-ratio: 1;
+              border-radius: 50%;
+              background: #000;
+              box-shadow: 0 0 0 0 #0004;
+              animation: l2 1.5s infinite linear;
+              position: relative;
             }
-          }
-      `}
+
+            .loader:before,
+            .loader:after {
+              position: absolute;
+              inset: 0;
+              border-radius: inherit;
+              box-shadow: 0 0 0 0 #0004;
+              animation: inherit;
+              animation-delay: -0.5s;
+            }
+
+            .loader:after {
+              animation-delay: -1s;
+            }
+            /* 深色模式下的样式 */
+            .dark .loader {
+              background: #fff; /* 白色或灰色 */
+              box-shadow: 0 0 0 0 #fff4; /* 使用白色阴影 */
+            }
+
+            @keyframes l2 {
+              100% {
+                box-shadow: 0 0 0 40px #0000;
+              }
+            }
+          `}
         </style>
         <div className='loader'></div>
       </div>
