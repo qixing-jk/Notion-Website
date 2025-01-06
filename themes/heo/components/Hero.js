@@ -64,13 +64,14 @@ function BannerGroup(props) {
 function Banner(props) {
   const router = useRouter()
   const { allNavPages } = props
+  const SUB_PATH = siteConfig('SUB_PATH', '')
   /**
    * 随机跳转文章
    */
   function handleClickBanner() {
     const randomIndex = Math.floor(Math.random() * allNavPages.length)
     const randomPost = allNavPages[randomIndex]
-    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
+    router.push(`${SUB_PATH}/${randomPost?.slug}`)
   }
 
   // 遮罩文字
@@ -227,6 +228,7 @@ function TopGroup(props) {
 
   // 获取置顶推荐文章
   const topPosts = getTopPosts({ latestPosts, allNavPages })
+  const SUB_PATH = siteConfig('SUB_PATH', '')
 
   return (
     <div
@@ -239,7 +241,7 @@ function TopGroup(props) {
         className='w-full flex space-x-3 xl:space-x-0 xl:grid xl:grid-cols-3 xl:gap-3 xl:h-[342px]'>
         {topPosts?.map((p, index) => {
           return (
-            <Link href={`${siteConfig('SUB_PATH', '')}/${p?.slug}`} key={index}>
+            <Link href={`${SUB_PATH}/${p?.slug}`} key={index}>
               <div className='cursor-pointer h-[164px] group relative flex flex-col w-52 xl:w-full overflow-hidden shadow bg-white dark:bg-black dark:text-white rounded-xl'>
                 <LazyImage
                   priority={index === 0}
