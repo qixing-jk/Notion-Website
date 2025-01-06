@@ -63,10 +63,11 @@ export async function getStaticProps(req) {
     generateRss(props)
     // 生成
     generateSitemapXml(props)
-    if (BLOG['UUID_REDIRECT']) {
-      // 生成重定向 JSON
-      generateRedirectJson(props)
-    }
+  }
+
+  if (BLOG['UUID_REDIRECT']) {
+    // 生成重定向 JSON
+    generateRedirectJson(props)
   }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
