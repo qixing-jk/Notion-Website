@@ -1,5 +1,5 @@
 import { HashTag } from '@/components/HeroIcons'
-import LazyImage from '@/components/LazyImage'
+import Image from 'next/image'
 import NotionIcon from '@/components/NotionIcon'
 import WordCount from '@/components/WordCount'
 import { siteConfig } from '@/lib/config'
@@ -45,12 +45,13 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
             filter: 'blur(15px)'
           }}
           className='coverdiv lg:opacity-50 lg:translate-x-96 lg:rotate-12'>
-          <LazyImage
+          <Image
             id='post-cover'
             className='w-full h-full object-cover max-h-[50rem] min-w-[50vw] min-h-[20rem]'
             src={headerImage}
             alt={post.title}
-            width={siteConfig('IMAGE_COMPRESS_WIDTH')}
+            width={800}
+            height={800}
           />
         </div>
 
