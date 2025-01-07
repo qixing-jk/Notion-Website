@@ -53,6 +53,8 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
             alt={post.title}
             width={800}
             height={800}
+            placeholder='blur'
+            blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
           />
         </div>
 
