@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 import CONFIG from '../config'
+import Image from 'next/image'
 
 /**
  * 顶部英雄区
@@ -396,13 +397,14 @@ function TodayCard({ cRef, siteInfo }) {
         </div>
 
         {/* 封面图 */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
+          priority={true}
           src={siteConfig('HEO_HERO_TITLE_COVER') || siteInfo?.pageCover}
           id='today-card-cover'
           className={`${
             isCoverUp ? '' : ' pointer-events-none'
           } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}
+          layout='fill'
         />
       </div>
     </div>
