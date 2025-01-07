@@ -1,5 +1,5 @@
 import { HashTag } from '@/components/HeroIcons'
-import LazyImage from '@/components/LazyImage'
+import Image from 'next/image'
 import NotionIcon from '@/components/NotionIcon'
 import { siteConfig } from '@/lib/config'
 import { formatDateFmt } from '@/lib/utils/formatDate'
@@ -43,14 +43,18 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
         {/* 文章背景图 */}
         <div
           id='post-cover-wrapper'
-          className='coverdiv lg:opacity-80 lg:translate-x-96 lg:rotate-12'>
-          <LazyImage
-            priority
+          style={{
+            filter: 'blur(15px)'
+          }}
+          className='coverdiv lg:opacity-70 lg:translate-x-96 lg:rotate-12'>
+          <Image
+            priority={true}
             id='post-cover'
             className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]'
             src={headerImage}
             alt={post.title}
-            width={siteConfig('IMAGE_COMPRESS_WIDTH')}
+            width={800}
+            height={800}
           />
         </div>
 
