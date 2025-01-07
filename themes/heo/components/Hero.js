@@ -405,6 +405,8 @@ function TodayCard({ cRef, siteInfo }) {
             isCoverUp ? '' : ' pointer-events-none'
           } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}
           layout='fill'
+          placeholder='blur'
+          blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
         />
       </div>
     </div>
