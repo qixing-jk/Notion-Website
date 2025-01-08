@@ -12,6 +12,7 @@ import md5 from 'js-md5'
 import { useRouter } from 'next/router'
 import { idToUuid } from 'notion-utils'
 import { useEffect, useState } from 'react'
+import { getRevalidateTime } from '@/lib/utils/revalidate'
 
 /**
  * 根据notion的slug访问页面
@@ -148,13 +149,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   }
   return {
     props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
+    revalidate: getRevalidateTime(props, 0)
   }
 }
 
