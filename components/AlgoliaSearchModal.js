@@ -1,6 +1,7 @@
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+// import { algoliasearch } from 'algoliasearch'
 import throttle from 'lodash.throttle'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -28,6 +29,8 @@ const ShortCutActions = [
   }
 ]
 
+let algoliasearch, client
+
 /**
  * 结合 Algolia 实现的弹出式搜索框
  * 打开方式 cRef.current.openSearch()
@@ -47,10 +50,7 @@ export default function AlgoliaSearchModal({ cRef }) {
 
   const inputRef = useRef(null)
   const router = useRouter()
-  const ALGOLIA_APP_ID = siteConfig('ALGOLIA_APP_ID')
-  const ALGOLIA_SEARCH_ONLY_APP_KEY = siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
-  const ALGOLIA_INDEX = siteConfig('ALGOLIA_INDEX')
-  let algoliasearch, index
+
   /**
    * 快捷键设置
    */
@@ -98,7 +98,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     'enter',
     e => {
       if (isInputFocused && searchResults.length > 0) {
-        onJumpSearchResult(index)
+        onJumpSearchResult()
       }
     },
     { enableOnFormTags: true }
@@ -150,6 +150,9 @@ export default function AlgoliaSearchModal({ cRef }) {
       }
     }
   })
+  const ALGOLIA_APP_ID = siteConfig('ALGOLIA_APP_ID')
+  const indexName = siteConfig('ALGOLIA_INDEX')
+  const ALGOLIA_SEARCH_ONLY_APP_KEY = siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
 
   /**
    * 搜索
@@ -168,7 +171,15 @@ export default function AlgoliaSearchModal({ cRef }) {
     }
     setIsLoading(true)
     try {
-      const res = await index.search(query, { page, hitsPerPage: 10 })
+      console.log(client)
+      const res = await client.searchSingleIndex({
+        indexName: indexName,
+        searchParams: {
+          query: query,
+          page: page,
+          hitsPerPage: 10
+        }
+      })
       const { hits, nbHits, nbPages, processingTimeMS } = res
       setUseTime(processingTimeMS)
       setTotalPage(nbPages)
@@ -207,15 +218,12 @@ export default function AlgoliaSearchModal({ cRef }) {
   // 修改input的onChange事件处理函数
   const handleInputChange = async e => {
     const query = e.target.value
-    if (algoliasearch) {
-      if (!index) {
-        index = algoliasearch(
-          ALGOLIA_APP_ID,
-          ALGOLIA_SEARCH_ONLY_APP_KEY
-        ).initIndex(ALGOLIA_INDEX)
+    if (!client) {
+      if (!algoliasearch) {
+        algoliasearch = (await import('algoliasearch')).algoliasearch
       }
-    } else {
-      algoliasearch = (await import('algoliasearch')).default
+      client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_ONLY_APP_KEY)
+      console.log(client)
     }
     // 如果已经有计时器在等待搜索，先清除之前的计时器
     if (searchTimer.current) {
@@ -251,12 +259,12 @@ export default function AlgoliaSearchModal({ cRef }) {
       id='search-wrapper'
       className={`${
         isModalOpen ? 'opacity-100' : 'invisible opacity-0 pointer-events-none'
-      } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-12 flex items-start justify-center mt-0`}>
+      } z-30 fixed h-screen w-screen left-0 top-0 sm:mt-[10vh] flex items-start justify-center mt-0`}>
       {/* 模态框 */}
       <div
         className={`${
           isModalOpen ? 'opacity-100' : 'invisible opacity-0 translate-y-10'
-        } flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
+        } max-h-[80vh] flex flex-col justify-between w-full min-h-[10rem] h-full md:h-fit max-w-xl dark:bg-hexo-black-gray dark:border-gray-800 bg-white dark:bg- p-5 rounded-lg z-50 shadow border hover:border-blue-600 duration-300 transition-all `}>
         <div className='flex justify-between items-center'>
           <div className='text-2xl text-blue-600 dark:text-yellow-600 font-bold'>
             搜索
@@ -296,7 +304,7 @@ export default function AlgoliaSearchModal({ cRef }) {
             <li
               key={result.objectID}
               onMouseEnter={() => setActiveIndex(index)}
-              onClick={() => onJumpSearchResult(index)}
+              onClick={() => onJumpSearchResult()}
               className={`cursor-pointer replace my-2 p-2 duration-100 
               rounded-lg
               ${activeIndex === index ? 'bg-blue-600 dark:bg-yellow-600' : ''}`}>
