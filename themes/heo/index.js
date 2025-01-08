@@ -443,7 +443,6 @@ const LayoutCategoryIndex = props => {
         {categoryOptions?.map(category => {
           return (
             <Link
-              prefetch={false}
               key={category.name}
               href={`/category/${category.name}`}
               passHref
@@ -486,7 +485,6 @@ const LayoutTagIndex = props => {
         {tagOptions.map(tag => {
           return (
             <Link
-              prefetch={false}
               key={tag.name}
               href={`/tag/${tag.name}`}
               passHref
