@@ -1,7 +1,7 @@
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { algoliasearch } from 'algoliasearch'
+// import { algoliasearch } from 'algoliasearch'
 import throttle from 'lodash.throttle'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -48,7 +48,11 @@ export default function AlgoliaSearchModal({ cRef }) {
 
   const inputRef = useRef(null)
   const router = useRouter()
-  let client, index
+
+  const ALGOLIA_APP_ID = siteConfig('ALGOLIA_APP_ID')
+  const index = siteConfig('ALGOLIA_INDEX')
+  let algoliasearch, client
+
   /**
    * 快捷键设置
    */
@@ -209,13 +213,10 @@ export default function AlgoliaSearchModal({ cRef }) {
   const handleInputChange = async e => {
     const query = e.target.value
     if (algoliasearch) {
-      if (!index) {
-        client = algoliasearch(
-            siteConfig('ALGOLIA_APP_ID'),
-            siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
-          )
-        index = client.initIndex(siteConfig('ALGOLIA_INDEX'))
-      }
+      client = algoliasearch(
+        ALGOLIA_APP_ID,
+        siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
+      )
     } else {
       algoliasearch = (await import('algoliasearch')).default
     }
