@@ -3,6 +3,7 @@ import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
 import CONFIG from '../config'
 import Link from 'next/link'
+import Image from 'next/image'
 
 /**
  * 英雄大图区块
@@ -80,15 +81,13 @@ export const Hero = props => {
                   className='wow fadeInUp relative z-10 mx-auto max-w-[845px]'
                   data-wow-delay='.25s'>
                   <div className='mt-16'>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={siteConfig(
                         'STARTER_HERO_PREVIEW_IMAGE',
                         null,
                         config
                       )}
-                      fetchPriority='high'
-                      loading='eager'
+                      fill={true}
                       alt={siteConfig('TITLE', null, config)}
                       title={siteConfig('TITLE', null, config)}
                       className='mx-auto max-w-full rounded-t-xl rounded-tr-xl'
