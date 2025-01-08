@@ -1,9 +1,9 @@
 import BLOG from '@/blog.config'
-import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, handleDataBeforeReturn } from '@/lib/db/getSiteData'
 import { checkSlugHasMorThanTwoSlash, processPostData } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
 import Slug from '..'
+import { getRevalidateTime } from '@/lib/utils/revalidate'
 
 /**
  * 根据notion的slug访问页面
@@ -86,13 +86,7 @@ export async function getStaticProps({
   }
   return {
     props,
-    revalidate: process.env.EXPORT
-      ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
-        )
+    revalidate: getRevalidateTime(props, 2)
   }
 }
 
