@@ -29,6 +29,8 @@ const ShortCutActions = [
   }
 ]
 
+let algoliasearch, client
+
 /**
  * 结合 Algolia 实现的弹出式搜索框
  * 打开方式 cRef.current.openSearch()
@@ -150,7 +152,7 @@ export default function AlgoliaSearchModal({ cRef }) {
   })
   const ALGOLIA_APP_ID = siteConfig('ALGOLIA_APP_ID')
   const indexName = siteConfig('ALGOLIA_INDEX')
-  let algoliasearch, client
+  const ALGOLIA_SEARCH_ONLY_APP_KEY = siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
 
   /**
    * 搜索
@@ -169,6 +171,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     }
     setIsLoading(true)
     try {
+      console.log(client)
       const res = await client.searchSingleIndex({
         indexName: indexName,
         searchParams: {
@@ -215,13 +218,12 @@ export default function AlgoliaSearchModal({ cRef }) {
   // 修改input的onChange事件处理函数
   const handleInputChange = async e => {
     const query = e.target.value
-    if (algoliasearch) {
-      client = algoliasearch(
-        ALGOLIA_APP_ID,
-        siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
-      )
-    } else {
-      algoliasearch = (await import('algoliasearch')).default
+    if (!client) {
+      if (!algoliasearch) {
+        algoliasearch = (await import('algoliasearch')).algoliasearch
+      }
+      client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_ONLY_APP_KEY)
+      console.log(client)
     }
     // 如果已经有计时器在等待搜索，先清除之前的计时器
     if (searchTimer.current) {
@@ -314,7 +316,7 @@ export default function AlgoliaSearchModal({ cRef }) {
           ))}
         </ul>
         <Pagination totalPage={totalPage} page={page} switchPage={switchPage} />
-        <div className='flex items-center justify-between mt-2 sm:text-sm text-xs dark:text-gray-300'>
+        <div className='max-h-[80vh] flex items-center justify-between mt-2 sm:text-sm text-xs dark:text-gray-300'>
           {totalHit === 0 && (
             <div className='flex items-center'>
               {ShortCutActions.map((action, index) => {
