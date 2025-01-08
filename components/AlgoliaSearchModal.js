@@ -49,10 +49,6 @@ export default function AlgoliaSearchModal({ cRef }) {
   const inputRef = useRef(null)
   const router = useRouter()
 
-  const ALGOLIA_APP_ID = siteConfig('ALGOLIA_APP_ID')
-  const index = siteConfig('ALGOLIA_INDEX')
-  let algoliasearch, client
-
   /**
    * 快捷键设置
    */
@@ -152,6 +148,9 @@ export default function AlgoliaSearchModal({ cRef }) {
       }
     }
   })
+  const ALGOLIA_APP_ID = siteConfig('ALGOLIA_APP_ID')
+  const indexName = siteConfig('ALGOLIA_INDEX')
+  let algoliasearch, client
 
   /**
    * 搜索
@@ -170,9 +169,13 @@ export default function AlgoliaSearchModal({ cRef }) {
     }
     setIsLoading(true)
     try {
-      const res = await client.searchSingleIndex(index, query, {
-        page,
-        hitsPerPage: 10
+      const res = await client.searchSingleIndex({
+        indexName: indexName,
+        searchParams: {
+          query: query,
+          page: page,
+          hitsPerPage: 10
+        }
       })
       const { hits, nbHits, nbPages, processingTimeMS } = res
       setUseTime(processingTimeMS)
