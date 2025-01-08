@@ -1,8 +1,8 @@
 import replaceSearchResult from '@/components/Mark'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import algoliasearch from 'algoliasearch'
-import throttle from 'lodash/throttle'
+import { algoliasearch } from 'algoliasearch'
+import throttle from 'lodash.throttle'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import {
@@ -96,7 +96,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     'enter',
     e => {
       if (isInputFocused && searchResults.length > 0) {
-        onJumpSearchResult(index)
+        onJumpSearchResult()
       }
     },
     { enableOnFormTags: true }
@@ -148,12 +148,11 @@ export default function AlgoliaSearchModal({ cRef }) {
       }
     }
   })
-
-  const client = algoliasearch(
-    siteConfig('ALGOLIA_APP_ID'),
-    siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
-  )
-  const index = client.initIndex(siteConfig('ALGOLIA_INDEX'))
+  const ALGOLIA_APP_ID = siteConfig('ALGOLIA_APP_ID')
+  const client =
+    ALGOLIA_APP_ID &&
+    algoliasearch(ALGOLIA_APP_ID, siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY'))
+  const index = siteConfig('ALGOLIA_INDEX')
 
   /**
    * 搜索
@@ -172,7 +171,10 @@ export default function AlgoliaSearchModal({ cRef }) {
     }
     setIsLoading(true)
     try {
-      const res = await index.search(query, { page, hitsPerPage: 10 })
+      const res = await client.searchSingleIndex(index, query, {
+        page,
+        hitsPerPage: 10
+      })
       const { hits, nbHits, nbPages, processingTimeMS } = res
       setUseTime(processingTimeMS)
       setTotalPage(nbPages)
@@ -238,7 +240,7 @@ export default function AlgoliaSearchModal({ cRef }) {
     setIsModalOpen(false)
   }
 
-  if (!siteConfig('ALGOLIA_APP_ID')) {
+  if (!ALGOLIA_APP_ID) {
     return <></>
   }
   return (
@@ -291,7 +293,7 @@ export default function AlgoliaSearchModal({ cRef }) {
             <li
               key={result.objectID}
               onMouseEnter={() => setActiveIndex(index)}
-              onClick={() => onJumpSearchResult(index)}
+              onClick={() => onJumpSearchResult()}
               className={`cursor-pointer replace my-2 p-2 duration-100 
               rounded-lg
               ${activeIndex === index ? 'bg-blue-600 dark:bg-yellow-600' : ''}`}>
