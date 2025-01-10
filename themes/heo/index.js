@@ -385,10 +385,8 @@ const Layout404 = props => {
               {/* 左侧动图 */}
               <LazyImage
                 className='error-img h-60 md:h-full p-4'
-                src={
-                  'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'
-                }></LazyImage>
-
+                src='/404.gif'
+              />
               {/* 右侧文字 */}
               <div className='error-info flex-1 flex flex-col justify-center items-center space-y-4'>
                 <h1 className='error-title font-extrabold md:text-9xl text-7xl dark:text-white'>
