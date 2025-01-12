@@ -28,6 +28,8 @@ const ShortCutActions = [
   }
 ]
 
+let algoliasearch, index
+
 /**
  * 结合 Algolia 实现的弹出式搜索框
  * 打开方式 cRef.current.openSearch()
@@ -50,7 +52,6 @@ export default function AlgoliaSearchModal({ cRef }) {
   const ALGOLIA_APP_ID = siteConfig('ALGOLIA_APP_ID')
   const ALGOLIA_SEARCH_ONLY_APP_KEY = siteConfig('ALGOLIA_SEARCH_ONLY_APP_KEY')
   const ALGOLIA_INDEX = siteConfig('ALGOLIA_INDEX')
-  let algoliasearch, index
   /**
    * 快捷键设置
    */
@@ -207,15 +208,15 @@ export default function AlgoliaSearchModal({ cRef }) {
   // 修改input的onChange事件处理函数
   const handleInputChange = async e => {
     const query = e.target.value
-    if (algoliasearch) {
-      if (!index) {
-        index = algoliasearch(
-          ALGOLIA_APP_ID,
-          ALGOLIA_SEARCH_ONLY_APP_KEY
-        ).initIndex(ALGOLIA_INDEX)
+    if (!index) {
+      if (!algoliasearch) {
+        algoliasearch = (await import('algoliasearch')).default
       }
-    } else {
-      algoliasearch = (await import('algoliasearch')).default
+      index = algoliasearch(
+        ALGOLIA_APP_ID,
+        ALGOLIA_SEARCH_ONLY_APP_KEY
+      ).initIndex(ALGOLIA_INDEX)
+      console.log(index)
     }
     // 如果已经有计时器在等待搜索，先清除之前的计时器
     if (searchTimer.current) {
