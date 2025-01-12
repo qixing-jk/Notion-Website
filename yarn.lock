@@ -155,63 +155,57 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@clerk/backend@1.14.1":
-  version "1.14.1"
-  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/backend/-/backend-1.14.1.tgz#eda9adfa6e381f113e63b9fa6da6f6aecdaf4de7"
-  integrity sha512-YlKMpiVo4UITw3sgA+9QrAFRILVOz5hgB1Zw180Y2LEZ5a+MdpX668vJKGh7riSweMN7JQvU2jlsKGRO+1bXDw==
+"@clerk/backend@^1.21.5":
+  version "1.21.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/backend/-/backend-1.21.5.tgz"
+  integrity sha512-fZ+HuHQkPngYp9vAEqsJ1XJkhWjSWTin90UixeV3jNrbuPY2jd70LKYTAIEvggnnG42pYxdVupaQDUfqj0dy4Q==
   dependencies:
-    "@clerk/shared" "2.9.2"
-    "@clerk/types" "4.26.0"
+    "@clerk/shared" "^2.20.5"
+    "@clerk/types" "^4.40.1"
     cookie "0.7.0"
     snakecase-keys "5.4.4"
     tslib "2.4.1"
 
-"@clerk/clerk-react@5.12.0":
-  version "5.12.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/clerk-react/-/clerk-react-5.12.0.tgz#b3e986ec15efdd60807e86a732c4ab66044ecbbc"
-  integrity sha512-3Lr2QazCm5R6ZLbu7wM+d5YwCElrAoX00OBWcKqjPYaWDJCCmEYN6LJbLzOTYQ8QT1J1ZIed85/lKa+q2aD1aA==
+"@clerk/clerk-react@^5.21.1":
+  version "5.21.1"
+  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/clerk-react/-/clerk-react-5.21.1.tgz"
+  integrity sha512-iwJR6y3PgimqqlGKOBa704EVnfrBlFeY7FuctmY9Cfjw6oe0wBjoBAYGbSyRm0ZGS+ZP/sIotyWpjWyxt9vCvw==
   dependencies:
-    "@clerk/shared" "2.9.2"
-    "@clerk/types" "4.26.0"
+    "@clerk/shared" "^2.20.5"
+    "@clerk/types" "^4.40.1"
     tslib "2.4.1"
 
-"@clerk/localizations@^3.0.4":
+"@clerk/localizations@^3.9.6":
   version "3.9.6"
-  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/localizations/-/localizations-3.9.6.tgz#06c652f9e40cdfe2dbe3a10c45944563ba5bc496"
+  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/localizations/-/localizations-3.9.6.tgz"
   integrity sha512-GOqXVCfchqTGKXWzAlW0fTqBvgn9Sok3V/BUKXq3WWgqtZXNgx9Mt1oL8PwvoSBl62T4Gf79yC22u4bti6vDmw==
   dependencies:
     "@clerk/types" "^4.40.1"
 
-"@clerk/nextjs@^5.1.5":
-  version "5.7.5"
-  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/nextjs/-/nextjs-5.7.5.tgz#2e65426217c827723b225489dedc233be0a6db96"
-  integrity sha512-hfH4IiKcDT9LlqSOlNHZoYfX6iF4lBqPXf/KwnILCX/0+MVYaotb30FwWXkcHI2jZgcvumlQTOq8Gv5KugnihA==
+"@clerk/nextjs@^6.9.7":
+  version "6.9.7"
+  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/nextjs/-/nextjs-6.9.7.tgz"
+  integrity sha512-h0HXDKQQrQCNn13ouk0j/jQ6Mkgtcq8YmWERHPDkdRtYjCrDc7siCxqmMZNTHjBOAz8BjPXCtuRA2sDWcdj2kw==
   dependencies:
-    "@clerk/backend" "1.14.1"
-    "@clerk/clerk-react" "5.12.0"
-    "@clerk/shared" "2.9.2"
-    "@clerk/types" "4.26.0"
+    "@clerk/backend" "^1.21.5"
+    "@clerk/clerk-react" "^5.21.1"
+    "@clerk/shared" "^2.20.5"
+    "@clerk/types" "^4.40.1"
     crypto-js "4.2.0"
     server-only "0.0.1"
     tslib "2.4.1"
 
-"@clerk/shared@2.9.2":
-  version "2.9.2"
-  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/shared/-/shared-2.9.2.tgz#ba195540e0f7591ec2b1d13bfa7e7caecebaa620"
-  integrity sha512-vRMDj13Pv9n8Pf+f8P40AvqJ8QEq348qUxUVIf17vn9R3/toicrQOY/Q6qsrAS8KXY9+ZnyTafJa+VFK+6iEFA==
+"@clerk/shared@^2.20.5":
+  version "2.20.5"
+  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/shared/-/shared-2.20.5.tgz"
+  integrity sha512-0WxJGMteWqKVSLsS+yJkg1Nst/wH5IEOSgJOSog01d7lrvf7mf0yHU+9DMBLYT+y9XzJvpyPE7yd3Sz1o+wU7A==
   dependencies:
-    "@clerk/types" "4.26.0"
+    "@clerk/types" "^4.40.1"
+    dequal "2.0.3"
     glob-to-regexp "0.4.1"
     js-cookie "3.0.5"
     std-env "^3.7.0"
     swr "^2.2.0"
-
-"@clerk/types@4.26.0":
-  version "4.26.0"
-  resolved "https://mirrors.cloud.tencent.com/npm/@clerk/types/-/types-4.26.0.tgz#335d1d591556c9335c4e61f182b6e3d9859d0b58"
-  integrity sha512-VGcrQz/XpCiGbpIIzKVwWw4nLorzKnIP1IAemj1xt/80ULcdEZCncwhas6PoYBBsl1W55A1SwP9B/pEs0nmkCw==
-  dependencies:
-    csstype "3.1.1"
 
 "@clerk/types@^4.40.1":
   version "4.40.1"
@@ -1508,7 +1502,7 @@ denque@^2.1.0:
   resolved "https://mirrors.cloud.tencent.com/npm/denque/-/denque-2.1.0.tgz"
   integrity sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==
 
-dequal@^2.0.3:
+dequal@2.0.3, dequal@^2.0.3:
   version "2.0.3"
   resolved "https://mirrors.cloud.tencent.com/npm/dequal/-/dequal-2.0.3.tgz"
   integrity sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==
