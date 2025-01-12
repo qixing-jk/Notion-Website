@@ -1,9 +1,10 @@
-import LazyImage from '@/components/LazyImage'
+import Image from 'next/image'
 import NotionIcon from './NotionIcon'
 import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
+import { isMobile } from '@/lib/utils'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview =
@@ -44,10 +45,14 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 (POST_TWO_COLS ? ' 2xl:w-full' : '') +
                 ' w-full md:w-5/12 overflow-hidden cursor-pointer select-none'
               }>
-              <LazyImage
-                priority={index === 0}
+              <Image
+                priority={isMobile() && index === 0}
                 src={post?.pageCoverThumbnail}
                 alt={post?.title}
+                width={800}
+                height={800}
+                placeholder='blur'
+                blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
                 className='h-full w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-500 ease-in-out' //宽高都调整为自适应,保证封面居中
               />
             </div>
