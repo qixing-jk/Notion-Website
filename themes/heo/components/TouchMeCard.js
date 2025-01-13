@@ -23,12 +23,13 @@ export default function TouchMeCard() {
             <h3 className='pt-2'>
               {siteConfig('HEO_SOCIAL_CARD_TITLE_2', null, CONFIG)}
             </h3>
-            <div
+            <img
+              src='/images/heo/touch-me-card.webp'
               className='absolute left-0 top-0 w-full h-full'
-              style={{
-                background:
-                  'url(/images/heo/touch-me-card.webp) center center no-repeat'
-              }}></div>
+              loading='eager'
+              fetchPriority='high'
+              decoding='sync'
+            />
           </div>
         }
         backContent={
