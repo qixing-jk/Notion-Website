@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
 import { initGoogleAdsense } from './GoogleAdsense'
-
+import { GoogleAnalytics } from '@next/third-parties/google'
 import Head from 'next/head'
 import ExternalScript from './ExternalScript'
 import WebWhiz from './Webwhiz'
@@ -131,7 +131,8 @@ const ExternalPlugin = props => {
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
       {ANALYTICS_ACKEE_TRACKER && <Ackee />}
-      {ANALYTICS_GOOGLE_ID && <Gtag />}
+      {ANALYTICS_GOOGLE_ID && <GoogleAnalytics gaId={ANALYTICS_GOOGLE_ID} />}
+      {/*{ANALYTICS_GOOGLE_ID && <Gtag />}*/}
       {ANALYTICS_VERCEL && <Analytics />}
       {ANALYTICS_BUSUANZI_ENABLE && <Busuanzi />}
       {FACEBOOK_APP_ID && FACEBOOK_PAGE_ID && <Messenger />}
@@ -326,27 +327,27 @@ const ExternalPlugin = props => {
       )}
 
       {/* 谷歌统计 */}
-      {ANALYTICS_GOOGLE_ID && (
-        <>
-          <script
-            async
-            src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_GOOGLE_ID}`}
-          />
-          <script
-            async
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${ANALYTICS_GOOGLE_ID}', {
-                  page_path: window.location.pathname,
-                });
-              `
-            }}
-          />
-        </>
-      )}
+      {/*{ANALYTICS_GOOGLE_ID && (*/}
+      {/*  <>*/}
+      {/*    <script*/}
+      {/*      async*/}
+      {/*      src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_GOOGLE_ID}`}*/}
+      {/*    />*/}
+      {/*    <script*/}
+      {/*      async*/}
+      {/*      dangerouslySetInnerHTML={{*/}
+      {/*        __html: `*/}
+      {/*          window.dataLayer = window.dataLayer || [];*/}
+      {/*          function gtag(){dataLayer.push(arguments);}*/}
+      {/*          gtag('js', new Date());*/}
+      {/*          gtag('config', '${ANALYTICS_GOOGLE_ID}', {*/}
+      {/*            page_path: window.location.pathname,*/}
+      {/*          });*/}
+      {/*        `*/}
+      {/*      }}*/}
+      {/*    />*/}
+      {/*  </>*/}
+      {/*)}*/}
 
       {/* Matomo 统计 */}
       {MATOMO_HOST_URL && MATOMO_SITE_ID && (
