@@ -160,6 +160,7 @@ const SEO = props => {
       {meta?.type === 'Post' && (
         <>
           <meta property='article:published_time' content={meta.publishDay} />
+          <meta property='article:published_time' content={post.publishDay} />
           <meta property='article:author' content={AUTHOR} />
           <meta property='article:section' content={category} />
           <meta property='article:publisher' content={FACEBOOK_PAGE} />
