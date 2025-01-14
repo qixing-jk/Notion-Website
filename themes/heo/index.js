@@ -13,7 +13,6 @@ import LoadingCover from '@/components/LoadingCover'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
-import { loadWowJS } from '@/lib/plugins/wow'
 import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import Link from 'next/link'
@@ -95,9 +94,9 @@ const LayoutBase = props => {
   const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
 
   // 加载wow动画
-  useEffect(() => {
-    loadWowJS()
-  }, [])
+  // useEffect(() => {
+  //   loadWowJS()
+  // }, [])
 
   return (
     <div

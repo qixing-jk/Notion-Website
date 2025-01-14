@@ -4,6 +4,8 @@ import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { memo, useEffect } from 'react'
+import { LANG, NOTION_PAGE_ID } from '@/blog.config'
+import { extractLangPrefix } from '@/lib/utils/pageId'
 
 /**
  * 页面的Head头，有用于SEO
@@ -15,9 +17,8 @@ const SEO = props => {
   const PATH = siteConfig('PATH')
   const LINK = siteConfig('LINK')
   const SUB_PATH = siteConfig('SUB_PATH', '')
-  let url = PATH?.length
-    ? `${LINK}/${SUB_PATH}`
-    : LINK
+  const siteIds = NOTION_PAGE_ID?.split(',') || []
+  let url = PATH?.length ? `${LINK}/${SUB_PATH}` : LINK
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
@@ -105,13 +106,22 @@ const SEO = props => {
   const JSDELIVR_CDN_BASE = siteConfig('JSDELIVR_CDN_BASE',null,
     NOTION_CONFIG)
 
-  const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
-
   const AUTHOR = siteConfig('AUTHOR')
   return (
     <Head>
       <link rel='icon' href={favicon} />
       <title>{title}</title>
+      {meta &&
+        siteIds.map(siteId => {
+          const langPrefix = extractLangPrefix(siteId) || LANG.slice(0, 2)
+          return (
+            <link
+              rel='alternate'
+              hrefLang={langPrefix}
+              href={`${LINK}/${SUB_PATH&&SUB_PATH+'/'}${langPrefix}/${meta.slug}`}
+            />
+          )
+        })}
       <meta name='theme-color' content={BACKGROUND_DARK} />
       <meta
         name='viewport'
@@ -178,10 +188,17 @@ const SEO = props => {
       )}
       {meta?.type === 'Post' && (
         <>
-          <meta property='article:published_time' content={meta.publishDay} />
+          <meta property='article:published_time' content={post.publishDay} />
+          <meta
+            property='article:modified_time'
+            content={post.lastEditedDate}
+          />
           <meta property='article:author' content={AUTHOR} />
           <meta property='article:section' content={category} />
-          <meta property='article:publisher' content={FACEBOOK_PAGE} />
+          <meta property='article:publisher' content={LINK} />
+          {post?.tags.map(tag => (
+          <meta property='article:tag' content={tag} />
+          ))}
         </>
       )}
       {children}
@@ -296,7 +313,7 @@ const getSEOMeta = (props, router, locale) => {
         type: post?.type,
         slug: post?.slug,
         image: post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
-        category: post?.category?.[0],
+        category: post?.category,
         tags: post?.tags
       }
   }

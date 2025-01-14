@@ -10,9 +10,8 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={BLOG.LANG}>
+      <Html>
         <Head>
-          <link rel='icon' href={`${BLOG.BLOG_FAVICON}`} />
           <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
           <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
           <link rel="shortcut icon" href="/favicon.ico" />
