@@ -196,8 +196,8 @@ const SEO = props => {
           <meta property='article:author' content={AUTHOR} />
           <meta property='article:section' content={category} />
           <meta property='article:publisher' content={LINK} />
-          {post?.tags.map(tag => (
-          <meta property='article:tag' content={tag} />
+          {post?.tags?.map(tag => (
+            <meta property='article:tag' content={tag} />
           ))}
         </>
       )}
