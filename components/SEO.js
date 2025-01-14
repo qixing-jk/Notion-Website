@@ -15,9 +15,7 @@ const SEO = props => {
   const PATH = siteConfig('PATH')
   const LINK = siteConfig('LINK')
   const SUB_PATH = siteConfig('SUB_PATH', '')
-  let url = PATH?.length
-    ? `${LINK}/${SUB_PATH}`
-    : LINK
+  let url = PATH?.length ? `${LINK}/${SUB_PATH}` : LINK
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
@@ -105,8 +103,6 @@ const SEO = props => {
   const JSDELIVR_CDN_BASE = siteConfig('JSDELIVR_CDN_BASE',null,
     NOTION_CONFIG)
 
-  const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE', null, NOTION_CONFIG)
-
   const AUTHOR = siteConfig('AUTHOR')
   return (
     <Head>
@@ -178,10 +174,17 @@ const SEO = props => {
       )}
       {meta?.type === 'Post' && (
         <>
-          <meta property='article:published_time' content={meta.publishDay} />
+          <meta property='article:published_time' content={post.publishDay} />
+          <meta
+            property='article:modified_time'
+            content={post.lastEditedDate}
+          />
           <meta property='article:author' content={AUTHOR} />
           <meta property='article:section' content={category} />
-          <meta property='article:publisher' content={FACEBOOK_PAGE} />
+          <meta property='article:publisher' content={LINK} />
+          {post?.tags.map(tag => (
+          <meta property='article:tag' content={tag} />
+          ))}
         </>
       )}
       {children}
@@ -296,7 +299,7 @@ const getSEOMeta = (props, router, locale) => {
         type: post?.type,
         slug: post?.slug,
         image: post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
-        category: post?.category?.[0],
+        category: post?.category,
         tags: post?.tags
       }
   }
