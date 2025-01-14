@@ -4,6 +4,8 @@ import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { LANG, NOTION_PAGE_ID } from '@/blog.config'
+import { extractLangPrefix } from '@/lib/utils/pageId'
 
 /**
  * 页面的Head头，有用于SEO
@@ -15,9 +17,8 @@ const SEO = props => {
   const PATH = siteConfig('PATH')
   const LINK = siteConfig('LINK')
   const SUB_PATH = siteConfig('SUB_PATH', '')
-  let url = PATH?.length
-    ? `${LINK}/${SUB_PATH}`
-    : LINK
+  const siteIds = NOTION_PAGE_ID?.split(',') || []
+  let url = PATH?.length ? `${LINK}/${SUB_PATH}` : LINK
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
@@ -104,6 +105,17 @@ const SEO = props => {
     <Head>
       <link rel='icon' href={favicon} />
       <title>{title}</title>
+      {meta &&
+        siteIds.map(siteId => {
+          const langPrefix = extractLangPrefix(siteId) || LANG.slice(0, 2)
+          return (
+            <link
+              rel='alternate'
+              hrefLang={langPrefix}
+              href={`${LINK}/${SUB_PATH&&SUB_PATH+'/'}${langPrefix}/${meta.slug}`}
+            />
+          )
+        })}
       <meta name='theme-color' content={BACKGROUND_DARK} />
       <meta
         name='viewport'
