@@ -277,7 +277,7 @@ const getSEOMeta = (props, router, locale) => {
         type: post?.type,
         slug: post?.slug,
         image: post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
-        category: post?.category?.[0],
+        category: post?.category,
         tags: post?.tags
       }
   }
