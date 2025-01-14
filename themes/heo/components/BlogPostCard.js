@@ -46,7 +46,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 ' w-full md:w-5/12 overflow-hidden cursor-pointer select-none'
               }>
               <Image
-                priority={isMobile() && index === 0}
+                priority={index === 0 && isMobile()}
                 src={post?.pageCoverThumbnail}
                 alt={post?.title}
                 width={800}
