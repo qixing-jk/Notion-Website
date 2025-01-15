@@ -26,13 +26,13 @@ import { PostLock } from './components/PostLock'
 import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
+import WWAds from '@/components/WWAds'
 
 const NotionPage = dynamic(() => import('@/components/NotionPage'))
 const LatestPostsGroup = dynamic(() => import('./components/LatestPostsGroup'))
 const AdSlot = dynamic(() =>
   import('@/components/GoogleAdsense').then(mod => mod.AdSlot)
 )
-const WWAds = dynamic(() => import('@/components/WWAds'))
 const replaceSearchResult = dynamic(() => import('@/components/Mark'))
 const PostAdjacent = dynamic(() => import('./components/PostAdjacent'), {
   ssr: false
