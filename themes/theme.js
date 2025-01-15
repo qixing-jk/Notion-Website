@@ -94,10 +94,17 @@ export const getLayoutByTheme = ({ layoutName, theme }) => {
   const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
   return dynamic(
     () =>
-      import(`@/themes/${themeQuery || BLOG.THEME}/${layoutName}`).then(m => {
-        setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
-        return m[layoutName]
-      }),
+      import(`@/themes/${themeQuery || BLOG.THEME}/${layoutName}`)
+        .then(m => {
+          setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
+          return m[layoutName]
+        })
+        .catch(err => {
+          import(`@/themes/${themeQuery || BLOG.THEME}/LayoutSlug`).then(m => {
+            setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
+            return m[layoutName]
+          })
+        }),
     { ssr: true }
   )
 }
