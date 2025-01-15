@@ -21,12 +21,14 @@ import BlogPostListPage from './components/BlogPostListPage'
 import CategoryBar from './components/CategoryBar'
 import { NoticeBar } from './components/NoticeBar'
 import PostHeader from './components/PostHeader'
-import { PostLock } from './components/PostLock'
 import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
 import WWAds from '@/components/WWAds'
 
+const PostLock = dynamic(() =>
+  import('./components/PostLock').then(mod => mod.PostLock)
+)
 const Transition = dynamic(() =>
   import('@headlessui/react').then(mod => mod.Transition)
 )
