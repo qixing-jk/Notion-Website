@@ -7,5 +7,43 @@
  */
 
 import CONFIG from './config'
+import dynamic from 'next/dynamic'
+import { LayoutBase } from './LayoutBase'
 
-export { CONFIG as THEME_CONFIG }
+const LayoutIndex = dynamic(() =>
+  import('./LayoutIndex').then(mod => mod.LayoutIndex)
+)
+const LayoutSearch = dynamic(() =>
+  import('./LayoutSearch').then(mod => mod.LayoutSearch)
+)
+const LayoutArchive = dynamic(() =>
+  import('./LayoutArchive').then(mod => mod.LayoutArchive)
+)
+const LayoutSlug = dynamic(() =>
+  import('./LayoutSlug').then(mod => mod.LayoutSlug)
+)
+const Layout404 = dynamic(() =>
+  import('./Layout404').then(mod => mod.Layout404)
+)
+const LayoutPostList = dynamic(() =>
+  import('./LayoutPostList').then(mod => mod.LayoutPostList)
+)
+const LayoutCategoryIndex = dynamic(() =>
+  import('./LayoutCategoryIndex').then(mod => mod.LayoutCategoryIndex)
+)
+const LayoutTagIndex = dynamic(() =>
+  import('./LayoutTagIndex').then(mod => mod.LayoutTagIndex)
+)
+
+export {
+  CONFIG as THEME_CONFIG,
+  LayoutBase,
+  LayoutIndex,
+  LayoutSearch,
+  LayoutArchive,
+  LayoutSlug,
+  Layout404,
+  LayoutPostList,
+  LayoutCategoryIndex,
+  LayoutTagIndex
+}

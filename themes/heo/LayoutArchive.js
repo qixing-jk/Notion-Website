@@ -6,7 +6,7 @@ import BlogPostArchive from '@/themes/heo/components/BlogPostArchive'
  * @param {*} props
  * @returns
  */
-const LayoutArchive = props => {
+export const LayoutArchive = props => {
   const { archivePosts } = props
 
   // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
@@ -28,4 +28,3 @@ const LayoutArchive = props => {
     </div>
   )
 }
-export { LayoutArchive }

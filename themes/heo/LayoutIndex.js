@@ -13,7 +13,7 @@ const BlogPostListScroll = dynamic(
  * @param {*} props
  * @returns
  */
-const LayoutIndex = props => {
+export const LayoutIndex = props => {
   return (
     <div id='post-outer-wrapper' className='px-5 md:px-0'>
       {/* 文章分类条 */}
@@ -26,4 +26,3 @@ const LayoutIndex = props => {
     </div>
   )
 }
-export { LayoutIndex }

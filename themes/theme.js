@@ -61,12 +61,16 @@ export const getThemeConfig = async themeQuery => {
  * @returns
  */
 export const getBaseLayoutByTheme = theme => {
-  return dynamic(
-    () => import(`@/themes/${theme}/LayoutBase`).then(m => m['LayoutBase']),
-    { ssr: true }
-  )
+  const LayoutBase = ThemeComponents['LayoutBase']
+  const isDefaultTheme = !theme || theme === BLOG.THEME
+  if (!isDefaultTheme) {
+    return dynamic(
+      () => import(`@/themes/${theme}/LayoutBase`).then(m => m['LayoutBase']),
+      { ssr: true }
+    )
+  }
+  return LayoutBase
 }
-
 /**
  * 动态获取布局
  * @param {*} props
@@ -85,16 +89,34 @@ export const DynamicLayout = props => {
  */
 export const getLayoutByTheme = ({ layoutName, theme }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
+  const LayoutComponents =
+    ThemeComponents[layoutName] || ThemeComponents['LayoutSlug']
+  console.log(LayoutComponents)
   const router = useRouter()
   const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
-  setTimeout(fixThemeDOM, 500)
-  return dynamic(
-    () =>
-      import(`@/themes/${themeQuery || BLOG.THEME}/${layoutName}`).then(
-        m => m[layoutName]
-      ),
-    { ssr: true }
-  )
+  const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
+  // 加载非当前默认主题
+  if (!isDefaultTheme) {
+    return dynamic(
+      () =>
+        import(`@/themes/${themeQuery || BLOG.THEME}/${layoutName}`)
+          .then(m => {
+            setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
+            return m[layoutName]
+          })
+          .catch(err => {
+            import(`@/themes/${themeQuery || BLOG.THEME}/LayoutSlug`).then(
+              m => {
+                setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
+                return m[layoutName]
+              }
+            )
+          }),
+      { ssr: true }
+    )
+  }
+  setTimeout(fixThemeDOM, 100)
+  return LayoutComponents
 }
 
 /**

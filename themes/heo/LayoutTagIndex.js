@@ -7,7 +7,7 @@ import { HashTag } from '@/components/HeroIcons'
  * @param {*} props
  * @returns
  */
-const LayoutTagIndex = props => {
+export const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
 
@@ -43,4 +43,3 @@ const LayoutTagIndex = props => {
     </div>
   )
 }
-export { LayoutTagIndex }
