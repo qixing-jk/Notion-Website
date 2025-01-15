@@ -9,9 +9,6 @@ import { GalleryBeautification } from '@/lib/GalleryBeautification'
 import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
 import Link from 'next/link'
 import useAdjustStyle from '@/hooks/useAdjustStyle'
-// core styles shared by all of react-notion-x (required)
-import 'react-notion-x/src/styles.css' // 原版的react-notion-x
-import '@/styles/notion.module.css' //  重写部分notion样式
 
 /**
  * 整个站点的核心组件
