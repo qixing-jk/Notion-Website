@@ -105,7 +105,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           {/* 文章Title */}
           <div className='max-w-6xl font-bold text-3xl lg:text-4xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white'>
             {siteConfig('POST_TITLE_ICON') && (
-              <NotionIcon icon={post.pageIcon} priority />
+              <NotionIcon icon={post.pageIcon} />
             )}
             <span className='ml-3 line-clamp-4 leading-tight'>
               {post.title}
