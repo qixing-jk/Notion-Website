@@ -13,7 +13,6 @@ import LoadingCover from '@/components/LoadingCover'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
-import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -28,6 +27,9 @@ import { Style } from './style'
 import AISummary from '@/components/AISummary'
 import WWAds from '@/components/WWAds'
 
+const Transition = dynamic(() =>
+  import('@headlessui/react').then(mod => mod.Transition)
+)
 const NotionPage = dynamic(() => import('@/components/NotionPage'))
 const LatestPostsGroup = dynamic(() => import('./components/LatestPostsGroup'))
 const AdSlot = dynamic(() =>
