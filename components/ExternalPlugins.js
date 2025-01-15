@@ -411,7 +411,7 @@ const Analytics = dynamic(
 )
 const MusicPlayer = dynamic(() => import('@/components/Player'), { ssr: false })
 const Ackee = dynamic(() => import('@/components/Ackee'), { ssr: false })
-const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
+// const Gtag = dynamic(() => import('@/components/Gtag'), { ssr: false })
 const Busuanzi = dynamic(() => import('@/components/Busuanzi'), { ssr: false })
 const Messenger = dynamic(() => import('@/components/FacebookMessenger'), {
   ssr: false
