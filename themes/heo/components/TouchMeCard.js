@@ -28,7 +28,6 @@ export default function TouchMeCard() {
               className='absolute left-0 top-0 w-full h-full'
               loading='eager'
               fetchPriority='high'
-              decoding='sync'
             />
           </div>
         }
