@@ -100,6 +100,9 @@ const SEO = props => {
     NOTION_CONFIG
   )
 
+  const CDN_PRECONNECT = siteConfig('CDN_PRECONNECT', null, NOTION_CONFIG)
+
+
   const AUTHOR = siteConfig('AUTHOR')
   return (
     <Head>
@@ -150,6 +153,12 @@ const SEO = props => {
       <meta name='twitter:title' content={title} />
 
       <link rel='icon' href={BLOG_FAVICON} />
+      {CDN_PRECONNECT.map(transformCDNUrl => (
+        <>
+          <link rel='preconnect' href={transformCDNUrl} />
+          <link rel='dns-prefetch' href={transformCDNUrl} />
+        </>
+      ))}
       {CDN_TRANSFORM && (
         <>
           {NPM_CDN_BASE && <link rel='dns-prefetch' href={NPM_CDN_BASE} />}
