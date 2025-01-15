@@ -14,9 +14,12 @@ import { getQueryParam } from '../lib/utils'
 
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
-import ExternalPlugins from '@/components/ExternalPlugins'
 import SEO from '@/components/SEO'
 import dynamic from 'next/dynamic'
+
+const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'), {
+  ssr: false
+})
 
 const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
