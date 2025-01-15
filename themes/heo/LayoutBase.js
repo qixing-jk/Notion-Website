@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic'
 import LoadingCover from '@/components/LoadingCover'
 import { NoticeBar } from './components/NoticeBar'
 import PostHeader from './components/PostHeader'
+import Header from './components/Header'
 import { Style } from './style'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
@@ -9,7 +10,6 @@ import { useRouter } from 'next/router'
 import CONFIG from './config'
 
 const Footer = dynamic(() => import('./components/Footer'))
-const Header = dynamic(() => import('./components/Header'))
 const Hero = dynamic(() => import('./components/Hero'))
 const SideRight = dynamic(() => import('./components/SideRight'))
 
