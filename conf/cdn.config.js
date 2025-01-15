@@ -2,6 +2,7 @@
  * CDN地址统一插件
  */
 module.exports = {
+  CDN_TRANSFORM: process.env.NEXT_PUBLIC_CDN_TRANSFORM || false, // 是否开启CDN地址转换
   // 统一的 NPM 资源CDN地址，例如：https://registry.npmmirror.com/
   NPM_CDN_BASE:
     process.env.NEXT_PUBLIC_NPM_CDN_BASE || 'https://registry.npmjs.org/',
