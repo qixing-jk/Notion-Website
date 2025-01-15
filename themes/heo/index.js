@@ -10,7 +10,6 @@ import dynamic from 'next/dynamic'
 import { HashTag } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import LoadingCover from '@/components/LoadingCover'
-import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
@@ -28,6 +27,7 @@ import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
 
+const NotionPage = dynamic(() => import('@/components/NotionPage'))
 const LatestPostsGroup = dynamic(() => import('./components/LatestPostsGroup'))
 const AdSlot = dynamic(() =>
   import('@/components/GoogleAdsense').then(mod => mod.AdSlot)
