@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { siteConfig } from '@/lib/config'
 import { useRouter } from 'next/router'
 import { isBrowser } from '@/lib/utils'
+import NotionPage from '@/components/NotionPage'
 import AISummary from '@/components/AISummary'
 import WWAds from '@/components/WWAds'
 import dynamic from 'next/dynamic'
@@ -10,8 +11,6 @@ import dynamic from 'next/dynamic'
 const PostLock = dynamic(() =>
   import('./components/PostLock').then(mod => mod.PostLock)
 )
-
-const NotionPage = dynamic(() => import('@/components/NotionPage'))
 
 const AdSlot = dynamic(() =>
   import('@/components/GoogleAdsense').then(mod => mod.AdSlot)
