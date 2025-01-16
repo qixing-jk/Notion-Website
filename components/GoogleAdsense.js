@@ -181,33 +181,35 @@ const AdEmbed = () => {
   const ADSENSE_GOOGLE_TEST = siteConfig('ADSENSE_GOOGLE_TEST')
   const ADSENSE_GOOGLE_SLOT_AUTO = siteConfig('ADSENSE_GOOGLE_SLOT_AUTO')
   useEffect(() => {
-    setTimeout(() => {
-      // 找到所有 class 为 notion-text 且内容为 '<ins/>' 的 div 元素
-      const notionTextElements = document.querySelectorAll(
-        '#article-wrapper #notion-article div.notion-text'
-      )
-      // 遍历找到的元素
-      notionTextElements?.forEach(element => {
-        // 检查元素的内容是否为 '<ins/>'
-        if (element.textContent.trim() === '<ins/>') {
-          // 创建新的 <ins> 元素
-          const newInsElement = document.createElement('ins')
-          newInsElement.className = 'adsbygoogle w-full py-1'
-          newInsElement.style.display = 'block'
-          newInsElement.setAttribute('data-ad-client', ADSENSE_GOOGLE_ID)
-          newInsElement.setAttribute(
-            'data-adtest',
-            ADSENSE_GOOGLE_TEST ? 'on' : 'off'
-          )
-          newInsElement.setAttribute('data-ad-slot', ADSENSE_GOOGLE_SLOT_AUTO)
-          newInsElement.setAttribute('data-ad-format', 'auto')
-          newInsElement.setAttribute('data-full-width-responsive', 'true')
+    if (ADSENSE_GOOGLE_ID || ADSENSE_GOOGLE_TEST) {
+      setTimeout(() => {
+        // 找到所有 class 为 notion-text 且内容为 '<ins/>' 的 div 元素
+        const notionTextElements = document.querySelectorAll(
+          '#article-wrapper #notion-article div.notion-text'
+        )
+        // 遍历找到的元素
+        notionTextElements?.forEach(element => {
+          // 检查元素的内容是否为 '<ins/>'
+          if (element.textContent.trim() === '<ins/>') {
+            // 创建新的 <ins> 元素
+            const newInsElement = document.createElement('ins')
+            newInsElement.className = 'adsbygoogle w-full py-1'
+            newInsElement.style.display = 'block'
+            newInsElement.setAttribute('data-ad-client', ADSENSE_GOOGLE_ID)
+            newInsElement.setAttribute(
+              'data-adtest',
+              ADSENSE_GOOGLE_TEST ? 'on' : 'off'
+            )
+            newInsElement.setAttribute('data-ad-slot', ADSENSE_GOOGLE_SLOT_AUTO)
+            newInsElement.setAttribute('data-ad-format', 'auto')
+            newInsElement.setAttribute('data-full-width-responsive', 'true')
 
-          // 用新创建的 <ins> 元素替换掉原来的 div 元素
-          element?.parentNode?.replaceChild(newInsElement, element)
-        }
-      })
-    }, 1000)
+            // 用新创建的 <ins> 元素替换掉原来的 div 元素
+            element?.parentNode?.replaceChild(newInsElement, element)
+          }
+        })
+      }, 1000)
+    }
   }, [])
   return <></>
 }
