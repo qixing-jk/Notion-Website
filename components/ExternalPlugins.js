@@ -66,6 +66,7 @@ const ExternalPlugin = props => {
   const ENABLE_NPROGRSS = siteConfig('ENABLE_NPROGRSS', false)
   const COZE_BOT_ID = siteConfig('COZE_BOT_ID')
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
+  const THEME = siteConfig('THEME')
 
   const router = useRouter()
   useEffect(() => {
@@ -152,7 +153,7 @@ const ExternalPlugin = props => {
       {TIANLI_KEY && <TianliGPT />}
       {/*<VConsole />*/}
       {ENABLE_NPROGRSS && <LoadingProgress />}
-      <AosAnimation />
+      {THEME !== 'heo' && <AosAnimation />}
       {ANALYTICS_51LA_ID && ANALYTICS_51LA_CK && <LA51 />}
       {COZE_BOT_ID && <Coze />}
 
