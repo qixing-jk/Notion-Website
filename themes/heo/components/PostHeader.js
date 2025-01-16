@@ -53,8 +53,8 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
             className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]'
             src={headerImage}
             alt={post.title}
-            width={800}
-            height={800}
+            width={500}
+            height={500}
             placeholder='blur'
             blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
           />
