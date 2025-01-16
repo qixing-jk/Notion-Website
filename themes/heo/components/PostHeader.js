@@ -53,8 +53,8 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
             className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]'
             src={headerImage}
             alt={post.title}
-            width={800}
-            height={800}
+            width={500}
+            height={500}
             placeholder='blur'
             blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
           />
@@ -105,7 +105,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           {/* 文章Title */}
           <div className='max-w-6xl font-bold text-3xl lg:text-4xl md:leading-snug shadow-text-md flex  justify-center md:justify-start text-white'>
             {siteConfig('POST_TITLE_ICON') && (
-              <NotionIcon icon={post.pageIcon} priority />
+              <NotionIcon icon={post.pageIcon} />
             )}
             <span className='ml-3 line-clamp-4 leading-tight'>
               {post.title}

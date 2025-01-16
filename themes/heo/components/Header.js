@@ -42,12 +42,6 @@ const Header = props => {
         setFixedNav(false)
         setBgWhite(false)
         setTextWhite(false)
-
-        // 文章详情页特殊处理
-        if (document?.querySelector('#post-bg')) {
-          setFixedNav(true)
-          setTextWhite(true)
-        }
       } else {
         // 向下滚动后的导航样式
         setFixedNav(true)
@@ -56,9 +50,6 @@ const Header = props => {
       }
     }, 100)
   )
-  useEffect(() => {
-    scrollTrigger()
-  }, [router])
 
   // 监听滚动
   useEffect(() => {
@@ -135,9 +126,7 @@ const Header = props => {
       `}</style>
 
       {/* fixed时留白高度 */}
-      {fixedNav && !document?.querySelector('#post-bg') && (
-        <div className='h-16'></div>
-      )}
+      {fixedNav && <div className='h-16'></div>}
 
       {/* 顶部导航菜单栏 */}
       <nav

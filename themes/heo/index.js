@@ -10,11 +10,9 @@ import dynamic from 'next/dynamic'
 import { HashTag } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import LoadingCover from '@/components/LoadingCover'
-import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
-import { Transition } from '@headlessui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -23,16 +21,22 @@ import BlogPostListPage from './components/BlogPostListPage'
 import CategoryBar from './components/CategoryBar'
 import { NoticeBar } from './components/NoticeBar'
 import PostHeader from './components/PostHeader'
-import { PostLock } from './components/PostLock'
 import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
+import WWAds from '@/components/WWAds'
 
+const PostLock = dynamic(() =>
+  import('./components/PostLock').then(mod => mod.PostLock)
+)
+const Transition = dynamic(() =>
+  import('@headlessui/react').then(mod => mod.Transition)
+)
+const NotionPage = dynamic(() => import('@/components/NotionPage'))
 const LatestPostsGroup = dynamic(() => import('./components/LatestPostsGroup'))
 const AdSlot = dynamic(() =>
   import('@/components/GoogleAdsense').then(mod => mod.AdSlot)
 )
-const WWAds = dynamic(() => import('@/components/WWAds'))
 const replaceSearchResult = dynamic(() => import('@/components/Mark'))
 const PostAdjacent = dynamic(() => import('./components/PostAdjacent'), {
   ssr: false

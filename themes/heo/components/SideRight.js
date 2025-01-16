@@ -4,6 +4,8 @@ import Catalog from './Catalog'
 import { InfoCard } from './InfoCard'
 import TouchMeCard from './TouchMeCard'
 import { memo } from 'react'
+import { siteConfig } from '@/lib/config'
+import { isMobile } from '@/lib/utils'
 
 // const TagGroups = dynamic(() => import('./TagGroups'))
 const AnalyticsCard = dynamic(() =>
@@ -31,6 +33,9 @@ const FaceBookPage = dynamic(
  */
 export default memo(function SideRight(props) {
   const { post, rightAreaSlot } = props
+  const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE')
+  const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
+  const showPet = siteConfig('WIDGET_PET')
 
   return (
     <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
@@ -43,12 +48,10 @@ export default memo(function SideRight(props) {
             <Catalog toc={post.toc} />
           </Card>
         )}
-
         {/* 联系交流群 */}
         <div className='wow fadeInUp'>
           <TouchMeCard />
         </div>
-
         {/* 最新文章列表 */}
         <div
           className={
@@ -56,12 +59,9 @@ export default memo(function SideRight(props) {
           }>
           <LatestPostsGroupMini {...props} />
         </div>
-
         {rightAreaSlot}
-
-        <FaceBookPage />
-        <Live2D />
-
+        {FACEBOOK_PAGE && FACEBOOK_APP_ID && <FaceBookPage />}
+        {!isMobile() && showPet && <Live2D />}
         {/* 标签和成绩 */}
         <Card
           className={

@@ -4,7 +4,7 @@ import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { memo, useEffect } from 'react'
-import { LANG, NOTION_PAGE_ID } from '@/blog.config'
+import { CDN_TRANSFORM, CDNJS_CDN_BASE, JSDELIVR_CDN_BASE, LANG, NOTION_PAGE_ID, NPM_CDN_BASE } from '@/blog.config'
 import { extractLangPrefix } from '@/lib/utils/pageId'
 
 /**
@@ -99,12 +99,9 @@ const SEO = props => {
     null,
     NOTION_CONFIG
   )
-  const NPM_CDN_BASE = siteConfig('NPM_CDN_BASE',null,
-    NOTION_CONFIG)
-  const CDNJS_CDN_BASE = siteConfig('CDNJS_CDN_BASE',null,
-    NOTION_CONFIG)
-  const JSDELIVR_CDN_BASE = siteConfig('JSDELIVR_CDN_BASE',null,
-    NOTION_CONFIG)
+
+  const CDN_PRECONNECT = siteConfig('CDN_PRECONNECT', null, NOTION_CONFIG)
+
 
   const AUTHOR = siteConfig('AUTHOR')
   return (
@@ -118,7 +115,7 @@ const SEO = props => {
             <link
               rel='alternate'
               hrefLang={langPrefix}
-              href={`${LINK}/${SUB_PATH&&SUB_PATH+'/'}${langPrefix}/${meta.slug}`}
+              href={`${LINK}/${SUB_PATH && SUB_PATH + '/'}${langPrefix}/${meta.slug}`}
             />
           )
         })}
@@ -156,16 +153,20 @@ const SEO = props => {
       <meta name='twitter:title' content={title} />
 
       <link rel='icon' href={BLOG_FAVICON} />
-      <link rel="preconnect" href="https://img.notionusercontent.com" />
-      <link rel="dns-prefetch" href="https://www.notion.so" />
-      {NPM_CDN_BASE && (
-        <link rel="dns-prefetch" href={NPM_CDN_BASE} />
-      )}
-      {CDNJS_CDN_BASE && (
-        <link rel="dns-prefetch" href={CDNJS_CDN_BASE} />
-      )}
-      {JSDELIVR_CDN_BASE && (
-        <link rel="dns-prefetch" href={JSDELIVR_CDN_BASE} />
+      {CDN_PRECONNECT.map(transformCDNUrl => (
+        <>
+          <link rel='preconnect' href={transformCDNUrl} />
+          <link rel='dns-prefetch' href={transformCDNUrl} />
+        </>
+      ))}
+      {CDN_TRANSFORM && (
+        <>
+          {NPM_CDN_BASE && <link rel='dns-prefetch' href={NPM_CDN_BASE} />}
+          {CDNJS_CDN_BASE && <link rel='dns-prefetch' href={CDNJS_CDN_BASE} />}
+          {JSDELIVR_CDN_BASE && (
+            <link rel='dns-prefetch' href={JSDELIVR_CDN_BASE} />
+          )}
+        </>
       )}
       {COMMENT_WEBMENTION_ENABLE && (
         <>

@@ -1,5 +1,4 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
-import BLOG from '@/blog.config'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 
 class MyDocument extends Document {
@@ -18,23 +17,6 @@ class MyDocument extends Document {
           <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
           <meta name="apple-mobile-web-app-title" content="NoTrans" />
           <link rel="manifest" href="/site.webmanifest" />
-          {/* 预加载字体 */}
-          {BLOG.FONT_AWESOME && (
-            <>
-              <link
-                rel='preload'
-                href={BLOG.FONT_AWESOME}
-                as='style'
-                crossOrigin='anonymous'
-              />
-              <link
-                rel='stylesheet'
-                href={BLOG.FONT_AWESOME}
-                crossOrigin='anonymous'
-                referrerPolicy='no-referrer'
-              />
-            </>
-          )}
         </Head>
 
         <body>
