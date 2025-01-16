@@ -4,7 +4,7 @@ import '@/styles/utility-patterns.css'
 import { GlobalContextProvider } from '@/lib/global'
 import { getBaseLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useInsertionEffect, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css' // 原版的react-notion-x
@@ -54,6 +54,22 @@ const MyApp = ({ Component, pageProps }) => {
     },
     [theme]
   )
+
+  // 加载 font-awesome
+  useInsertionEffect(() => {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = BLOG.FONT_AWESOME
+    link.id = 'font-awesome'
+    document.head.appendChild(link)
+    // cleanup function
+    return () => {
+      const linkElm = document.getElementById('font-awesome')
+      if (linkElm) {
+        linkElm.remove()
+      }
+    }
+  })
 
   const content = (
     <GlobalContextProvider {...pageProps}>
