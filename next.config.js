@@ -91,6 +91,7 @@ function scanSubdirectories(directory) {
  */
 
 const nextConfig = {
+  productionBrowserSourceMaps: process.env.VERCEL_ENV !== 'production',
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true
