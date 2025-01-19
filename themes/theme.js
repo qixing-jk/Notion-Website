@@ -91,7 +91,6 @@ export const getLayoutByTheme = ({ layoutName, theme }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
   const LayoutComponents =
     ThemeComponents[layoutName] || ThemeComponents['LayoutSlug']
-  console.log(LayoutComponents)
   const router = useRouter()
   const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
   const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME

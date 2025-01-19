@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import BlogPostListPage from '@/themes/heo/components/BlogPostListPage'
 import dynamic from 'next/dynamic'
+import { siteConfig } from '@/lib/config'
 
 const replaceSearchResult = dynamic(() => import('@/components/Mark'))
 const SearchNav = dynamic(() => import('./components/SearchNav'))
