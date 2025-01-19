@@ -91,6 +91,7 @@ function scanSubdirectories(directory) {
  */
 
 const nextConfig = {
+  reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true
   },
