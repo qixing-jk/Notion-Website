@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
+import LayoutCategoryIndex from '@theme-components/LayoutCategoryIndex'
 
 /**
  * 分类首页
@@ -11,7 +12,12 @@ import { DynamicLayout } from '@/themes/theme'
 export default function Category(props) {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   return (
-    <DynamicLayout theme={theme} layoutName='LayoutCategoryIndex' {...props} />
+    <DynamicLayout
+      theme={theme}
+      layoutName='LayoutCategoryIndex'
+      layout={LayoutCategoryIndex}
+      {...props}
+    />
   )
 }
 

@@ -3,10 +3,18 @@ import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
+import LayoutSearch from '@theme-components/LayoutSearch'
 
 const Index = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
+  return (
+    <DynamicLayout
+      theme={theme}
+      layoutName='LayoutSearch'
+      layout={LayoutSearch}
+      {...props}
+    />
+  )
 }
 
 /**
