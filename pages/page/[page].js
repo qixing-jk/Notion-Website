@@ -2,7 +2,6 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
-import LayoutPostList from '@theme-components/LayoutPostList'
 
 /**
  * 文章列表分页
@@ -11,14 +10,7 @@ import LayoutPostList from '@theme-components/LayoutPostList'
  */
 const Page = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutPostList'
-      layout={LayoutPostList}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
 }
 
 export async function getStaticPaths({ locale }) {

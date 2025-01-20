@@ -1,6 +1,5 @@
 import BLOG, { LAYOUT_MAPPINGS } from '@/blog.config'
 import * as ThemeComponents from '@theme-components'
-import LayoutBaseComponent from '@theme-components/LayoutBase'
 import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -62,7 +61,7 @@ export const getThemeConfig = async themeQuery => {
  * @returns
  */
 export const getBaseLayoutByTheme = theme => {
-  const LayoutBase = LayoutBaseComponent || ThemeComponents['LayoutBase']
+  const LayoutBase = ThemeComponents['LayoutBase']
   const isDefaultTheme = !theme || theme === BLOG.THEME
   if (!isDefaultTheme) {
     return dynamic(
@@ -77,8 +76,8 @@ export const getBaseLayoutByTheme = theme => {
  * @param {*} props
  */
 export const DynamicLayout = props => {
-  const { theme, layoutName, layout } = props
-  const SelectedLayout = getLayoutByTheme({ layoutName, theme, layout })
+  const { theme, layoutName } = props
+  const SelectedLayout = getLayoutByTheme({ layoutName, theme })
   return <SelectedLayout {...props} />
 }
 
@@ -88,10 +87,10 @@ export const DynamicLayout = props => {
  * @param {*} theme
  * @returns
  */
-export const getLayoutByTheme = ({ layoutName, theme, layout }) => {
+export const getLayoutByTheme = ({ layoutName, theme }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
   const LayoutComponents =
-    layout || ThemeComponents[layoutName] || ThemeComponents['LayoutSlug']
+    ThemeComponents[layoutName] || ThemeComponents['LayoutSlug']
   const router = useRouter()
   const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
   const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME

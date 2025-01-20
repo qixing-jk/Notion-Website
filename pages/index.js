@@ -7,7 +7,6 @@ import { DynamicLayout } from '@/themes/theme'
 import { isNotVercelProduction } from '@/lib/utils'
 import { generateRss } from '@/lib/rss'
 import { generateRedirectJson } from '@/lib/redirect'
-import { LayoutIndex } from '@theme-components/LayoutIndex'
 
 /**
  * 首页布局
@@ -16,14 +15,7 @@ import { LayoutIndex } from '@theme-components/LayoutIndex'
  */
 const Index = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutIndex'
-      layout={LayoutIndex}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutIndex' {...props} />
 }
 
 /**

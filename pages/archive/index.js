@@ -5,7 +5,6 @@ import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import { DynamicLayout } from '@/themes/theme'
 import { useEffect } from 'react'
-import { LayoutArchive } from '@theme-components/LayoutArchive'
 
 /**
  * 归档首页
@@ -28,7 +27,7 @@ const ArchiveIndex = props => {
   }, [])
 
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutArchive' layout={LayoutArchive} {...props} />
+  return <DynamicLayout theme={theme} layoutName='LayoutArchive' {...props} />
 }
 
 export async function getStaticProps({ locale }) {

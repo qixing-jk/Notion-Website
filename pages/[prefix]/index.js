@@ -15,7 +15,6 @@ import { useRouter } from 'next/router'
 import { idToUuid } from 'notion-utils'
 import { useEffect, useState } from 'react'
 import { getRevalidateTime } from '@/lib/utils/revalidate'
-import { LayoutSlug } from '@theme-components/LayoutSlug'
 import dynamic from 'next/dynamic'
 
 const OpenWrite = dynamic(() => import('@/components/OpenWrite'))
@@ -80,12 +79,7 @@ const Slug = props => {
   return (
     <>
       {/* 文章布局 */}
-      <DynamicLayout
-        theme={theme}
-        layoutName='LayoutSlug'
-        layout={LayoutSlug}
-        {...props}
-      />
+      <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} />
       {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
       {/* 导流工具 */}
