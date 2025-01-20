@@ -57,6 +57,10 @@ const CONFIG = {
   HEO_INFO_CARD_URL3: 'https://moments.qixing1217.top/',
   HEO_INFO_CARD_TEXT3: '我的朋友圈',
 
+  // 404 文案
+  HEO_404_TITLE: '内容不存在',
+  HEO_404_BACK: '返回主页',
+
   // 用户技能图标
   HEO_GROUP_ICONS: [
     {
