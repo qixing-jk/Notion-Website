@@ -1,5 +1,6 @@
 import BLOG, { LAYOUT_MAPPINGS } from '@/blog.config'
 import * as ThemeComponents from '@theme-components'
+import LayoutBaseComponent from '@theme-components/LayoutBase'
 import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -61,25 +62,23 @@ export const getThemeConfig = async themeQuery => {
  * @returns
  */
 export const getBaseLayoutByTheme = theme => {
-  const LayoutBase = ThemeComponents['LayoutBase']
+  const LayoutBase = LayoutBaseComponent || ThemeComponents['LayoutBase']
   const isDefaultTheme = !theme || theme === BLOG.THEME
   if (!isDefaultTheme) {
     return dynamic(
-      () => import(`@/themes/${theme}`).then(m => m['LayoutBase']),
+      () => import(`@/themes/${theme}/LayoutBase`).then(m => m['LayoutBase']),
       { ssr: true }
     )
   }
-
   return LayoutBase
 }
-
 /**
  * 动态获取布局
  * @param {*} props
  */
 export const DynamicLayout = props => {
-  const { theme, layoutName } = props
-  const SelectedLayout = getLayoutByTheme({ layoutName, theme })
+  const { theme, layoutName, layout } = props
+  const SelectedLayout = getLayoutByTheme({ layoutName, theme, layout })
   return <SelectedLayout {...props} />
 }
 
@@ -89,29 +88,33 @@ export const DynamicLayout = props => {
  * @param {*} theme
  * @returns
  */
-export const getLayoutByTheme = ({ layoutName, theme }) => {
+export const getLayoutByTheme = ({ layoutName, theme, layout }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
   const LayoutComponents =
-    ThemeComponents[layoutName] || ThemeComponents.LayoutSlug
-
+    layout || ThemeComponents[layoutName] || ThemeComponents['LayoutSlug']
   const router = useRouter()
   const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
   const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
-
   // 加载非当前默认主题
   if (!isDefaultTheme) {
-    const loadThemeComponents = componentsSource => {
-      const components =
-        componentsSource[layoutName] || componentsSource.LayoutSlug
-      setTimeout(fixThemeDOM, 500)
-      return components
-    }
     return dynamic(
-      () => import(`@/themes/${themeQuery}`).then(m => loadThemeComponents(m)),
+      () =>
+        import(`@/themes/${themeQuery || BLOG.THEME}/${layoutName}`)
+          .then(m => {
+            setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
+            return m[layoutName]
+          })
+          .catch(err => {
+            import(`@/themes/${themeQuery || BLOG.THEME}/LayoutSlug`).then(
+              m => {
+                setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
+                return m[layoutName]
+              }
+            )
+          }),
       { ssr: true }
     )
   }
-
   setTimeout(fixThemeDOM, 100)
   return LayoutComponents
 }

@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
+import LayoutDashboard from '@theme-components/LayoutDashboard'
 
 /**
  * 根据notion的slug访问页面
@@ -11,7 +12,14 @@ import { DynamicLayout } from '@/themes/theme'
  */
 const Dashboard = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return <DynamicLayout theme={theme} layoutName='LayoutDashboard' {...props} />
+  return (
+    <DynamicLayout
+      theme={theme}
+      layoutName='LayoutDashboard'
+      layout={LayoutDashboard}
+      {...props}
+    />
+  )
 }
 
 export async function getStaticProps({ locale }) {
