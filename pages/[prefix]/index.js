@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import { idToUuid } from 'notion-utils'
 import { useEffect, useState } from 'react'
 import { getRevalidateTime } from '@/lib/utils/revalidate'
+import { LayoutSlug } from '@theme-components/LayoutSlug'
 
 /**
  * 根据notion的slug访问页面
@@ -72,7 +73,12 @@ const Slug = props => {
   return (
     <>
       {/* 文章布局 */}
-      <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} />
+      <DynamicLayout
+        theme={theme}
+        layoutName='LayoutSlug'
+        layout={LayoutSlug}
+        {...props}
+      />
       {/* 解锁密码提示框 */}
       {post?.password && post?.password !== '' && !lock && <Notification />}
       {/* 导流工具 */}
@@ -103,7 +109,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { prefix }, locale }) {
   let fullSlug = prefix
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale ,cleanData: false})
+  const props = await getGlobalData({ from, locale, cleanData: false })
   if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
