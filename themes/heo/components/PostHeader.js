@@ -46,15 +46,15 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           style={{
             filter: 'blur(5px)'
           }}
-          className='coverdiv lg:opacity-70 lg:translate-x-96 lg:rotate-12'>
+          className='coverdiv lg:opacity-70 lg:translate-x-96'>
           <Image
             priority={true}
             id='post-cover'
             className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]'
             src={headerImage}
             alt={post.title}
-            width={500}
-            height={500}
+            width={100}
+            height={100}
             placeholder='blur'
             blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
           />
