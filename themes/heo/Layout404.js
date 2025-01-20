@@ -2,6 +2,8 @@ import { useGlobal } from '@/lib/global'
 import LazyImage from '@/components/LazyImage'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { siteConfig } from '@/lib/config'
+import config from '@/themes/heo/config'
 
 const Transition = dynamic(() =>
   import('@headlessui/react').then(mod => mod.Transition)
@@ -15,6 +17,16 @@ const LatestPostsGroup = dynamic(() => import('./components/LatestPostsGroup'))
 export const Layout404 = props => {
   // const { meta, siteInfo } = props
   const { onLoading, fullWidth } = useGlobal()
+  const HEO_404_TITLE = siteConfig(
+    'HEO_404_TITLE',
+    config.HEO_404_TITLE,
+    props.config
+  )
+  const HEO_404_BACK = siteConfig(
+    'HEO_404_BACK',
+    config.HEO_404_BACK,
+    props.config
+  )
   return (
     <>
       {/* 主区块 */}
@@ -44,10 +56,10 @@ export const Layout404 = props => {
                 <h1 className='error-title font-extrabold md:text-9xl text-7xl dark:text-white'>
                   404
                 </h1>
-                <div className='dark:text-white'>请尝试站内搜索寻找文章</div>
+                <div className='dark:text-white'>{HEO_404_TITLE}</div>
                 <Link href='/'>
                   <button className='bg-blue-500 py-2 px-4 text-white shadow rounded-lg hover:bg-blue-600 hover:shadow-md duration-200 transition-all'>
-                    回到主页
+                    {HEO_404_BACK}
                   </button>
                 </Link>
               </div>
