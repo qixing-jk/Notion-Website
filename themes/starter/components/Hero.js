@@ -87,7 +87,8 @@ export const Hero = props => {
                         null,
                         config
                       )}
-                      fill={true}
+                      width={845}
+                      height={845}
                       alt={siteConfig('TITLE', null, config)}
                       title={siteConfig('TITLE', null, config)}
                       className='mx-auto max-w-full rounded-t-xl rounded-tr-xl'
