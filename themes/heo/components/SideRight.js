@@ -39,9 +39,7 @@ export default memo(function SideRight(props) {
   const [showSideRight, setShowSideRight] = useState(false)
 
   useEffect(() => {
-    if (!isMobile()) {
-      setShowSideRight(true)
-    }
+    setShowSideRight(isMobile())
   }, [])
   return (
     showSideRight && (
