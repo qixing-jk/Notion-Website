@@ -13,7 +13,7 @@ jobs:
         id: waitForVercelPreviewDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 60
+          max_timeout: ${{ vars.WAIT_FOR_VERCEL_MAX_TIMEOUT }}
       - name: Audit Vercel preview URL using Lighthouse
         uses: treosh/lighthouse-ci-action@v3
         with:
