@@ -4,7 +4,6 @@ import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
-import { isMobile } from '@/lib/utils'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview =
@@ -46,7 +45,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 ' w-full md:w-5/12 overflow-hidden cursor-pointer select-none'
               }>
               <Image
-                priority={index === 0 && isMobile()}
+                priority={index === 0}
                 src={post?.pageCoverThumbnail}
                 alt={post?.title}
                 width={430}
