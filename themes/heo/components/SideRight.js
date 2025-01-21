@@ -38,7 +38,6 @@ export default memo(function SideRight(props) {
   const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
   const showPet = siteConfig('WIDGET_PET')
   const [showSideRight, setShowSideRight] = useState(false)
-  console.log(tailwindBreakpoints.xl)
   const isXl = useMediaQuery({
     query: `(min-width: ${tailwindBreakpoints.xl})`
   })
