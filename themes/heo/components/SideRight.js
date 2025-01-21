@@ -5,7 +5,8 @@ import { InfoCard } from './InfoCard'
 import TouchMeCard from './TouchMeCard'
 import { memo, useEffect, useState } from 'react'
 import { siteConfig } from '@/lib/config'
-import { isMobile } from '@/lib/utils'
+import { useMediaQuery } from 'react-responsive'
+import tailwindBreakpoints from '../../../tailwind.screens'
 
 // const TagGroups = dynamic(() => import('./TagGroups'))
 const AnalyticsCard = dynamic(() =>
@@ -37,10 +38,15 @@ export default memo(function SideRight(props) {
   const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
   const showPet = siteConfig('WIDGET_PET')
   const [showSideRight, setShowSideRight] = useState(false)
+  console.log(tailwindBreakpoints.xl)
+  const isXl = useMediaQuery({
+    query: `(min-width: ${tailwindBreakpoints.xl})`
+  })
 
   useEffect(() => {
-    setShowSideRight(isMobile())
-  }, [])
+    setShowSideRight(isXl)
+  }, [isXl])
+
   return (
     showSideRight && (
       <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
