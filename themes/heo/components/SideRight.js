@@ -68,7 +68,7 @@ export default memo(function SideRight(props) {
           </div>
           {rightAreaSlot}
           {FACEBOOK_PAGE && FACEBOOK_APP_ID && <FaceBookPage />}
-          {!isMobile() && showPet && <Live2D />}
+          {showPet && <Live2D />}
           {/* 标签和成绩 */}
           <Card
             className={
