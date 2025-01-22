@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
-import LayoutPostList from '@theme-components/LayoutPostList'
+import { LayoutPostList } from '@theme-components/LayoutPostList'
 
 const Tag = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)

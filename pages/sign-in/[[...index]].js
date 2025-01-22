@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 // import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
-import LayoutSignIn from '@theme-components/LayoutSignIn'
+import { LayoutSignIn } from '@theme-components/LayoutSignIn'
 
 /**
  * 登录

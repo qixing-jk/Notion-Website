@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
-import LayoutPostList from '@theme-components/LayoutPostList'
+import { LayoutPostList } from '@theme-components/LayoutPostList'
 
 /**
  * 标签下的文章列表

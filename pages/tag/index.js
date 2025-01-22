@@ -3,7 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import LayoutTagIndex from '@theme-components/LayoutTagIndex'
+import { LayoutTagIndex } from '@theme-components/LayoutTagIndex'
 
 /**
  * 标签首页

@@ -3,7 +3,7 @@ import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
-import LayoutSearch from '@theme-components/LayoutSearch'
+import { LayoutSearch } from '@theme-components/LayoutSearch'
 
 const Index = props => {
   const { keyword } = props

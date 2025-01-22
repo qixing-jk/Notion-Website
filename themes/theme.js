@@ -1,6 +1,6 @@
 import BLOG, { LAYOUT_MAPPINGS } from '@/blog.config'
 import * as ThemeComponents from '@theme-components'
-import LayoutBaseComponent from '@theme-components/LayoutBase'
+import { LayoutBase as LayoutBaseComponent } from '@theme-components/LayoutBase'
 import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
