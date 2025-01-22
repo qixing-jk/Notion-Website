@@ -73,8 +73,8 @@ const MyApp = ({ Component, pageProps }) => {
 
   const content = (
     <GlobalContextProvider {...pageProps}>
+      <SEO {...pageProps} />
       <GLayout {...pageProps}>
-        <SEO {...pageProps} />
         <Component {...pageProps} />
       </GLayout>
       <ExternalPlugins {...pageProps} />
