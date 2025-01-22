@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
-import LayoutSignUp from '@theme-components/LayoutSignUp'
+import { LayoutSignUp } from '@theme-components/LayoutSignUp'
 
 /**
  * 注册
