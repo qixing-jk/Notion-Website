@@ -5,7 +5,7 @@ jobs:
     name: Lighthouse
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Wait for Vercel Preview
@@ -15,9 +15,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: ${{ vars.WAIT_FOR_VERCEL_MAX_TIMEOUT }}
       - name: Audit Vercel preview URL using Lighthouse
-        uses: treosh/lighthouse-ci-action@v3
+        uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
             ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
           uploadArtifacts: true
           temporaryPublicStorage: true
+          runs: 3
