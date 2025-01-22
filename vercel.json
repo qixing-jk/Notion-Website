@@ -1,4 +1,11 @@
 {
+  "github": {
+    "deploymentEnabled": {
+      "main": false,
+      "heo": false,
+      "Notrans": false
+    }
+  },
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
