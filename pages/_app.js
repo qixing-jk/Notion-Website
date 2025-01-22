@@ -72,13 +72,15 @@ const MyApp = ({ Component, pageProps }) => {
   })
 
   const content = (
-    <GlobalContextProvider {...pageProps}>
-      <GLayout {...pageProps}>
-        <SEO {...pageProps} />
-        <Component {...pageProps} />
-      </GLayout>
-      <ExternalPlugins {...pageProps} />
-    </GlobalContextProvider>
+    <>
+      <SEO {...pageProps} />
+      <GlobalContextProvider {...pageProps}>
+        <GLayout {...pageProps}>
+          <Component {...pageProps} />
+        </GLayout>
+        <ExternalPlugins {...pageProps} />
+      </GlobalContextProvider>
+    </>
   )
   return (
     <>
