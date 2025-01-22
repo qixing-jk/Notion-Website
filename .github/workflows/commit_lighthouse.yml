@@ -22,6 +22,6 @@ jobs:
         with:
           urls: |
             ${{ steps.vercel_action.outputs.preview-url }}
-          uploadArtifacts: true
-          temporaryPublicStorage: true
           runs: 3
+          serverBaseUrl: ${{ secrets.LHCI_SERVER_URL }}
+          serverToken: ${{ secrets.LHCI_SERVER_TOKEN }}
