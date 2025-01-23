@@ -5,22 +5,18 @@ jobs:
     name: Lighthouse
     runs-on: ubuntu-latest
     steps:
-#      - uses: actions/checkout@v4
-#        with:
-#          ref: ${{ github.event.pull_request.head.sha }}
-#      - name: Vercel Action
-#        id: vercel_action
-#        uses: amondnet/vercel-action@v25.2.0
-#        with:
-#          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
-#          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
-#          scope: ${{ secrets.VERCEL_SCOPE }}
-      # 获取 Vercel 预览 URL
-      - name: Fetch Vercel preview URL
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Vercel Action
         id: vercel_action
-        run: echo "::set-output name=preview-url::https://example.vercel.app" # 模拟输出
+        uses: amondnet/vercel-action@v25.2.0
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
+          scope: ${{ secrets.VERCEL_SCOPE }}
       # 设置子路径变量
       - name: Set sub-paths based on branch
         id: sub_paths
@@ -54,13 +50,13 @@ jobs:
             echo $urls
           done
           echo "urls=$urls" >> "$GITHUB_OUTPUT"
-#      - name: Audit Vercel preview URL using Lighthouse
-#        uses: treosh/lighthouse-ci-action@v12
-#        with:
-#          urls: |
-#            ${{ steps.urls.outputs.urls }}
-#          runs: 3
-#          serverBaseUrl: ${{ secrets.LHCI_SERVER_URL }}
-#          serverToken: ${{ secrets.LHCI_SERVER_TOKEN }}
-#          basicAuthUsername: ${{ secrets.LHCI_BASIC_AUTH_USERNAME }}
-#          basicAuthPassword: ${{ secrets.LHCI_BASIC_AUTH_PASSWORD }}
+      - name: Audit Vercel preview URL using Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            ${{ steps.urls.outputs.urls }}
+          runs: 3
+          serverBaseUrl: ${{ secrets.LHCI_SERVER_URL }}
+          serverToken: ${{ secrets.LHCI_SERVER_TOKEN }}
+          basicAuthUsername: ${{ secrets.LHCI_BASIC_AUTH_USERNAME }}
+          basicAuthPassword: ${{ secrets.LHCI_BASIC_AUTH_PASSWORD }}
