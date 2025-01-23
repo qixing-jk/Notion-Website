@@ -42,12 +42,10 @@ jobs:
       - name: Combine full URLs
         id: urls
         run: |
-          IFS=","
           preview_url="${{ steps.vercel_action.outputs.preview-url }}"
           urls=""
           for path in ${{ steps.sub_paths.outputs.sub_paths }}; do
-            urls="${urls}${preview_url}/${path}\n"
-            echo $urls
+            urls+="${preview_url}/${path}\n"
           done
           echo "urls=$urls" >> "$GITHUB_OUTPUT"
       - name: Audit Vercel preview URL using Lighthouse
