@@ -17,11 +17,40 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
           scope: ${{ secrets.VERCEL_SCOPE }}
+      # 设置子路径变量
+      - name: Set sub-paths based on branch
+        id: sub_paths
+        run: |
+          sub_paths=""
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            # 检查 MAIN_URL 是否为空
+            if [[ -z "${{ secrets.MAIN_URL }}" ]]; then
+              sub_paths="${{ secrets.HEO_URL }}"
+            else
+              sub_paths="${{ secrets.MAIN_URL }}"
+            fi
+          elif [[ "${GITHUB_REF}" == "refs/heads/heo" ]]; then
+            sub_paths=${{secrets.HEO_URL}}
+          elif [[ "${GITHUB_REF}" == "refs/heads/notrans" ]]; then
+            sub_paths=${{secrets.NOTRANS_URL}}
+          fi
+          core.setOutput('sub_paths', sub_paths);
+      # 组合完整的 URL
+      - name: Combine full URLs
+        id: urls
+        run: |
+          IFS=","
+          preview_url="${{ steps.vercel_action.outputs.preview-url }}"
+          urls=""
+          for path in ${{ steps.sub_paths.outputs.sub_paths }}; do
+            urls="${urls}${preview_url}/${path}\n"
+          done
+          core.setOutput('urls', urls);
       - name: Audit Vercel preview URL using Lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            ${{ steps.vercel_action.outputs.preview-url }}
+            ${{ steps.urls.outputs.urls }}
           runs: 3
           serverBaseUrl: ${{ secrets.LHCI_SERVER_URL }}
           serverToken: ${{ secrets.LHCI_SERVER_TOKEN }}
