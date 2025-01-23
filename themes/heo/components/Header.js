@@ -10,6 +10,8 @@ import RandomPostButton from './RandomPostButton'
 import ReadingProgress from './ReadingProgress'
 import SearchButton from './SearchButton'
 import dynamic from 'next/dynamic'
+import { useMediaQuery } from 'react-responsive'
+import tailwindBreakpoints from '../../../tailwind.screens'
 
 const SlideOver = dynamic(() => import('./SlideOver'))
 
@@ -23,6 +25,15 @@ const Header = props => {
   const [textWhite, setTextWhite] = useState(false)
   const [navBgWhite, setBgWhite] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
+
+  const [showSlideOver, setShowSlideOver] = useState(false)
+  const isLg = useMediaQuery({
+    query: `(min-width: ${tailwindBreakpoints.lg})`
+  })
+
+  useEffect(() => {
+    setShowSlideOver(!isLg)
+  }, [isLg])
 
   const router = useRouter()
   const slideOverRef = useRef()
@@ -176,7 +187,7 @@ const Header = props => {
           </div>
 
           {/* 右边侧拉抽屉 */}
-          <SlideOver cRef={slideOverRef} {...props} />
+          {showSlideOver && <SlideOver cRef={slideOverRef} {...props} />}
         </div>
       </nav>
     </>
