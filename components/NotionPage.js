@@ -3,7 +3,7 @@ import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
 import { getLastPartOfUrl, isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
 import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
@@ -24,6 +24,15 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
   const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
+
+  const [isCodeLoaded, setIsCodeLoaded] = useState(false)
+
+  useEffect(() => {
+    if (document.querySelector('.notion-code')) {
+      setIsCodeLoaded(true)
+    }
+  }, [])
+
 
   const zoom =
     isBrowser &&
@@ -146,7 +155,7 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
       />
 
       <AdEmbed />
-      <PrismMac />
+      {isCodeLoaded && <PrismMac />}
     </div>
   )
 }
@@ -226,16 +235,16 @@ function getMediumZoomMargin() {
   }
 }
 
-// 代码
+// 代码 是按需加载的
 const Code = dynamic(
   () =>
     import('react-notion-x/build/third-party/code').then(async m => {
       return m.Code
     }),
-  { ssr: false }
+  { ssr: true }
 )
 
-// 公式
+// 公式 是按需加载的
 const Equation = dynamic(
   () =>
     import('@/components/Equation').then(async m => {
@@ -246,7 +255,7 @@ const Equation = dynamic(
       ])
       return m.Equation
     }),
-  { ssr: false }
+  { ssr: true }
 )
 
 // 原版文档
@@ -256,6 +265,7 @@ const Equation = dynamic(
 //     ssr: false
 //   }
 // )
+// PDF 是按需加载的
 const Pdf = dynamic(() => import('@/components/Pdf').then(m => m.Pdf), {
   ssr: false
 })
@@ -269,7 +279,7 @@ const PrismMac = dynamic(() => import('@/components/PrismMac'), {
  * tweet嵌入
  */
 const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
-  ssr: false
+  ssr: true
 })
 
 /**
@@ -280,6 +290,7 @@ const AdEmbed = dynamic(
   { ssr: true }
 )
 
+// 不是按需加载的
 const Collection = dynamic(
   () =>
     import('react-notion-x/build/third-party/collection').then(
@@ -290,11 +301,13 @@ const Collection = dynamic(
   }
 )
 
+// 是按需加载的
 const Modal = dynamic(
   () => import('react-notion-x/build/third-party/modal').then(m => m.Modal),
   { ssr: false }
 )
 
+// 是按需加载的
 const Tweet = ({ id }) => {
   return <TweetEmbed tweetId={id} />
 }
