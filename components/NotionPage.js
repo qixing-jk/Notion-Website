@@ -3,7 +3,7 @@ import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
 import { getLastPartOfUrl, isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
 import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
@@ -24,6 +24,15 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
   const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
+
+  const [isCodeLoaded, setIsCodeLoaded] = useState(false)
+
+  useEffect(() => {
+    if (document.querySelector('.notion-code')) {
+      setIsCodeLoaded(true)
+    }
+  }, [])
+
 
   const zoom =
     isBrowser &&
@@ -146,7 +155,7 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
       />
 
       <AdEmbed />
-      <PrismMac />
+      {isCodeLoaded && <PrismMac />}
     </div>
   )
 }
