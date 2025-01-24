@@ -235,7 +235,7 @@ function getMediumZoomMargin() {
   }
 }
 
-// 代码
+// 代码 是按需加载的
 const Code = dynamic(
   () =>
     import('react-notion-x/build/third-party/code').then(async m => {
@@ -244,7 +244,7 @@ const Code = dynamic(
   { ssr: false }
 )
 
-// 公式
+// 公式 是按需加载的
 const Equation = dynamic(
   () =>
     import('@/components/Equation').then(async m => {
@@ -265,6 +265,7 @@ const Equation = dynamic(
 //     ssr: false
 //   }
 // )
+// PDF 是按需加载的
 const Pdf = dynamic(() => import('@/components/Pdf').then(m => m.Pdf), {
   ssr: false
 })
@@ -289,6 +290,7 @@ const AdEmbed = dynamic(
   { ssr: true }
 )
 
+// 不是按需加载的
 const Collection = dynamic(
   () =>
     import('react-notion-x/build/third-party/collection').then(
@@ -299,11 +301,13 @@ const Collection = dynamic(
   }
 )
 
+// 是按需加载的
 const Modal = dynamic(
   () => import('react-notion-x/build/third-party/modal').then(m => m.Modal),
   { ssr: false }
 )
 
+// 是按需加载的
 const Tweet = ({ id }) => {
   return <TweetEmbed tweetId={id} />
 }
