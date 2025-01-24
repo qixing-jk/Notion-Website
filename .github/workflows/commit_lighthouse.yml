@@ -10,8 +10,11 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Vercel Action
         id: vercel_action
+        env:
+          VERCEL_ARGS: ${{ github.ref == 'refs/heads/notrans' && '--prod'|| '' }}
         uses: amondnet/vercel-action@v25.2.0
         with:
+          vercel-args: ${{ env.VERCEL_ARGS }}
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
