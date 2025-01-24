@@ -241,7 +241,7 @@ const Code = dynamic(
     import('react-notion-x/build/third-party/code').then(async m => {
       return m.Code
     }),
-  { ssr: false }
+  { ssr: true }
 )
 
 // 公式 是按需加载的
@@ -255,7 +255,7 @@ const Equation = dynamic(
       ])
       return m.Equation
     }),
-  { ssr: false }
+  { ssr: true }
 )
 
 // 原版文档
@@ -279,7 +279,7 @@ const PrismMac = dynamic(() => import('@/components/PrismMac'), {
  * tweet嵌入
  */
 const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
-  ssr: false
+  ssr: true
 })
 
 /**
