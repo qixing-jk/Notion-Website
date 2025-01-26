@@ -15,6 +15,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+          alias-domains: ${{ secrets.PROJECT_NAME}}-git-{{ BRANCH }}-${{ secrets.TEAM_NAME}}.vercel.app
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
           scope: ${{ secrets.VERCEL_SCOPE }}
       # 设置子路径变量
