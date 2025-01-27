@@ -39,14 +39,14 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
       `}</style>
 
       <div
-        className={`${isDarkMode ? 'bg-[#CA8A04]' : 'bg-[#0060e0]'} absolute top-0 w-full h-full py-10 flex justify-center items-center`}>
+        className={`${isDarkMode ? 'bg-[#CA8A04]' : 'bg-[#0060e0]'} absolute top-0 w-full h-full flex justify-center items-center`}>
         {/* 文章背景图 */}
         <div
           id='post-cover-wrapper'
           style={{
-            filter: 'blur(3px)'
+            filter: 'blur(5px)'
           }}
-          className='coverdiv lg:opacity-70 lg:translate-x-96'>
+          className='coverdiv h-full lg:opacity-70 lg:translate-x-96'>
           <Image
             priority={true}
             id='post-cover'
@@ -55,6 +55,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
             alt={post.title}
             width={100}
             height={100}
+            // sizes={`(max-width: ${lg}) 50vw,30vw`}
             placeholder='blur'
             blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
           />
