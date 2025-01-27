@@ -11,13 +11,14 @@ import {
   useState
 } from 'react'
 import { MenuListSide } from './MenuListSide'
+import TagGroups from './TagGroups'
 
 /**
  * 侧边抽屉
  * 移动端的菜单在这里
  */
 export default function SlideOver(props) {
-  const { cRef } = props
+  const { cRef, tagOptions } = props
   const [open, setOpen] = useState(false)
   const { locale } = useGlobal()
   const router = useRouter()
@@ -107,7 +108,7 @@ export default function SlideOver(props) {
 
                       <section className='space-y-2 flex flex-col'>
                         <div>{locale.COMMON.TAGS}</div>
-                        {/*<TagGroups tags={tagOptions} />*/}
+                        <TagGroups tags={tagOptions} />
                       </section>
                     </div>
                   </div>

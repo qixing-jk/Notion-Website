@@ -8,7 +8,7 @@ import { siteConfig } from '@/lib/config'
 import { useMediaQuery } from 'react-responsive'
 import tailwindBreakpoints from '../../../tailwind.screens'
 
-// const TagGroups = dynamic(() => import('./TagGroups'))
+const TagGroups = dynamic(() => import('./TagGroups'))
 const AnalyticsCard = dynamic(() =>
   import('./AnalyticsCard').then(m => m.AnalyticsCard)
 )
@@ -33,7 +33,7 @@ const FaceBookPage = dynamic(
  * @returns
  */
 export default memo(function SideRight(props) {
-  const { post, rightAreaSlot } = props
+  const { post, tagOptions, currentTag, rightAreaSlot } = props
   const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE')
   const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
   const showPet = siteConfig('WIDGET_PET')
@@ -41,6 +41,9 @@ export default memo(function SideRight(props) {
   const isXl = useMediaQuery({
     query: `(min-width: ${tailwindBreakpoints.xl})`
   })
+
+  // 只摘取标签的前60个，防止右侧过长
+  const sortedTags = tagOptions?.slice(0, 60) || []
 
   useEffect(() => {
     setShowSideRight(isXl)
@@ -77,7 +80,7 @@ export default memo(function SideRight(props) {
             className={
               'bg-white dark:bg-[#1e1e1e] dark:text-white hover:border-indigo-600  dark:hover:border-yellow-600 duration-200'
             }>
-            {/*<TagGroups tags={sortedTags} currentTag={currentTag} />*/}
+            <TagGroups tags={sortedTags} currentTag={currentTag} />
             <hr className='mx-1 flex border-dashed relative my-4' />
             <AnalyticsCard {...props} />
           </Card>
