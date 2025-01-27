@@ -4,6 +4,7 @@ import { siteConfig } from '@/lib/config'
 import Link from 'next/link'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
+import { md } from '../../../tailwind.screens'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview =
@@ -50,6 +51,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 alt={post?.title}
                 width={430}
                 height={210}
+                sizes={`(max-width: ${md}) 90vw,40vw`}
                 placeholder='blur'
                 blurDataURL={siteConfig('IMG_LAZY_LOAD_PLACEHOLDER')}
                 className='h-full w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-500 ease-in-out' //宽高都调整为自适应,保证封面居中
