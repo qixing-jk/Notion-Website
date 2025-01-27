@@ -33,7 +33,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           height: 100%;
           top: 0;
           left: 0;
-          box-shadow: 110px -130px 500px 100px
+          box-shadow: 55px -65px 250px 50px
             ${isDarkMode ? '#CA8A04' : '#0060e0'} inset;
         }
       `}</style>
@@ -44,13 +44,13 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
         <div
           id='post-cover-wrapper'
           style={{
-            filter: 'blur(5px)'
+            filter: 'blur(3px)'
           }}
           className='coverdiv lg:opacity-70 lg:translate-x-96'>
           <Image
             priority={true}
             id='post-cover'
-            className='w-full h-full object-cover opacity-80 max-h-[50rem] min-w-[50vw] min-h-[20rem]'
+            className='w-full h-full object-cover max-h-[50rem] min-w-[50vw] min-h-[20rem]'
             src={headerImage}
             alt={post.title}
             width={100}
