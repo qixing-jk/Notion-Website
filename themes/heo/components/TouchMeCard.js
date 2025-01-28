@@ -26,8 +26,7 @@ export default function TouchMeCard() {
             <img
               src='/images/heo/touch-me-card.webp'
               className='absolute left-0 top-0 w-full h-full'
-              loading='eager'
-              fetchPriority='high'
+              loading='lazy'
             />
           </div>
         }

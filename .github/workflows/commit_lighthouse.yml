@@ -4,6 +4,7 @@ jobs:
   lhci:
     name: Lighthouse
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -64,6 +65,7 @@ jobs:
           urls: |
             ${{ steps.urls.outputs.urls }}
           runs: 3
+          configPath: './lighthouserc.js'
           serverBaseUrl: ${{ secrets.LHCI_SERVER_URL }}
           serverToken: ${{ secrets.LHCI_SERVER_TOKEN }}
           basicAuthUsername: ${{ secrets.LHCI_BASIC_AUTH_USERNAME }}

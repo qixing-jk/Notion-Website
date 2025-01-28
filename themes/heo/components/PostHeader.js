@@ -35,7 +35,6 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
           }}
           className='coverdiv h-full lg:opacity-70 lg:translate-x-96'>
           <Image
-            priority={true}
             id='post-cover'
             className='w-full h-full object-cover max-h-[50rem] min-w-[50vw] min-h-[20rem]'
             style={{
