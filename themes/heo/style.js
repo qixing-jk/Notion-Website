@@ -40,10 +40,6 @@ const Style = () => {
         display: none;
       }
 
-      * {
-        box-sizing: border-box;
-      }
-
       // 标签滚动动画
       .tags-group-wrapper {
         animation: rowup 60s linear infinite;
