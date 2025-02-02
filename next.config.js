@@ -234,6 +234,14 @@ const nextConfig = {
     if (process.env.NODE_ENV_API === 'development') {
       config.devtool = 'source-map'
     }
+
+    // 添加 statoscope 包分析
+    if (process.env.ANALYZE) {
+      const StatoscopeWebpackPlugin =
+        require('@statoscope/webpack-plugin').default
+      config.plugins.push(new StatoscopeWebpackPlugin())
+    }
+
     return config
   },
   experimental: {
