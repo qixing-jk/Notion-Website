@@ -28,11 +28,12 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   const [isCodeLoaded, setIsCodeLoaded] = useState(false)
 
   useEffect(() => {
-    if (document.querySelector('.notion-code')) {
-      setIsCodeLoaded(true)
-    }
+    setTimeout(() => {
+      if (document.querySelector('.notion-code')) {
+        setIsCodeLoaded(true)
+      }
+    }, 300)
   }, [])
-
 
   const zoom =
     isBrowser &&
