@@ -3,7 +3,7 @@ import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
 import { getLastPartOfUrl, isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 import { GalleryBeautification } from '@/lib/GalleryBeautification'
 import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
@@ -24,6 +24,32 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
   const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
+  const LINK = siteConfig('LINK')
+
+  const SmartLink = useCallback(
+    ({ href, children, ...rest }) => {
+      const isExternal = !href.startsWith(LINK) || rest.target === '_blank'
+      if (
+        isExternal &&
+        !rest.className.includes('notion-bookmark') &&
+        !rest.className.includes('notion-file-link')
+      ) {
+        return (
+          <a href={href} target='_blank' rel='noopener noreferrer' {...rest}>
+            {children}
+            &nbsp;
+            <i className='fas fa-arrow-up-right-from-square'></i>
+          </a>
+        )
+      }
+      return (
+        <Link href={href} {...rest}>
+          {children}
+        </Link>
+      )
+    },
+    [LINK]
+  )
 
   const [isCodeLoaded, setIsCodeLoaded] = useState(false)
 
@@ -144,6 +170,7 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
         mapPageUrl={customMapPageUrl(allNavPages, uuidSlugMap)}
         mapImageUrl={mapImgUrl}
         components={{
+          Link: SmartLink,
           nextImage: Image,
           nextLink: Link,
           Code,
