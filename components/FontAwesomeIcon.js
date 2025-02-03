@@ -27,7 +27,7 @@ const getIcon = async (style, name) => {
   return iconModule[formattedName]
 }
 
-export const DynamicIcon = ({ icon }) => {
+export const DynamicFontAwesomeIcon = ({ icon }) => {
   const [iconComponent, setIconComponent] = useState(null)
 
   useEffect(() => {
