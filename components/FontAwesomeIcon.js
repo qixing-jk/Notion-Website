@@ -5,16 +5,26 @@ const getIcon = async (style, name) => {
   const formattedName = name
     .replace(/-([a-z])/g, (_, char) => char.toUpperCase())
     .replace(/^\w/, c => c.toLowerCase()) // file-word -> fileWord
-  const packageMap = {
-    fas: '@fortawesome/free-solid-svg-icons',
-    far: '@fortawesome/free-regular-svg-icons',
-    fab: '@fortawesome/free-brands-svg-icons'
+
+  let iconModule
+  switch (style) {
+    case 'fas':
+    case 'fa-solid':
+      iconModule = await import('@fortawesome/free-solid-svg-icons')
+      break
+    case 'far':
+    case 'fa-regular':
+      iconModule = await import('@fortawesome/free-regular-svg-icons')
+      break
+    case 'fab':
+    case 'fa-brands':
+      iconModule = await import('@fortawesome/free-brands-svg-icons')
+      break
+    default:
+      throw new Error('Invalid style prefix')
   }
 
-  const packageName = packageMap[style]
-  if (!packageName) throw new Error('Invalid style prefix')
-  const m = await import(packageName)
-  return m[`fa${formattedName}`]
+  return iconModule[formattedName]
 }
 
 export const DynamicIcon = ({ icon }) => {
@@ -24,5 +34,5 @@ export const DynamicIcon = ({ icon }) => {
     getIcon(...icon.split(' ')).then(setIconComponent)
   }, [icon])
 
-  return <FontAwesomeIcon icon={iconComponent} />
+  return iconComponent ? <FontAwesomeIcon icon={iconComponent} /> : null
 }
