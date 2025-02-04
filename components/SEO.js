@@ -102,7 +102,6 @@ const SEO = props => {
 
   const CDN_PRECONNECT = siteConfig('CDN_PRECONNECT', null, NOTION_CONFIG)
 
-
   const AUTHOR = siteConfig('AUTHOR')
   return (
     <Head>
@@ -229,7 +228,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/archive':
       return {
         title: `${locale.NAV.ARCHIVE} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${locale.NAV.ARCHIVE} ${locale.COMMON.RELATE_POSTS}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'archive',
         type: 'website'
@@ -237,7 +236,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/page/[page]':
       return {
         title: `${page} | Page | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${page} Page ${locale.COMMON.ARTICLE_LIST}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'page/' + page,
         type: 'website'
@@ -245,7 +244,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${category} ${locale.COMMON.RELATE_POSTS}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
@@ -253,16 +252,23 @@ const getSEOMeta = (props, router, locale) => {
     case '/category/[category]/page/[page]':
       return {
         title: `${category} | ${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${page} Page ${category} ${locale.COMMON.RELATE_POSTS} ${locale.COMMON.ARTICLE_LIST}`,
         slug: 'category/' + category,
         image: `${siteInfo?.pageCover}`,
         type: 'website'
       }
     case '/tag/[tag]':
+      return {
+        title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
+        description: `${tag} ${locale.COMMON.RELATE_POSTS}`,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'tag/' + tag,
+        type: 'website'
+      }
     case '/tag/[tag]/page/[page]':
       return {
         title: `${tag} | ${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${page} Page ${tag} ${locale.COMMON.RELATE_POSTS} ${locale.COMMON.ARTICLE_LIST}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag/' + tag,
         type: 'website'
@@ -292,7 +298,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/tag':
       return {
         title: `${locale.COMMON.TAGS} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${locale.COMMON.TAGS} ${locale.COMMON.RELATE_POSTS}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'tag',
         type: 'website'
@@ -300,7 +306,7 @@ const getSEOMeta = (props, router, locale) => {
     case '/category':
       return {
         title: `${locale.COMMON.CATEGORY} | ${siteInfo?.title}`,
-        description: `${siteInfo?.description}`,
+        description: `${locale.COMMON.CATEGORY} ${locale.COMMON.RELATE_POSTS}`,
         image: `${siteInfo?.pageCover}`,
         slug: 'category',
         type: 'website'
