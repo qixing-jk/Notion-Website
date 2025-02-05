@@ -3,7 +3,7 @@ import { useGlobal } from '@/lib/global'
 import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { memo, useEffect } from 'react'
+import { Fragment, memo, useEffect } from 'react'
 import { CDN_TRANSFORM, CDNJS_CDN_BASE, JSDELIVR_CDN_BASE, LANG, NOTION_PAGE_ID, NPM_CDN_BASE } from '@/blog.config'
 import { extractLangPrefix } from '@/lib/utils/pageId'
 
@@ -112,6 +112,7 @@ const SEO = props => {
           const langPrefix = extractLangPrefix(siteId) || LANG.slice(0, 2)
           return (
             <link
+              key={meta.slug}
               rel='alternate'
               hrefLang={langPrefix}
               href={`${LINK}/${SUB_PATH && SUB_PATH + '/'}${langPrefix}/${meta.slug}`}
@@ -153,10 +154,10 @@ const SEO = props => {
 
       <link rel='icon' href={BLOG_FAVICON} />
       {CDN_PRECONNECT.map(transformCDNUrl => (
-        <>
+        <Fragment key={transformCDNUrl}>
           <link rel='preconnect' href={transformCDNUrl} />
           <link rel='dns-prefetch' href={transformCDNUrl} />
-        </>
+        </Fragment>
       ))}
       {CDN_TRANSFORM && (
         <>
@@ -197,7 +198,7 @@ const SEO = props => {
           <meta property='article:section' content={category} />
           <meta property='article:publisher' content={LINK} />
           {post?.tags?.map(tag => (
-            <meta property='article:tag' content={tag} />
+            <meta key={tag} property='article:tag' content={tag} />
           ))}
         </>
       )}
