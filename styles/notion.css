@@ -760,14 +760,6 @@ svg.notion-page-icon {
   margin-bottom: 0.5em;
 }
 
-.notion pre[class*='language-'] {
-  line-height: inherit;
-}
-
-.notion code[class*='language-'] {
-  background: unset !important;
-}
-
 .notion-code {
   padding: 30px 16px 30px 20px;
   border-bottom-right-radius: 0.5rem;
@@ -967,6 +959,12 @@ svg.notion-page-icon {
   white-space: pre-wrap;
   word-break: break-word;
   overflow: hidden;
+}
+
+.notion-callout-text .notion-text{
+  padding: 0px 0px !important;
+  margin: 0px 0px !important;
+  line-height: normal !important;
 }
 
 .notion-toggle {
@@ -1693,7 +1691,7 @@ svg.notion-page-icon {
   color: inherit;
 }
 
-notion-callout svg.notion-page-icon {
+.notion-callout svg.notion-page-icon {
   @apply hidden;
 }
 
