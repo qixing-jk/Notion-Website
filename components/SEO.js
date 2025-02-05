@@ -13,7 +13,7 @@ import { extractLangPrefix } from '@/lib/utils/pageId'
  * @returns
  */
 const SEO = props => {
-  const { children, siteInfo, post, NOTION_CONFIG } = props
+  const { siteInfo, post, NOTION_CONFIG } = props
   const PATH = siteConfig('PATH')
   const LINK = siteConfig('LINK')
   const SUB_PATH = siteConfig('SUB_PATH', '')
@@ -202,7 +202,6 @@ const SEO = props => {
           ))}
         </>
       )}
-      {children}
     </Head>
   )
 }
