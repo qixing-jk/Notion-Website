@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { LayoutSearch } from '@theme-components/LayoutSearch'
@@ -47,14 +47,16 @@ const Search = props => {
  * 浏览器前端搜索
  */
 export async function getStaticProps({ locale }) {
+  const from = 'search-props'
   const props = await getGlobalData({
-    from: 'search-props',
+    from,
     locale
   })
   const { allPages } = props
   props.posts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
+  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT
