@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -16,8 +16,10 @@ export default function Category(props) {
 }
 
 export async function getStaticProps({ locale }) {
-  const props = await getGlobalData({ from: 'category-index-props', locale })
+  const from = 'search-props'
+  const props = await getGlobalData({ from, locale })
   delete props.allPages
+  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT
