@@ -174,7 +174,7 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
           nextImage: Image,
           nextLink: Link,
           Code,
-          ...(post?.shouldLoadCollection ? { Collection } : null),
+          Collection: post?.shouldLoadCollection ? Collection : null,
           Equation,
           Modal,
           Pdf,
