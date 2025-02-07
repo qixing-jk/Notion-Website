@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
@@ -81,7 +81,7 @@ export async function getStaticProps(req) {
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 
   delete props.allPages
-
+  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT

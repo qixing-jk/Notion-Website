@@ -2,6 +2,7 @@ import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
 import { siteConfig } from '@/lib/config'
 import {
+  cleanDataBeforeReturn,
   getGlobalData,
   getPost,
   handleDataBeforeReturn
@@ -146,6 +147,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     await processPostData(props, from)
     handleDataBeforeReturn(props)
   }
+  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: getRevalidateTime(props, 0)

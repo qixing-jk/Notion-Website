@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 import { LayoutPostList } from '@theme-components/LayoutPostList'
 
@@ -35,6 +35,7 @@ export async function getStaticProps({ params: { tag, page }, locale }) {
   props.tag = tag
   props.page = page
   delete props.allPages
+  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT
