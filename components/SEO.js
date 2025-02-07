@@ -112,7 +112,7 @@ const SEO = props => {
           const langPrefix = extractLangPrefix(siteId) || LANG.slice(0, 2)
           return (
             <link
-              key={meta.slug}
+              key={langPrefix}
               rel='alternate'
               hrefLang={langPrefix}
               href={`${LINK}/${SUB_PATH && SUB_PATH + '/'}${langPrefix}/${meta.slug}`}
