@@ -4,6 +4,7 @@ import { checkSlugHasOneSlash, processPostData } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
 import Slug from '..'
 import { getRevalidateTime } from '@/lib/utils/revalidate'
+import { getOrSetDataWithCache } from '@/lib/cache/cache_manager'
 
 /**
  * 根据notion的slug访问页面
@@ -74,9 +75,17 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
       notFound: true
     }
   } else {
-    await processPostData(props, from)
+    await getOrSetDataWithCache(
+      `${props.post.id}_${props.post.lastEditedDay}`,
+      async (props, from) => {
+        await processPostData(props, from)
+        cleanDataBeforeReturn(props, from)
+        return props
+      },
+      props,
+      from
+    )
   }
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: getRevalidateTime(props, 1)

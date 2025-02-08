@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 import { getRevalidateTime } from '@/lib/utils/revalidate'
 import { LayoutSlug } from '@theme-components/LayoutSlug'
 import dynamic from 'next/dynamic'
+import { getOrSetDataWithCache } from '@/lib/cache/cache_manager'
 
 const OpenWrite = dynamic(() => import('@/components/OpenWrite'))
 
@@ -144,9 +145,17 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       notFound: true
     }
   } else {
-    await processPostData(props, from)
+    await getOrSetDataWithCache(
+      `${props.post.id}}`,
+      async (props, from) => {
+        await processPostData(props, from)
+        cleanDataBeforeReturn(props, from)
+        return props
+      },
+      props,
+      from
+    )
   }
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: getRevalidateTime(props, 0)
