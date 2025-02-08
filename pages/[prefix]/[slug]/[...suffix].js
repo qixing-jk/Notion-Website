@@ -2,13 +2,13 @@ import BLOG from '@/blog.config'
 import {
   cleanDataBeforeReturn,
   getGlobalData,
-  getPost,
-  handleDataBeforeReturn
+  getPost
 } from '@/lib/db/getSiteData'
 import { checkSlugHasMorThanTwoSlash, processPostData } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
 import Slug from '..'
 import { getRevalidateTime } from '@/lib/utils/revalidate'
+import { getOrSetDataWithCache } from '@/lib/cache/cache_manager'
 
 /**
  * 根据notion的slug访问页面
@@ -60,7 +60,7 @@ export async function getStaticProps({
 }) {
   const fullSlug = prefix + '/' + slug + '/' + suffix.join('/')
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale, cleanData: false })
+  let props = await getGlobalData({ from, locale })
 
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
@@ -77,19 +77,27 @@ export async function getStaticProps({
   if (!props?.post) {
     const pageId = fullSlug.slice(-1)[0]
     if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
+      props.post = await getPost(pageId)
     }
   }
 
   if (!props?.post) {
     // 无法获取文章
-    props.post = null
+    return {
+      notFound: true
+    }
   } else {
-    await processPostData(props, from)
-    handleDataBeforeReturn(props)
+    props = await getOrSetDataWithCache(
+      `${props.post.id}_${props.post.lastEditedDay}`,
+      async (props, from) => {
+        await processPostData(props, from)
+        cleanDataBeforeReturn(props, from)
+        return props
+      },
+      props,
+      from
+    )
   }
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: getRevalidateTime(props, 2)

@@ -1,10 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import {
-  cleanDataBeforeReturn,
-  getGlobalData,
-  getPostBlocks
-} from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -64,7 +60,6 @@ export async function getStaticProps({ params: { page }, locale }) {
     }
   }
 
-  delete props.allPages
   cleanDataBeforeReturn(props, from)
   return {
     props,

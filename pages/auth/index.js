@@ -1,5 +1,5 @@
 // pages/sitemap.xml.js
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData } from '@/lib/db/getSiteData'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -28,7 +28,6 @@ const UI = props => {
 export const getServerSideProps = async ctx => {
   const from = `auth`
   const props = await getGlobalData({ from })
-  delete props.allPages
   const code = ctx.query.code
 
   let params = null
@@ -53,7 +52,7 @@ export const getServerSideProps = async ctx => {
   }
 
   props.redirect_pathname = '/auth/result'
-
+  cleanDataBeforeReturn(props, from)
   return {
     props
   }

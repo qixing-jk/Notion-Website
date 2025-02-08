@@ -72,7 +72,6 @@ export async function getStaticProps(req) {
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 
-  delete props.allPages
   cleanDataBeforeReturn(props, from)
   return {
     props,

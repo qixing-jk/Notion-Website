@@ -19,7 +19,6 @@ export async function getStaticProps(req) {
   const from = 'SignIn'
   const props = await getGlobalData({ from, locale })
 
-  delete props.allPages
   cleanDataBeforeReturn(props, from)
   return {
     props,

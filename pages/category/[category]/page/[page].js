@@ -31,7 +31,6 @@ export async function getStaticProps({ params: { category, page } }) {
     POSTS_PER_PAGE * page
   )
 
-  delete props.allPages
   props.page = page
 
   props = { ...props, category, page }

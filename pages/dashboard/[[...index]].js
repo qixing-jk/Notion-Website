@@ -1,11 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import {
-  cleanDataBeforeReturn,
-  getGlobalData,
-  getPost,
-  getPostBlocks
-} from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -39,22 +34,13 @@ export async function getStaticProps({ locale }) {
   if (!props?.post) {
     const pageId = prefix
     if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
+      props.post = await getPost(pageId)
     }
   }
   // 无法获取文章
   if (!props?.post) {
-    props.post = null
     return {
-      props,
-      revalidate: process.env.EXPORT
-        ? undefined
-        : siteConfig(
-            'NEXT_REVALIDATE_SECOND',
-            BLOG.NEXT_REVALIDATE_SECOND,
-            props.NOTION_CONFIG
-          )
+      notFound: true
     }
   }
 
@@ -63,7 +49,6 @@ export async function getStaticProps({ locale }) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
-  delete props.allPages
   cleanDataBeforeReturn(props, from)
   return {
     props,
