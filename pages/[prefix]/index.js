@@ -142,7 +142,9 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   }
   if (!props?.post) {
     // 无法获取文章
-    props.post = null
+    return {
+      notFound: true
+    }
   } else {
     await processPostData(props, from)
     handleDataBeforeReturn(props)

@@ -1,11 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import {
-  cleanDataBeforeReturn,
-  getGlobalData,
-  getPost,
-  getPostBlocks
-} from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData, getPost, getPostBlocks } from '@/lib/db/getSiteData'
 import { DynamicLayout } from '@/themes/theme'
 import { LayoutDashboard } from '@theme-components/LayoutDashboard'
 
@@ -53,16 +48,8 @@ export async function getStaticProps({ locale }) {
   }
   // 无法获取文章
   if (!props?.post) {
-    props.post = null
     return {
-      props,
-      revalidate: process.env.EXPORT
-        ? undefined
-        : siteConfig(
-            'NEXT_REVALIDATE_SECOND',
-            BLOG.NEXT_REVALIDATE_SECOND,
-            props.NOTION_CONFIG
-          )
+      notFound: true
     }
   }
 
