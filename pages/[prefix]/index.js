@@ -136,8 +136,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   if (!props?.post) {
     const pageId = prefix
     if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
+      props.post = await getPost(pageId)
     }
   }
   if (!props?.post) {

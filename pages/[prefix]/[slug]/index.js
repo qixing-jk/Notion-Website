@@ -1,10 +1,5 @@
 import BLOG from '@/blog.config'
-import {
-  cleanDataBeforeReturn,
-  getGlobalData,
-  getPost,
-  handleDataBeforeReturn
-} from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData, getPost, handleDataBeforeReturn } from '@/lib/db/getSiteData'
 import { checkSlugHasOneSlash, processPostData } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
 import Slug from '..'
@@ -69,8 +64,7 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
   if (!props?.post) {
     const pageId = slug.slice(-1)[0]
     if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
+      props.post = await getPost(pageId)
     }
   }
 

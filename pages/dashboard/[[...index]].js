@@ -42,8 +42,7 @@ export async function getStaticProps({ locale }) {
   if (!props?.post) {
     const pageId = prefix
     if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
+      props.post = await getPost(pageId)
     }
   }
   // 无法获取文章
