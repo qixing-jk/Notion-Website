@@ -84,7 +84,7 @@ export async function getStaticProps({
     }
   } else {
     await getOrSetDataWithCache(
-      `${props.post.id}}`,
+      `${props.post.id}_${props.post.lastEditedDay}`,
       async (props, from) => {
         await processPostData(props, from)
         cleanDataBeforeReturn(props, from)
