@@ -48,7 +48,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
   const fullSlug = prefix + '/' + slug
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale })
+  let props = await getGlobalData({ from, locale })
 
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
@@ -75,7 +75,7 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
       notFound: true
     }
   } else {
-    await getOrSetDataWithCache(
+    props = await getOrSetDataWithCache(
       `${props.post.id}_${props.post.lastEditedDay}`,
       async (props, from) => {
         await processPostData(props, from)
