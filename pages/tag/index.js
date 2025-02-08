@@ -28,7 +28,7 @@ export async function getStaticProps(req) {
 
   const from = 'tag-index-props'
   const props = await getGlobalData({ from, locale })
-  delete props.allPages
+
   cleanDataBeforeReturn(props, from)
   return {
     props,

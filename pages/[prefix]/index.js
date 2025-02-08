@@ -4,8 +4,7 @@ import { siteConfig } from '@/lib/config'
 import {
   cleanDataBeforeReturn,
   getGlobalData,
-  getPost,
-  handleDataBeforeReturn
+  getPost
 } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
 import { getPasswordQuery } from '@/lib/password'
@@ -18,6 +17,7 @@ import { useEffect, useState } from 'react'
 import { getRevalidateTime } from '@/lib/utils/revalidate'
 import { LayoutSlug } from '@theme-components/LayoutSlug'
 import dynamic from 'next/dynamic'
+import { getOrSetDataWithCache } from '@/lib/cache/cache_manager'
 
 const OpenWrite = dynamic(() => import('@/components/OpenWrite'))
 
@@ -117,7 +117,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { prefix }, locale }) {
   let fullSlug = prefix
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale, cleanData: false })
+  const props = await getGlobalData({ from, locale })
   if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
@@ -136,18 +136,26 @@ export async function getStaticProps({ params: { prefix }, locale }) {
   if (!props?.post) {
     const pageId = prefix
     if (pageId.length >= 32) {
-      const post = await getPost(pageId)
-      props.post = post
+      props.post = await getPost(pageId)
     }
   }
   if (!props?.post) {
     // 无法获取文章
-    props.post = null
+    return {
+      notFound: true
+    }
   } else {
-    await processPostData(props, from)
-    handleDataBeforeReturn(props)
+    await getOrSetDataWithCache(
+      `${props.post.id}}`,
+      async (props, from) => {
+        await processPostData(props, from)
+        cleanDataBeforeReturn(props, from)
+        return props
+      },
+      props,
+      from
+    )
   }
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: getRevalidateTime(props, 0)

@@ -1,8 +1,6 @@
 import { useGlobal } from '@/lib/global'
 import { useEffect, useState } from 'react'
 import { siteConfig } from '@/lib/config'
-import { useRouter } from 'next/router'
-import { isBrowser } from '@/lib/utils'
 import AISummary from '@/components/AISummary'
 import WWAds from '@/components/WWAds'
 import dynamic from 'next/dynamic'
@@ -53,25 +51,6 @@ export const LayoutSlug = props => {
     siteConfig('COMMENT_GITALK_CLIENT_ID') ||
     siteConfig('COMMENT_WEBMENTION_ENABLE')
 
-  const router = useRouter()
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
-  useEffect(() => {
-    // 404
-    if (!post) {
-      setTimeout(() => {
-        if (isBrowser) {
-          const article = document.querySelector(
-            '#article-wrapper #notion-article'
-          )
-          if (!article) {
-            router.push('/404').then(() => {
-              console.warn('找不到页面', router.asPath)
-            })
-          }
-        }
-      }, waiting404)
-    }
-  }, [post])
   return (
     <>
       <div

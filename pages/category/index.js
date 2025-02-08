@@ -24,7 +24,7 @@ export default function Category(props) {
 export async function getStaticProps({ locale }) {
   const from = 'search-props'
   const props = await getGlobalData({ from, locale })
-  delete props.allPages
+
   cleanDataBeforeReturn(props, from)
   return {
     props,
