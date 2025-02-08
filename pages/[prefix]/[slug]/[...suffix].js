@@ -1,5 +1,9 @@
 import BLOG from '@/blog.config'
-import { cleanDataBeforeReturn, getGlobalData, getPost } from '@/lib/db/getSiteData'
+import {
+  cleanDataBeforeReturn,
+  getGlobalData,
+  getPost
+} from '@/lib/db/getSiteData'
 import { checkSlugHasMorThanTwoSlash, processPostData } from '@/lib/utils/post'
 import { idToUuid } from 'notion-utils'
 import Slug from '..'
@@ -56,7 +60,7 @@ export async function getStaticProps({
 }) {
   const fullSlug = prefix + '/' + slug + '/' + suffix.join('/')
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale })
+  let props = await getGlobalData({ from, locale })
 
   // 在列表内查找文章
   props.post = props?.allPages?.find(p => {
@@ -83,7 +87,7 @@ export async function getStaticProps({
       notFound: true
     }
   } else {
-    await getOrSetDataWithCache(
+    props = await getOrSetDataWithCache(
       `${props.post.id}_${props.post.lastEditedDay}`,
       async (props, from) => {
         await processPostData(props, from)

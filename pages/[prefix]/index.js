@@ -117,7 +117,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { prefix }, locale }) {
   let fullSlug = prefix
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale })
+  let props = await getGlobalData({ from, locale })
   if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
@@ -145,7 +145,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
       notFound: true
     }
   } else {
-    await getOrSetDataWithCache(
+    props = await getOrSetDataWithCache(
       `${props.post.id}_${props.post.lastEditedDay}`,
       async (props, from) => {
         await processPostData(props, from)
