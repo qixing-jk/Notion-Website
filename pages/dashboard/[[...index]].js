@@ -57,7 +57,6 @@ export async function getStaticProps({ locale }) {
     props.post.blockMap = await getPostBlocks(props.post.id, from)
   }
 
-  delete props.allPages
   cleanDataBeforeReturn(props, from)
   return {
     props,

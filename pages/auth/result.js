@@ -1,5 +1,5 @@
 // pages/sitemap.xml.js
-import { getGlobalData } from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData } from '@/lib/db/getSiteData'
 import { useRouter } from 'next/router'
 import Slug from '../[prefix]'
 
@@ -11,7 +11,7 @@ export const getStaticProps = async () => {
   const from = `auth`
   const props = await getGlobalData({ from })
 
-  delete props.allPages
+  cleanDataBeforeReturn(props, from)
   return {
     props
   }

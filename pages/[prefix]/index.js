@@ -4,8 +4,7 @@ import { siteConfig } from '@/lib/config'
 import {
   cleanDataBeforeReturn,
   getGlobalData,
-  getPost,
-  handleDataBeforeReturn
+  getPost
 } from '@/lib/db/getSiteData'
 import { useGlobal } from '@/lib/global'
 import { getPasswordQuery } from '@/lib/password'
@@ -117,7 +116,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { prefix }, locale }) {
   let fullSlug = prefix
   const from = `slug-props-${fullSlug}`
-  const props = await getGlobalData({ from, locale, cleanData: false })
+  const props = await getGlobalData({ from, locale })
   if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
     if (!fullSlug.endsWith('.html')) {
       fullSlug += '.html'
@@ -146,7 +145,6 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     }
   } else {
     await processPostData(props, from)
-    handleDataBeforeReturn(props)
   }
   cleanDataBeforeReturn(props, from)
   return {

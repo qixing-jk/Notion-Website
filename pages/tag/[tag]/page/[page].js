@@ -34,7 +34,7 @@ export async function getStaticProps({ params: { tag, page }, locale }) {
 
   props.tag = tag
   props.page = page
-  delete props.allPages
+
   cleanDataBeforeReturn(props, from)
   return {
     props,

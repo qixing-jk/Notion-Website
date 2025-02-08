@@ -46,7 +46,7 @@ export async function getStaticProps({ params: { keyword, page }, locale }) {
   )
   props.keyword = keyword
   props.page = page
-  delete props.allPages
+
   cleanDataBeforeReturn(props, from)
   return {
     props,

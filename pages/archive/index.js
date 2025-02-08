@@ -45,7 +45,6 @@ export async function getStaticProps({ locale }) {
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
-  delete props.allPages
 
   const postsSortByDate = Object.create(props.posts)
 
@@ -65,7 +64,6 @@ export async function getStaticProps({ locale }) {
   })
 
   props.archivePosts = archivePosts
-  delete props.allPages
 
   cleanDataBeforeReturn(props, from)
   return {
