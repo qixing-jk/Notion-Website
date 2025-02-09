@@ -97,6 +97,7 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   // 页面文章发生变化时会执行的勾子
   useEffect(() => {
     if (GALLERY_BEAUTIFICATION && post.shouldLoadCollection) {
+      loadExternalResource('/css/gallery.css', 'css')
       import('@/lib/GalleryBeautification').then(module => {
         module.GalleryBeautification(post)
       })

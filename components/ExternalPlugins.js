@@ -154,11 +154,6 @@ const ExternalPlugin = props => {
       loadExternalResource('/css/img-shadow.css', 'css')
     }
 
-    // 画册视图美化
-    if (GALLERY_BEAUTIFICATION) {
-      loadExternalResource('/css/gallery.css', 'css')
-    }
-
     if (ANIMATE_CSS_URL) {
       loadExternalResource(ANIMATE_CSS_URL, 'css')
     }
