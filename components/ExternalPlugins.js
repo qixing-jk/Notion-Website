@@ -122,11 +122,6 @@ const ExternalPlugin = props => {
     null,
     NOTION_CONFIG
   )
-  const GALLERY_BEAUTIFICATION = siteConfig(
-    'GALLERY_BEAUTIFICATION',
-    null,
-    NOTION_CONFIG
-  )
   const THEME = siteConfig('THEME')
 
   const router = useRouter()
