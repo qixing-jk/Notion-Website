@@ -122,11 +122,6 @@ const ExternalPlugin = props => {
     null,
     NOTION_CONFIG
   )
-  const GALLERY_BEAUTIFICATION = siteConfig(
-    'GALLERY_BEAUTIFICATION',
-    null,
-    NOTION_CONFIG
-  )
   const THEME = siteConfig('THEME')
 
   const router = useRouter()
@@ -152,11 +147,6 @@ const ExternalPlugin = props => {
     // 自动添加图片阴影
     if (IMG_SHADOW) {
       loadExternalResource('/css/img-shadow.css', 'css')
-    }
-
-    // 画册视图美化
-    if (GALLERY_BEAUTIFICATION) {
-      loadExternalResource('/css/gallery.css', 'css')
     }
 
     if (ANIMATE_CSS_URL) {
