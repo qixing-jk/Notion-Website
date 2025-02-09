@@ -7,7 +7,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
 import Link from 'next/link'
-import useAdjustStyle from '@/hooks/useAdjustStyle'
 
 /**
  * 整个站点的核心组件
@@ -17,7 +16,7 @@ import useAdjustStyle from '@/hooks/useAdjustStyle'
  */
 const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
-  useAdjustStyle()
+  // useAdjustStyle()
   // 是否关闭数据库和画册的点击跳转
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
