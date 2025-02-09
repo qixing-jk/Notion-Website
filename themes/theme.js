@@ -115,7 +115,7 @@ export const getLayoutByTheme = ({ layoutName, theme, layout }) => {
       { ssr: true }
     )
   }
-  setTimeout(fixThemeDOM, 100)
+  // setTimeout(fixThemeDOM, 100)
   return LayoutComponents
 }
 
