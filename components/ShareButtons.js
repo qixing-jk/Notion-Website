@@ -321,7 +321,7 @@ const ShareButtons = ({ post }) => {
                   target='_blank'
                   rel='noreferrer'
                   aria-label='Share by QQ'
-                  href={`http://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${title}&desc=${body}`}>
+                  href={`https://connect.qq.com/widget/shareqq/index.html?url=${shareUrl}&sharesource=qzone&title=${title}&desc=${body}`}>
                   <i className='fab fa-qq w-8' />
                 </a>
               </button>
