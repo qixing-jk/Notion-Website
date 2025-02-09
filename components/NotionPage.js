@@ -27,16 +27,17 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   const SmartLink = useCallback(
     ({ href, children, ...rest }) => {
       const isExternal = !href.startsWith(LINK) || rest.target === '_blank'
-      if (
-        isExternal &&
-        !rest.className.includes('notion-bookmark') &&
-        !rest.className.includes('notion-file-link')
-      ) {
+      if (isExternal) {
+        const shouldShowArrow =
+          !rest.className.includes('notion-bookmark') &&
+          !rest.className.includes('notion-file-link')
         return (
           <a href={href} target='_blank' rel='noopener noreferrer' {...rest}>
             {children}
             &nbsp;
-            <i className='fas fa-arrow-up-right-from-square'></i>
+            {shouldShowArrow && (
+              <i className='fas fa-arrow-up-right-from-square'></i>
+            )}
           </a>
         )
       }
