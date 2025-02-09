@@ -5,7 +5,6 @@ import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { NotionRenderer } from 'react-notion-x'
-import { GalleryBeautification } from '@/lib/GalleryBeautification'
 import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
 import Link from 'next/link'
 import useAdjustStyle from '@/hooks/useAdjustStyle'
@@ -98,7 +97,9 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   // 页面文章发生变化时会执行的勾子
   useEffect(() => {
     if (GALLERY_BEAUTIFICATION) {
-      GalleryBeautification(post)
+      import('@/lib/GalleryBeautification').then(module => {
+        module.GalleryBeautification(post)
+      })
     }
     // 相册视图点击禁止跳转，只能放大查看图片
     if (POST_DISABLE_GALLERY_CLICK) {
