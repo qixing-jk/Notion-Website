@@ -4,11 +4,8 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
-import { initGoogleAdsense } from './GoogleAdsense'
-import { GoogleAnalytics } from '@next/third-parties/google'
 import Head from 'next/head'
 import ExternalScript from './ExternalScript'
-import WebWhiz from './Webwhiz'
 
 /**
  * 各种插件脚本
@@ -432,6 +429,20 @@ const ExternalPlugin = props => {
   )
 }
 
+const WebWhiz = dynamic(() => import('./Webwhiz'), { ssr: false })
+const GoogleAnalytics = dynamic(
+  () =>
+    import('@next/third-parties/google').then(module => module.GoogleAnalytics),
+  {
+    ssr: false
+  }
+)
+const initGoogleAdsense = dynamic(
+  () => import('./GoogleAdsense').then(module => module.initGoogleAdsense),
+  {
+    ssr: false
+  }
+)
 const TwikooCommentCounter = dynamic(
   () => import('@/components/TwikooCommentCounter'),
   { ssr: false }
