@@ -5,6 +5,7 @@ import getConfig from 'next/config'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { getQueryParam, getQueryVariable, isBrowser } from '../lib/utils'
+import { siteConfig } from '@/lib/config'
 
 // 在next.config.js中扫描所有主题
 export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
@@ -92,30 +93,32 @@ export const getLayoutByTheme = ({ layoutName, theme, layout }) => {
   // const layoutName = getLayoutNameByPath(router.pathname, router.asPath)
   const LayoutComponents =
     layout || ThemeComponents[layoutName] || ThemeComponents['LayoutSlug']
-  const router = useRouter()
-  const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
-  const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
-  // 加载非当前默认主题
-  if (!isDefaultTheme) {
-    return dynamic(
-      () =>
-        import(`@/themes/${themeQuery || BLOG.THEME}/${layoutName}`)
-          .then(m => {
-            setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
-            return m[layoutName]
-          })
-          .catch(err => {
-            import(`@/themes/${themeQuery || BLOG.THEME}/LayoutSlug`).then(
-              m => {
-                setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
-                return m[layoutName]
-              }
-            )
-          }),
-      { ssr: true }
-    )
+  if (siteConfig('THEME_SWITCH')) {
+    const router = useRouter()
+    const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
+    const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
+    // 加载非当前默认主题
+    if (!isDefaultTheme) {
+      return dynamic(
+        () =>
+          import(`@/themes/${themeQuery || BLOG.THEME}/${layoutName}`)
+            .then(m => {
+              setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
+              return m[layoutName]
+            })
+            .catch(err => {
+              import(`@/themes/${themeQuery || BLOG.THEME}/LayoutSlug`).then(
+                m => {
+                  setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
+                  return m[layoutName]
+                }
+              )
+            }),
+        { ssr: true }
+      )
+    }
   }
-  setTimeout(fixThemeDOM, 100)
+  // setTimeout(fixThemeDOM, 100)
   return LayoutComponents
 }
 
