@@ -5,10 +5,8 @@ import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { NotionRenderer } from 'react-notion-x'
-import { GalleryBeautification } from '@/lib/GalleryBeautification'
 import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
 import Link from 'next/link'
-import useAdjustStyle from '@/hooks/useAdjustStyle'
 
 /**
  * 整个站点的核心组件
@@ -18,7 +16,7 @@ import useAdjustStyle from '@/hooks/useAdjustStyle'
  */
 const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
-  useAdjustStyle()
+  // useAdjustStyle()
   // 是否关闭数据库和画册的点击跳转
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
@@ -29,16 +27,17 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
   const SmartLink = useCallback(
     ({ href, children, ...rest }) => {
       const isExternal = !href.startsWith(LINK) || rest.target === '_blank'
-      if (
-        isExternal &&
-        !rest.className.includes('notion-bookmark') &&
-        !rest.className.includes('notion-file-link')
-      ) {
+      if (isExternal) {
+        const shouldShowArrow =
+          !rest.className.includes('notion-bookmark') &&
+          !rest.className.includes('notion-file-link')
         return (
           <a href={href} target='_blank' rel='noopener noreferrer' {...rest}>
             {children}
             &nbsp;
-            <i className='fas fa-arrow-up-right-from-square'></i>
+            {shouldShowArrow && (
+              <i className='fas fa-arrow-up-right-from-square'></i>
+            )}
           </a>
         )
       }
@@ -97,20 +96,30 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
 
   // 页面文章发生变化时会执行的勾子
   useEffect(() => {
-    if (GALLERY_BEAUTIFICATION) {
-      GalleryBeautification(post)
+    if (GALLERY_BEAUTIFICATION && post.shouldLoadCollection) {
+      loadExternalResource('/css/gallery.css', 'css')
+      import('@/lib/GalleryBeautification').then(module => {
+        module.GalleryBeautification(post)
+      })
     }
+  }, [post])
+
+  useEffect(() => {
     // 相册视图点击禁止跳转，只能放大查看图片
-    if (POST_DISABLE_GALLERY_CLICK) {
+    if (POST_DISABLE_GALLERY_CLICK && post.shouldLoadCollection) {
       // 针对页面中的gallery视图，点击后是放大图片还是跳转到gallery的内部页面
       processGalleryImg(zoomRef?.current)
     }
+  }, [post])
 
+  useEffect(() => {
     // 页内数据库点击禁止跳转，只能查看
     if (POST_DISABLE_DATABASE_CLICK) {
       processDisableDatabaseUrl()
     }
+  }, [post])
 
+  useEffect(() => {
     /**
      * 放大查看图片时替换成高清图像
      */
