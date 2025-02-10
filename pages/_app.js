@@ -90,7 +90,7 @@ const MyApp = ({ Component, pageProps }) => {
         defaultTheme={BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE}
         attribute='class'
         enableSystem={true}
-        forcedTheme={Component.theme || forceDarkMode() ? 'dark' : 'light'}>
+        forcedTheme={Component.theme || forceDarkMode() ? 'dark' : 'system'}>
         <GlobalContextProvider {...pageProps}>
           <SEO {...pageProps} />
           <GLayout {...pageProps}>
