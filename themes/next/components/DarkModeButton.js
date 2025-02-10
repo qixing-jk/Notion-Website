@@ -1,8 +1,8 @@
 import { useTheme } from 'next-themes'
 
 const DarkModeButton = () => {
-  const { theme, setTheme } = useTheme()
-  const isDarkMode = theme === 'dark'
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDarkMode = resolvedTheme === 'dark'
 
   function handleChangeDarkMode() {
     setTheme(isDarkMode ? 'light' : 'dark')

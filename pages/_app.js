@@ -2,7 +2,7 @@
 import '@/styles/globals.css'
 import '@/styles/utility-patterns.css'
 import { GlobalContextProvider } from '@/lib/global'
-import { forceDarkMode, getBaseLayoutByTheme } from '@/themes/theme'
+import { getBaseLayoutByTheme, shouldDefaultDarkMode } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useCallback, useInsertionEffect, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
@@ -89,12 +89,10 @@ const MyApp = ({ Component, pageProps }) => {
   const content = (
     <>
       <ThemeProvider
-        defaultTheme={defaultTheme}
+        defaultTheme={shouldDefaultDarkMode() ? 'dark' : defaultTheme}
         attribute='class'
         enableSystem={true}
-        forcedTheme={
-          Component.theme || forceDarkMode() ? 'dark' : undefined
-        }>
+        forcedTheme={Component.theme || undefined}>
         <GlobalContextProvider {...pageProps}>
           <SEO {...pageProps} />
           <GLayout {...pageProps}>

@@ -14,8 +14,8 @@ import { useTheme } from 'next-themes'
 export default function CustomContextMenu(props) {
   const [position, setPosition] = useState({ x: '0px', y: '0px' })
   const [show, setShow] = useState(false)
-  const { theme, setTheme } = useTheme()
-  const isDarkMode = theme === 'dark'
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDarkMode = resolvedTheme === 'dark'
 
   function handleChangeDarkMode() {
     setTheme(isDarkMode ? 'light' : 'dark')

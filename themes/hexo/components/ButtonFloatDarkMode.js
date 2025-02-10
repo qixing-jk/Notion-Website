@@ -6,12 +6,12 @@ import { useTheme } from 'next-themes'
  * 深色模式按钮
  */
 export default function ButtonDarkModeFloat() {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
   if (!siteConfig('HEXO_WIDGET_DARK_MODE', null, CONFIG)) {
     return <></>
   }
-  const isDarkMode = theme === 'dark'
+  const isDarkMode = resolvedTheme === 'dark'
 
   function handleChangeDarkMode() {
     setTheme(isDarkMode ? 'light' : 'dark')

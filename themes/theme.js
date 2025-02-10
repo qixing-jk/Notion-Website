@@ -151,7 +151,7 @@ const fixThemeDOM = () => {
  * - The system is in dark mode
  * - The current time is between `BLOG.APPEARANCE_DARK_TIME[0]` and `BLOG.APPEARANCE_DARK_TIME[1]`
  */
-export const forceDarkMode = () => {
+export const shouldDefaultDarkMode = () => {
   if (BLOG.APPEARANCE === 'auto') {
     // 系统深色模式或时间是夜间时，强行置为夜间模式
     const date = new Date()

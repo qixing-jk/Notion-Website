@@ -18,8 +18,8 @@ const ThemeSwitch = () => {
   const router = useRouter()
   const currentTheme = getQueryParam(router.asPath, 'theme') || theme
   const [sideBarVisible, setSideBarVisible] = useState(false)
-  const { theme, setTheme } = useTheme()
-  const isDarkMode = theme === 'dark'
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDarkMode = resolvedTheme === 'dark'
 
   function handleChangeDarkMode() {
     setTheme(isDarkMode ? 'light' : 'dark')

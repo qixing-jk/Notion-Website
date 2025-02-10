@@ -3,13 +3,13 @@ import { siteConfig } from '@/lib/config'
 import { useTheme } from 'next-themes'
 
 export default function FloatDarkModeButton() {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
 
   if (!siteConfig('HEO_WIDGET_DARK_MODE', null, CONFIG)) {
     return <></>
   }
 
-  const isDarkMode = theme === 'dark'
+  const isDarkMode = resolvedTheme === 'dark'
 
   function handleChangeDarkMode() {
     setTheme(isDarkMode ? 'light' : 'dark')

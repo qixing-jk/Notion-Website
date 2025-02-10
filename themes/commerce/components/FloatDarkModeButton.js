@@ -2,12 +2,12 @@ import CONFIG from '../config'
 import { useTheme } from 'next-themes'
 
 export default function FloatDarkModeButton() {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   if (!CONFIG.WIDGET_DARK_MODE) {
     return <></>
   }
 
-  const isDarkMode = theme === 'dark'
+  const isDarkMode = resolvedTheme === 'dark'
 
   function handleChangeDarkMode() {
     setTheme(isDarkMode ? 'light' : 'dark')
