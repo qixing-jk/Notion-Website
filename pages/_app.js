@@ -13,12 +13,16 @@ import '@/styles/notion.css' //  重写部分notion样式
 import BLOG from '@/blog.config'
 import SEO from '@/components/SEO'
 import dynamic from 'next/dynamic'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'), {
   ssr: false
 })
 
 const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+const enableVercelSpeedInsight =
+  process.env.NEXT_PUBLIC_VERCEL_SPEED_INSIGHT && BLOG['isProd']
 
 const ClerkProvider = enableClerk
   ? dynamic(() => import('@clerk/nextjs').then(m => m.ClerkProvider), {
@@ -72,13 +76,16 @@ const MyApp = ({ Component, pageProps }) => {
   })
 
   const content = (
-    <GlobalContextProvider {...pageProps}>
-      <SEO {...pageProps} />
-      <GLayout {...pageProps}>
-        <Component {...pageProps} />
-      </GLayout>
-      <ExternalPlugins {...pageProps} />
-    </GlobalContextProvider>
+    <>
+      <GlobalContextProvider {...pageProps}>
+        <SEO {...pageProps} />
+        <GLayout {...pageProps}>
+          <Component {...pageProps} />
+        </GLayout>
+        <ExternalPlugins {...pageProps} />
+      </GlobalContextProvider>
+      {enableVercelSpeedInsight && <SpeedInsights />}
+    </>
   )
   return (
     <>
