@@ -13,6 +13,7 @@ import '@/styles/notion.css' //  重写部分notion样式
 import BLOG from '@/blog.config'
 import SEO from '@/components/SEO'
 import dynamic from 'next/dynamic'
+import { ThemeProvider } from 'next-themes'
 
 const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'), {
   ssr: false
@@ -85,14 +86,20 @@ const MyApp = ({ Component, pageProps }) => {
 
   const content = (
     <>
-      <GlobalContextProvider {...pageProps}>
-        <SEO {...pageProps} />
-        <GLayout {...pageProps}>
-          <Component {...pageProps} />
-        </GLayout>
-        <ExternalPlugins {...pageProps} />
-      </GlobalContextProvider>
-      {enableVercelSpeedInsight && <SpeedInsights />}
+      <ThemeProvider
+        // defaultTheme={BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE}
+        defaultTheme='system'
+        attribute='class'
+        enableSystem={true}>
+        <GlobalContextProvider {...pageProps}>
+          <SEO {...pageProps} />
+          <GLayout {...pageProps}>
+            <Component {...pageProps} />
+          </GLayout>
+          <ExternalPlugins {...pageProps} />
+        </GlobalContextProvider>
+        {enableVercelSpeedInsight && <SpeedInsights />}
+      </ThemeProvider>
     </>
   )
   return (
