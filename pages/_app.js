@@ -18,13 +18,25 @@ const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'), {
   ssr: false
 })
 
+const SpeedInsights = dynamic(
+  () =>
+    import('@vercel/speed-insights/next').then(module => module.SpeedInsights),
+  {
+    ssr: false
+  }
+)
+
 const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-const ClerkProvider = enableClerk
-  ? dynamic(() => import('@clerk/nextjs').then(m => m.ClerkProvider), {
-      ssr: false
-    })
-  : null
+const enableVercelSpeedInsight =
+  process.env.NEXT_PUBLIC_VERCEL_SPEED_INSIGHT && BLOG['isProd']
+
+const ClerkProvider = dynamic(
+  () => import('@clerk/nextjs').then(m => m.ClerkProvider),
+  {
+    ssr: false
+  }
+)
 const zhCN = enableClerk
   ? dynamic(() => import('@clerk/localizations').then(m => m.zhCN), {
       ssr: false
@@ -72,13 +84,16 @@ const MyApp = ({ Component, pageProps }) => {
   })
 
   const content = (
-    <GlobalContextProvider {...pageProps}>
-      <SEO {...pageProps} />
-      <GLayout {...pageProps}>
-        <Component {...pageProps} />
-      </GLayout>
-      <ExternalPlugins {...pageProps} />
-    </GlobalContextProvider>
+    <>
+      <GlobalContextProvider {...pageProps}>
+        <SEO {...pageProps} />
+        <GLayout {...pageProps}>
+          <Component {...pageProps} />
+        </GLayout>
+        <ExternalPlugins {...pageProps} />
+      </GlobalContextProvider>
+      {enableVercelSpeedInsight && <SpeedInsights />}
+    </>
   )
   return (
     <>
