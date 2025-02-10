@@ -2,7 +2,7 @@
 import '@/styles/globals.css'
 import '@/styles/utility-patterns.css'
 import { GlobalContextProvider } from '@/lib/global'
-import { getBaseLayoutByTheme } from '@/themes/theme'
+import { getBaseLayoutByTheme, shouldDefaultDarkMode } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useCallback, useInsertionEffect, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
@@ -13,6 +13,7 @@ import '@/styles/notion.css' //  重写部分notion样式
 import BLOG from '@/blog.config'
 import SEO from '@/components/SEO'
 import dynamic from 'next/dynamic'
+import { ThemeProvider } from 'next-themes'
 
 const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'), {
   ssr: false
@@ -42,6 +43,8 @@ const zhCN = enableClerk
       ssr: false
     })
   : null
+
+const defaultTheme = BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE
 
 /**
  * App挂载DOM 入口文件
@@ -85,13 +88,19 @@ const MyApp = ({ Component, pageProps }) => {
 
   const content = (
     <>
-      <GlobalContextProvider {...pageProps}>
-        <SEO {...pageProps} />
-        <GLayout {...pageProps}>
-          <Component {...pageProps} />
-        </GLayout>
-        <ExternalPlugins {...pageProps} />
-      </GlobalContextProvider>
+      <ThemeProvider
+        defaultTheme={shouldDefaultDarkMode() ? 'dark' : defaultTheme}
+        attribute='class'
+        enableSystem={true}
+        forcedTheme={Component.theme || undefined}>
+        <GlobalContextProvider {...pageProps}>
+          <SEO {...pageProps} />
+          <GLayout {...pageProps}>
+            <Component {...pageProps} />
+          </GLayout>
+          <ExternalPlugins {...pageProps} />
+        </GlobalContextProvider>
+      </ThemeProvider>
       {enableVercelSpeedInsight && <SpeedInsights />}
     </>
   )

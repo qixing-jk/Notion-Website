@@ -8,7 +8,7 @@ module.exports = {
     './layouts/**/*.js',
     './themes/**/*.js'
   ],
-  darkMode: BLOG.APPEARANCE === 'class' ? 'media' : 'class', // or 'media' or 'class'
+  darkMode: BLOG.APPEARANCE === 'class' ? 'media' : 'selector', // or 'media' or 'class'
   theme: {
     fontFamily: fontFamilies,
     screens: require('./tailwind.screens'),

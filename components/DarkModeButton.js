@@ -1,22 +1,25 @@
-import { useGlobal } from '@/lib/global'
 import { memo, useImperativeHandle } from 'react'
 import { Moon, Sun } from './HeroIcons'
+import { useTheme } from 'next-themes'
 
 /**
  * 深色模式按钮
  */
 const DarkModeButton = props => {
   const { cRef, className } = props
-  const { isDarkMode, toggleDarkMode } = useGlobal()
+  const { resolvedTheme, setTheme } = useTheme()
+  const isDarkMode = resolvedTheme === 'dark'
+
+  function handleChangeDarkMode() {
+    setTheme(isDarkMode ? 'light' : 'dark')
+  }
 
   /**
    * 对外暴露方法
    */
   useImperativeHandle(cRef, () => {
     return {
-      handleChangeDarkMode: () => {
-        toggleDarkMode()
-      }
+      handleChangeDarkMode: handleChangeDarkMode
     }
   })
 
@@ -24,7 +27,7 @@ const DarkModeButton = props => {
     <div
       className={`${className || ''} flex justify-center dark:text-gray-200 text-gray-800`}>
       <div
-        onClick={toggleDarkMode}
+        onClick={handleChangeDarkMode}
         id='darkModeButton'
         className=' hover:scale-110 cursor-pointer transform duration-200 w-5 h-5'>
         {' '}
