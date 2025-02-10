@@ -87,8 +87,7 @@ const MyApp = ({ Component, pageProps }) => {
   const content = (
     <>
       <ThemeProvider
-        // defaultTheme={BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE}
-        defaultTheme='system'
+        defaultTheme={BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE}
         attribute='class'
         enableSystem={true}
         forcedTheme={Component.theme|| forceDarkMode() ? 'dark' : 'light'}
