@@ -945,6 +945,11 @@
   resolved "https://registry.npmmirror.com/@vercel/analytics/-/analytics-1.4.1.tgz#a28a93133d68b6e3d86884a52fa7893f5ecaa381"
   integrity sha512-ekpL4ReX2TH3LnrRZTUKjHHNpNy9S1I7QmS+g/RQXoSUQ8ienzosuX7T9djZ/s8zPhBx1mpHP/Rw5875N+zQIQ==
 
+"@vercel/speed-insights@^1.1.0":
+  version "1.1.0"
+  resolved "https://mirrors.cloud.tencent.com/npm/@vercel/speed-insights/-/speed-insights-1.1.0.tgz#d48bce27b38a35da86805cc316656344a2230108"
+  integrity sha512-rAXxuhhO4mlRGC9noa5F7HLMtGg8YF1zAN6Pjd1Ny4pII4cerhtwSG4vympbCl+pWkH7nBS9kVXRD4FAn54dlg==
+
 "@vue/compiler-core@3.5.13":
   version "3.5.13"
   resolved "https://registry.npmmirror.com/@vue/compiler-core/-/compiler-core-3.5.13.tgz#b0ae6c4347f60c03e849a05d34e5bf747c9bda05"
@@ -3601,6 +3606,11 @@ next-sitemap@^1.6.203:
   dependencies:
     "@corex/deepmerge" "^2.6.148"
     minimist "^1.2.5"
+
+next-themes@^0.4.4:
+  version "0.4.4"
+  resolved "https://mirrors.cloud.tencent.com/npm/next-themes/-/next-themes-0.4.4.tgz#ce6f68a4af543821bbc4755b59c0d3ced55c2d13"
+  integrity sha512-LDQ2qIOJF0VnuVrrMSMLrWGjRMkq+0mpgl6e0juCLqdJ+oo8Q84JRWT6Wh11VDQKkMMe+dVzDKLWs5n87T+PkQ==
 
 next@14.2.4:
   version "14.2.4"
