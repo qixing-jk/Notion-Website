@@ -90,8 +90,7 @@ const MyApp = ({ Component, pageProps }) => {
         defaultTheme={BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE}
         attribute='class'
         enableSystem={true}
-        forcedTheme={Component.theme|| forceDarkMode() ? 'dark' : 'light'}
-      >
+        forcedTheme={Component.theme || forceDarkMode() ? 'dark' : 'light'}>
         <GlobalContextProvider {...pageProps}>
           <SEO {...pageProps} />
           <GLayout {...pageProps}>
@@ -99,8 +98,8 @@ const MyApp = ({ Component, pageProps }) => {
           </GLayout>
           <ExternalPlugins {...pageProps} />
         </GlobalContextProvider>
-        {enableVercelSpeedInsight && <SpeedInsights />}
       </ThemeProvider>
+      {enableVercelSpeedInsight && <SpeedInsights />}
     </>
   )
   return (
