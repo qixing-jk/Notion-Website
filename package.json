@@ -31,6 +31,7 @@
     "@statoscope/webpack-plugin": "^5.28.3",
     "@upstash/redis": "^1.34.3",
     "@vercel/analytics": "^1.0.0",
+    "@vercel/speed-insights": "^1.1.0",
     "algoliasearch": "^4.18.0",
     "axios": "^1.7.2",
     "feed": "^4.2.2",
