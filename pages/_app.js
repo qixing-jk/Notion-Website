@@ -13,11 +13,18 @@ import '@/styles/notion.css' //  重写部分notion样式
 import BLOG from '@/blog.config'
 import SEO from '@/components/SEO'
 import dynamic from 'next/dynamic'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'), {
   ssr: false
 })
+
+const SpeedInsights = dynamic(
+  () =>
+    import('@vercel/speed-insights/next').then(module => module.SpeedInsights),
+  {
+    ssr: false
+  }
+)
 
 const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
