@@ -44,6 +44,8 @@ const zhCN = enableClerk
     })
   : null
 
+const defaultTheme = BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE
+
 /**
  * App挂载DOM 入口文件
  * @param {*} param0
@@ -87,10 +89,12 @@ const MyApp = ({ Component, pageProps }) => {
   const content = (
     <>
       <ThemeProvider
-        defaultTheme={BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE}
+        defaultTheme={defaultTheme}
         attribute='class'
         enableSystem={true}
-        forcedTheme={Component.theme || forceDarkMode() ? 'dark' : 'system'}>
+        forcedTheme={
+          Component.theme || forceDarkMode() ? 'dark' : defaultTheme
+        }>
         <GlobalContextProvider {...pageProps}>
           <SEO {...pageProps} />
           <GLayout {...pageProps}>
