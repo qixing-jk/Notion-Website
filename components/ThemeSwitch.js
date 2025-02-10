@@ -7,15 +7,23 @@ import DarkModeButton from './DarkModeButton'
 import { Draggable } from './Draggable'
 import LazyImage from './LazyImage'
 import SideBarDrawer from './SideBarDrawer'
+import { useTheme } from 'next-themes'
+
 /**
  *
  * @returns 主题切换
  */
 const ThemeSwitch = () => {
-  const { theme, locale, isDarkMode, toggleDarkMode } = useGlobal()
+  const { locale } = useGlobal()
   const router = useRouter()
   const currentTheme = getQueryParam(router.asPath, 'theme') || theme
   const [sideBarVisible, setSideBarVisible] = useState(false)
+  const { theme, setTheme } = useTheme()
+  const isDarkMode = theme === 'dark'
+
+  function handleChangeDarkMode() {
+    setTheme(isDarkMode ? 'light' : 'dark')
+  }
 
   const changeTheme = newTheme => {
     const query = router.query
@@ -76,7 +84,7 @@ const ThemeSwitch = () => {
           <div className='border dark:border-gray-60 text-sm flex items-center w-32 duration-200 hover:bg-green-500 p-2'>
             <DarkModeButton />
             <div
-              onClick={toggleDarkMode}
+              onClick={handleChangeDarkMode}
               className='cursor-pointer w-24 duration-200 overflow-hidden whitespace-nowrap pl-1 h-auto'>
               {isDarkMode ? locale.MENU.DARK_MODE : locale.MENU.LIGHT_MODE}
             </div>
