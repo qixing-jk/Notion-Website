@@ -1,10 +1,10 @@
 import useWindowSize from '@/hooks/useWindowSize'
 import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
-import { THEMES, saveDarkModeToLocalStorage } from '@/themes/theme'
+import { THEMES } from '@/themes/theme'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useTheme } from 'next-themes'
 
 /**
  * 自定义右键菜单
@@ -14,7 +14,12 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 export default function CustomContextMenu(props) {
   const [position, setPosition] = useState({ x: '0px', y: '0px' })
   const [show, setShow] = useState(false)
-  const { isDarkMode, updateDarkMode, locale } = useGlobal()
+  const { theme, setTheme } = useTheme()
+  const isDarkMode = theme === 'dark'
+
+  function handleChangeDarkMode() {
+    setTheme(isDarkMode ? 'light' : 'dark')
+  }
   const menuRef = useRef(null)
   const windowSize = useWindowSize()
   const [width, setWidth] = useState(0)
@@ -117,27 +122,22 @@ export default function CustomContextMenu(props) {
   function handleCopy() {
     const selectedText = document.getSelection().toString()
     if (selectedText) {
-      const tempInput = document.createElement('input');
-      tempInput.value = selectedText;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      if (tempInput && tempInput.parentNode && tempInput.parentNode.contains(tempInput)) {
-        tempInput.parentNode.removeChild(tempInput);
+      const tempInput = document.createElement('input')
+      tempInput.value = selectedText
+      document.body.appendChild(tempInput)
+      tempInput.select()
+      document.execCommand('copy')
+      if (
+        tempInput &&
+        tempInput.parentNode &&
+        tempInput.parentNode.contains(tempInput)
+      ) {
+        tempInput.parentNode.removeChild(tempInput)
       }
       // alert("Text copied: " + selectedText);
     } else {
       // alert("Please select some text first.");
     }
-  }
-
-  function handleChangeDarkMode() {
-    const newStatus = !isDarkMode
-    saveDarkModeToLocalStorage(newStatus)
-    updateDarkMode(newStatus)
-    const htmlElement = document.getElementsByTagName('html')[0]
-    htmlElement.classList?.remove(newStatus ? 'light' : 'dark')
-    htmlElement.classList?.add(newStatus ? 'dark' : 'light')
   }
 
   // 一些配置变量
