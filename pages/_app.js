@@ -31,11 +31,12 @@ const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 const enableVercelSpeedInsight =
   process.env.NEXT_PUBLIC_VERCEL_SPEED_INSIGHT && BLOG['isProd']
 
-const ClerkProvider = enableClerk
-  ? dynamic(() => import('@clerk/nextjs').then(m => m.ClerkProvider), {
-      ssr: false
-    })
-  : null
+const ClerkProvider = dynamic(
+  () => import('@clerk/nextjs').then(m => m.ClerkProvider),
+  {
+    ssr: false
+  }
+)
 const zhCN = enableClerk
   ? dynamic(() => import('@clerk/localizations').then(m => m.zhCN), {
       ssr: false
