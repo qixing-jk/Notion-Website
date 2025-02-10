@@ -24,8 +24,7 @@ const SpeedInsights = dynamic(
 
 const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-const enableVercelSpeedInsight =
-  process.env.NEXT_PUBLIC_VERCEL_SPEED_INSIGHT && BLOG['isProd']
+const enableVercelSpeedInsight = process.env.NEXT_PUBLIC_VERCEL_SPEED_INSIGHT
 
 const ClerkProvider = dynamic(() =>
   import('@clerk/nextjs').then(m => m.ClerkProvider)
