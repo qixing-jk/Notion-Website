@@ -93,7 +93,7 @@ const MyApp = ({ Component, pageProps }) => {
         attribute='class'
         enableSystem={true}
         forcedTheme={
-          Component.theme || forceDarkMode() ? 'dark' : defaultTheme
+          Component.theme || forceDarkMode() ? 'dark' : undefined
         }>
         <GlobalContextProvider {...pageProps}>
           <SEO {...pageProps} />
