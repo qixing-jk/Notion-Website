@@ -10,14 +10,16 @@ const DarkModeButton = props => {
   const { theme, setTheme } = useTheme()
   const isDarkMode = theme === 'dark'
 
+  function handleChangeDarkMode() {
+    setTheme(isDarkMode ? 'light' : 'dark')
+  }
+
   /**
    * 对外暴露方法
    */
   useImperativeHandle(cRef, () => {
     return {
-      handleChangeDarkMode: () => {
-        setTheme(isDarkMode ? 'light' : 'dark')
-      }
+      handleChangeDarkMode: handleChangeDarkMode
     }
   })
 
@@ -25,7 +27,7 @@ const DarkModeButton = props => {
     <div
       className={`${className || ''} flex justify-center dark:text-gray-200 text-gray-800`}>
       <div
-        onClick={() => setTheme(isDarkMode ? 'light' : 'dark')}
+        onClick={handleChangeDarkMode}
         id='darkModeButton'
         className=' hover:scale-110 cursor-pointer transform duration-200 w-5 h-5'>
         {' '}
