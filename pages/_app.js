@@ -2,7 +2,7 @@
 import '@/styles/globals.css'
 import '@/styles/utility-patterns.css'
 import { GlobalContextProvider } from '@/lib/global'
-import { getBaseLayoutByTheme } from '@/themes/theme'
+import { forceDarkMode, getBaseLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { useCallback, useInsertionEffect, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
@@ -90,7 +90,9 @@ const MyApp = ({ Component, pageProps }) => {
         // defaultTheme={BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE}
         defaultTheme='system'
         attribute='class'
-        enableSystem={true}>
+        enableSystem={true}
+        forcedTheme={Component.theme|| forceDarkMode() ? 'dark' : 'light'}
+      >
         <GlobalContextProvider {...pageProps}>
           <SEO {...pageProps} />
           <GLayout {...pageProps}>

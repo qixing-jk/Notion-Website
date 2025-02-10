@@ -214,6 +214,25 @@ export function isPreferDark() {
 }
 
 /**
+ * Whether to force dark mode
+ * @returns {boolean} Whether to force dark mode
+ * @description If `BLOG.APPEARANCE` is set to `'auto'`, this function will return `true` if:
+ * - The system is in dark mode
+ * - The current time is between `BLOG.APPEARANCE_DARK_TIME[0]` and `BLOG.APPEARANCE_DARK_TIME[1]`
+ */
+export const forceDarkMode = () => {
+  if (BLOG.APPEARANCE === 'auto') {
+    // 系统深色模式或时间是夜间时，强行置为夜间模式
+    const date = new Date()
+    return (
+      BLOG.APPEARANCE_DARK_TIME &&
+      (date.getHours() >= BLOG.APPEARANCE_DARK_TIME[0] ||
+        date.getHours() < BLOG.APPEARANCE_DARK_TIME[1])
+    )
+  }
+}
+
+/**
  * 读取深色模式
  * @returns {*}
  */
