@@ -316,7 +316,7 @@ const getSEOMeta = (props, router, locale) => {
         title: post
           ? `${post?.title} | ${siteInfo?.title}`
           : `${siteInfo?.title || '加载中'} | loading`,
-        description: post?.aiSummary || post?.summary,
+        description: post?.summary || post?.aiSummary || siteInfo?.description,
         type: post?.type,
         slug: post?.slug,
         image: post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
