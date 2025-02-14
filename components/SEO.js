@@ -4,7 +4,14 @@ import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Fragment, memo, useEffect } from 'react'
-import { CDN_TRANSFORM, CDNJS_CDN_BASE, JSDELIVR_CDN_BASE, LANG, NOTION_PAGE_ID, NPM_CDN_BASE } from '@/blog.config'
+import {
+  CDN_TRANSFORM,
+  CDNJS_CDN_BASE,
+  JSDELIVR_CDN_BASE,
+  LANG,
+  NOTION_PAGE_ID,
+  NPM_CDN_BASE
+} from '@/blog.config'
 import { extractLangPrefix } from '@/lib/utils/pageId'
 
 /**
@@ -316,7 +323,7 @@ const getSEOMeta = (props, router, locale) => {
         title: post
           ? `${post?.title} | ${siteInfo?.title}`
           : `${siteInfo?.title || '加载中'} | loading`,
-        description: post?.summary || post?.aiSummary || siteInfo?.description,
+        description: post?.aiSummary || post?.summary || siteInfo?.description,
         type: post?.type,
         slug: post?.slug,
         image: post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
