@@ -3715,15 +3715,15 @@ notion-types@^6.15.6, notion-types@^6.16.0:
   resolved "https://registry.npmmirror.com/notion-types/-/notion-types-6.16.0.tgz"
   integrity sha512-Cv83GaAczx57q1qsnuG8DHOuOb63c83u9LX2IainG5aqBEB0GUuLZ4DUQfB6MaXt+FMY9fO+KTgPeZWwX9hbrQ==
 
-notion-utils@6.15.6:
-  version "6.15.6"
-  resolved "https://registry.npmmirror.com/notion-utils/-/notion-utils-6.15.6.tgz"
-  integrity sha512-Ys7lQ5KWmrk9ZmpFquomQcVRdQqmZMRAl0aFhoqirVgeyKtq/i5IZoHCw8jCY8732WlaEAUnBid56nN33N2fRQ==
+notion-utils@6.16.0, notion-utils@^6.15.6:
+  version "6.16.0"
+  resolved "https://registry.npmmirror.com/notion-utils/-/notion-utils-6.16.0.tgz"
+  integrity sha512-DxToriZAJW/64O1xlAjyU/50dRmkO1e54+i0dEAPDij0MlHyihEivAMsdEG/6/4eFC972BIsEKZ6BXsSTUYKlQ==
   dependencies:
     is-url-superb "^6.1.0"
     mem "^9.0.2"
     normalize-url "^7.0.3"
-    notion-types "^6.15.6"
+    notion-types "^6.16.0"
     p-queue "^7.2.0"
 
 notion-utils@7.1.6:
@@ -3736,17 +3736,6 @@ notion-utils@7.1.6:
     normalize-url "^8.0.1"
     notion-types "7.1.6"
     p-queue "^8.0.1"
-
-notion-utils@^6.15.6:
-  version "6.16.0"
-  resolved "https://registry.npmmirror.com/notion-utils/-/notion-utils-6.16.0.tgz"
-  integrity sha512-DxToriZAJW/64O1xlAjyU/50dRmkO1e54+i0dEAPDij0MlHyihEivAMsdEG/6/4eFC972BIsEKZ6BXsSTUYKlQ==
-  dependencies:
-    is-url-superb "^6.1.0"
-    mem "^9.0.2"
-    normalize-url "^7.0.3"
-    notion-types "^6.16.0"
-    p-queue "^7.2.0"
 
 object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"
