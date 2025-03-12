@@ -782,10 +782,10 @@
   resolved "https://mirrors.cloud.tencent.com/npm/@types/semver/-/semver-7.5.8.tgz"
   integrity sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==
 
-"@types/web-bluetooth@^0.0.20":
-  version "0.0.20"
-  resolved "https://registry.npmmirror.com/@types/web-bluetooth/-/web-bluetooth-0.0.20.tgz"
-  integrity sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==
+"@types/web-bluetooth@^0.0.21":
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/@types/web-bluetooth/-/web-bluetooth-0.0.21.tgz#525433c784aed9b457aaa0ee3d92aeb71f346b63"
+  integrity sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==
 
 "@types/webpack@^5.0.0":
   version "5.28.5"
@@ -1025,37 +1025,42 @@
   resolved "https://registry.npmmirror.com/@vue/shared/-/shared-3.5.13.tgz"
   integrity sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==
 
-"@vueuse/core@^10.4.1":
-  version "10.11.1"
-  resolved "https://registry.npmmirror.com/@vueuse/core/-/core-10.11.1.tgz"
-  integrity sha512-guoy26JQktXPcz+0n3GukWIy/JDNKti9v6VEMu6kV2sYBsWuGiTU8OWdg+ADfUbHg3/3DlqySDe7JmdHrktiww==
+"@vueuse/core@^13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-13.0.0.tgz#60bf419e3f9fb003b51f1dfed550afffdb1691ff"
+  integrity sha512-rkgb4a8/0b234lMGCT29WkCjPfsX0oxrIRR7FDndRoW3FsaC9NBzefXg/9TLhAgwM11f49XnutshM4LzJBrQ5g==
   dependencies:
-    "@types/web-bluetooth" "^0.0.20"
-    "@vueuse/metadata" "10.11.1"
-    "@vueuse/shared" "10.11.1"
-    vue-demi ">=0.14.8"
+    "@types/web-bluetooth" "^0.0.21"
+    "@vueuse/metadata" "13.0.0"
+    "@vueuse/shared" "13.0.0"
 
-"@vueuse/metadata@10.11.1":
-  version "10.11.1"
-  resolved "https://registry.npmmirror.com/@vueuse/metadata/-/metadata-10.11.1.tgz"
-  integrity sha512-IGa5FXd003Ug1qAZmyE8wF3sJ81xGLSqTqtQ6jaVfkeZ4i5kS2mwQF61yhVqojRnenVew5PldLyRgvdl4YYuSw==
+"@vueuse/metadata@13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-13.0.0.tgz#f9c70e1d4958869693e6dcf385d3294cdd304b58"
+  integrity sha512-TRNksqmvtvqsuHf7bbgH9OSXEV2b6+M3BSN4LR5oxWKykOFT9gV78+C2/0++Pq9KCp9KQ1OQDPvGlWNQpOb2Mw==
 
-"@vueuse/shared@10.11.1":
-  version "10.11.1"
-  resolved "https://registry.npmmirror.com/@vueuse/shared/-/shared-10.11.1.tgz"
-  integrity sha512-LHpC8711VFZlDaYUXEBbFBCQ7GS3dVU9mjOhhMhXP6txTV4EhYQg/KGnQuvt/sPAtoUKq7VVUnL6mVtFoL42sA==
+"@vueuse/shared@13.0.0":
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-13.0.0.tgz#4bc454ac359303904d4cf9b23e0dd265be90bf2d"
+  integrity sha512-9MiHhAPw+sqCF/RLo8V6HsjRqEdNEWVpDLm2WBRW2G/kSQjb8X901sozXpSCaeLG0f7TEfMrT4XNaA5m1ez7Dg==
+
+"@waline/api@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@waline/api/-/api-1.0.0.tgz#ff299456a796d989bfeb789459a4bfa2c1efa335"
+  integrity sha512-o0lWjt+/oZH1/4q3DJxTf5kdkgNbSmoLRXIiGznW225A6hq9/9IkOO1DiAijIsxGYJS6psFC+58+IzkD1EerBA==
+
+"@waline/client@^3.0.0":
+  version "3.5.6"
+  resolved "https://registry.yarnpkg.com/@waline/client/-/client-3.5.6.tgz#c18adb66037f48eedfdf49a2bac3fbad705c410a"
+  integrity sha512-K+mfUpuLilzFUN3G84ytB02v5EkaaU0eOyN6BILcSozjUpSsggbgcy73WBiuUVg8u7pRsIvx192/PclJYvaWCg==
   dependencies:
-    vue-demi ">=0.14.8"
-
-"@waline/client@^2.5.1":
-  version "2.15.8"
-  resolved "https://registry.npmmirror.com/@waline/client/-/client-2.15.8.tgz"
-  integrity sha512-EBL7RXJUJs742miTvOU0Vt8NEmeJ63EN5TtSsYZfzjUdvEtlv+JsBbS5uiz3C9v5qV7Hz+XDZdc8nc13mG9vNQ==
-  dependencies:
-    "@vueuse/core" "^10.4.1"
+    "@vueuse/core" "^13.0.0"
+    "@waline/api" "1.0.0"
     autosize "^6.0.1"
-    marked "^4.3.0"
-    vue "^3.3.4"
+    marked "^15.0.7"
+    marked-highlight "^2.2.1"
+    recaptcha-v3 "^1.11.3"
+    vue "^3.5.13"
 
 "@webassemblyjs/ast@1.14.1", "@webassemblyjs/ast@^1.14.1":
   version "1.14.1"
@@ -3470,10 +3475,15 @@ map-obj@^4.1.0:
   resolved "https://registry.npmmirror.com/map-obj/-/map-obj-4.3.0.tgz"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-marked@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.npmmirror.com/marked/-/marked-4.3.0.tgz"
-  integrity sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==
+marked-highlight@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/marked-highlight/-/marked-highlight-2.2.1.tgz#33b7fcac24088c0e0213229b7d01044a2974670d"
+  integrity sha512-SiCIeEiQbs9TxGwle9/OwbOejHCZsohQRaNTY2u8euEXYt2rYUFoiImUirThU3Gd/o6Q1gHGtH9qloHlbJpNIA==
+
+marked@^15.0.7:
+  version "15.0.7"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-15.0.7.tgz#f67d7e34d202ce087e6b879107b5efb04e743314"
+  integrity sha512-dgLIeKGLx5FwziAnsk4ONoGwHwGPJzselimvlVskE9XLN4Orv9u2VA3GWw/lYUqjfA0rUT/6fqKwfZJapP9BEg==
 
 matchmediaquery@^0.4.2:
   version "0.4.2"
@@ -4380,6 +4390,11 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
+recaptcha-v3@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/recaptcha-v3/-/recaptcha-v3-1.11.3.tgz#ea0ba6da462196236c243bc1fbba4a4072646d26"
+  integrity sha512-sEE6J0RzUkS+sKEBpgCD/AqCU0ffrAVOADGjvAx9vcttN+VLK42SWMkj/J/I6vHu3Kew+xcfbBqDVb65N0QGDw==
+
 redis-errors@^1.0.0, redis-errors@^1.2.0:
   version "1.2.0"
   resolved "https://mirrors.cloud.tencent.com/npm/redis-errors/-/redis-errors-1.2.0.tgz"
@@ -5236,14 +5251,9 @@ util-deprecate@^1.0.1, util-deprecate@^1.0.2:
   resolved "https://registry.npmmirror.com/util-deprecate/-/util-deprecate-1.0.2.tgz"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-vue-demi@>=0.14.8:
-  version "0.14.10"
-  resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.14.10.tgz"
-  integrity sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==
-
-vue@^3.3.4:
+vue@^3.5.13:
   version "3.5.13"
-  resolved "https://registry.npmmirror.com/vue/-/vue-3.5.13.tgz"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-3.5.13.tgz#9f760a1a982b09c0c04a867903fc339c9f29ec0a"
   integrity sha512-wmeiSMxkZCSc+PM2w2VRsOYAZC8GdipNFRTsLSfodVqI9mbejKeXEGr8SckuLnrQPGe3oJN5c3K0vpoU9q/wCQ==
   dependencies:
     "@vue/compiler-dom" "3.5.13"
