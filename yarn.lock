@@ -3743,14 +3743,14 @@ normalize-url@^8.0.1:
   resolved "https://mirrors.cloud.tencent.com/npm/normalize-url/-/normalize-url-8.0.1.tgz"
   integrity sha512-IO9QvjUMWxPQQhs60oOu10CRkWCiZzSUkzbXGGV9pviYl1fXYcvkzQ5jV9z8Y6un8ARoVRl4EtC6v6jNqbaJ/w==
 
-notion-client@6.15.6:
-  version "6.15.6"
-  resolved "https://registry.npmmirror.com/notion-client/-/notion-client-6.15.6.tgz"
-  integrity sha512-/ze9bHNhi09IvSo+loAelGVf2VsrnPaXoGtea/VUQq0adTvgcQhC1u37BwaK5G8bS/crVC277+KWlgdJOBIxeQ==
+notion-client@6.16.0:
+  version "6.16.0"
+  resolved "https://registry.yarnpkg.com/notion-client/-/notion-client-6.16.0.tgz#5d3db8c36fa7b9eb7cf03f237a61c6f98241a717"
+  integrity sha512-gI2kPpls8XxJfXt7cs2JDmSHPZL1HkkXQnE5YWKPT4OnpiniUgHk5b+rRB2dXUqGT4003vSYmPnxXUTbzKPoLA==
   dependencies:
     got "^11.8.1"
-    notion-types "^6.15.6"
-    notion-utils "^6.15.6"
+    notion-types "^6.16.0"
+    notion-utils "^6.16.0"
     p-map "^5.3.0"
 
 notion-types@7.1.6:
@@ -3758,7 +3758,7 @@ notion-types@7.1.6:
   resolved "https://mirrors.cloud.tencent.com/npm/notion-types/-/notion-types-7.1.6.tgz"
   integrity sha512-bWv5wGrlaEKPd0qGWJq0G5cq8uwgfMKhCM+5GEgdXfzuDD9eoKX2pkfdXnE5bU2uFJJK+LGc2XWggBJ+P8AWCg==
 
-notion-types@^6.15.6, notion-types@^6.16.0:
+notion-types@^6.16.0:
   version "6.16.0"
   resolved "https://registry.npmmirror.com/notion-types/-/notion-types-6.16.0.tgz"
   integrity sha512-Cv83GaAczx57q1qsnuG8DHOuOb63c83u9LX2IainG5aqBEB0GUuLZ4DUQfB6MaXt+FMY9fO+KTgPeZWwX9hbrQ==
@@ -3774,9 +3774,9 @@ notion-utils@7.1.6:
     notion-types "7.1.6"
     p-queue "^8.0.1"
 
-notion-utils@^6.15.6:
+notion-utils@^6.16.0:
   version "6.16.0"
-  resolved "https://registry.npmmirror.com/notion-utils/-/notion-utils-6.16.0.tgz"
+  resolved "https://registry.yarnpkg.com/notion-utils/-/notion-utils-6.16.0.tgz#b81567b9d8d7ee6199383b9b41f58f5f297a1c36"
   integrity sha512-DxToriZAJW/64O1xlAjyU/50dRmkO1e54+i0dEAPDij0MlHyihEivAMsdEG/6/4eFC972BIsEKZ6BXsSTUYKlQ==
   dependencies:
     is-url-superb "^6.1.0"
