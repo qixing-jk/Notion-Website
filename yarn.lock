@@ -3371,6 +3371,13 @@ mem@^10.0.0:
     map-age-cleaner "^0.1.3"
     mimic-fn "^4.0.0"
 
+memoize@^10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/memoize/-/memoize-10.1.0.tgz#32a9d09da985a1ab518dfe9fd52d14d1d130446f"
+  integrity sha512-MMbFhJzh4Jlg/poq1si90XRlTZRDHVqdlz2mPyGJ6kqMpyHUyVpDd5gpFAvVehW64+RA1eKE9Yt8aSLY7w2Kgg==
+  dependencies:
+    mimic-function "^5.0.1"
+
 memory-cache@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npmmirror.com/memory-cache/-/memory-cache-0.2.0.tgz"
@@ -3415,6 +3422,11 @@ mimic-fn@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmmirror.com/mimic-fn/-/mimic-fn-4.0.0.tgz"
   integrity sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==
+
+mimic-function@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/mimic-function/-/mimic-function-5.0.1.tgz#acbe2b3349f99b9deaca7fb70e48b83e94e67076"
+  integrity sha512-VP79XUPxV2CigYP3jWwAUFSku2aKqBH7uTAapFWCBqutsbmDo96KY5o8uh6U+/YSIn5OxJnXp73beVkpqMIGhA==
 
 mimic-response@^3.1.0:
   version "3.1.0"
@@ -3602,6 +3614,11 @@ notion-types@7.1.6:
   resolved "https://mirrors.cloud.tencent.com/npm/notion-types/-/notion-types-7.1.6.tgz"
   integrity sha512-bWv5wGrlaEKPd0qGWJq0G5cq8uwgfMKhCM+5GEgdXfzuDD9eoKX2pkfdXnE5bU2uFJJK+LGc2XWggBJ+P8AWCg==
 
+notion-types@7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/notion-types/-/notion-types-7.3.0.tgz#2a6152eb7c72f1d019a734dd74d77c8cf867ad75"
+  integrity sha512-XAS9vZPRPoPEs95UXEeuQp1OsfWeVSruG6qujnDOEHA7aRMHiuSv/Oqm2wZfpDHz+nnUyPIX3JZhcmNnjc3jlQ==
+
 notion-utils@7.1.6:
   version "7.1.6"
   resolved "https://mirrors.cloud.tencent.com/npm/notion-utils/-/notion-utils-7.1.6.tgz"
@@ -3612,6 +3629,17 @@ notion-utils@7.1.6:
     normalize-url "^8.0.1"
     notion-types "7.1.6"
     p-queue "^8.0.1"
+
+notion-utils@7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/notion-utils/-/notion-utils-7.3.0.tgz#f52eae28c6879bbeddf98c4583e4146e8a34e8d2"
+  integrity sha512-+ifyB8SmSzB/MID/2fly338ZRTR7Ug8RNp7XyK3TlvM5iJZbo+YyAOTfDv41y342NleCibx50iBLQAJwb+GD6Q==
+  dependencies:
+    is-url-superb "^6.1.0"
+    memoize "^10.1.0"
+    normalize-url "^8.0.1"
+    notion-types "7.3.0"
+    p-queue "^8.1.0"
 
 object-assign@^4.0.1, object-assign@^4.1.1:
   version "4.1.1"
@@ -3758,7 +3786,7 @@ p-map@^7.0.2:
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-7.0.3.tgz#7ac210a2d36f81ec28b736134810f7ba4418cdb6"
   integrity sha512-VkndIv2fIB99swvQoA65bm+fsmt6UNdGeIB0oxBs+WhAhdh08QA04JXpI7rbB9r08/nkbysKoya9rtDERYOYMA==
 
-p-queue@^8.0.1:
+p-queue@^8.0.1, p-queue@^8.1.0:
   version "8.1.0"
   resolved "https://mirrors.cloud.tencent.com/npm/p-queue/-/p-queue-8.1.0.tgz"
   integrity sha512-mxLDbbGIBEXTJL0zEx8JIylaj3xQ7Z/7eEVjcF9fJX4DBiH9oqe+oahYnlKKxm0Ci9TlWTyhSHgygxMxjIB2jw==
