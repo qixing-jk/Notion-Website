@@ -14,7 +14,7 @@ import { useTheme } from 'next-themes'
  * @returns 主题切换
  */
 const ThemeSwitch = () => {
-  const { locale } = useGlobal()
+  const { theme, locale } = useGlobal()
   const router = useRouter()
   const currentTheme = getQueryParam(router.asPath, 'theme') || theme
   const [sideBarVisible, setSideBarVisible] = useState(false)
