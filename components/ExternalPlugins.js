@@ -6,7 +6,9 @@ import { useEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
 import Head from 'next/head'
 import ExternalScript from './ExternalScript'
+import { useGlobal } from '@/lib/global'
 import IconFont from './IconFont'
+
 
 /**
  * 各种插件脚本
@@ -16,6 +18,7 @@ import IconFont from './IconFont'
 const ExternalPlugin = props => {
   // 读取自Notion的配置
   const { NOTION_CONFIG } = props
+  const {lang} = useGlobal()
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
   const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
   const DEBUG = siteConfig('DEBUG', null, NOTION_CONFIG)
@@ -163,8 +166,8 @@ const ExternalPlugin = props => {
     }
 
     // setTimeout(() => {
-    //   // 将notion-id格式的url转成自定义slug
-    //   convertInnerUrl(props?.allNavPages)
+    //   // 映射url
+    //   convertInnerUrl({ allPages:props?.allNavPages, lang:lang })
     // }, 500)
   }, [router])
 
