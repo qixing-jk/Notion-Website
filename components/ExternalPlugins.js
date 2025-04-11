@@ -6,6 +6,8 @@ import { useEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
 import Head from 'next/head'
 import ExternalScript from './ExternalScript'
+import WebWhiz from './Webwhiz'
+import IconFont from './IconFont'
 
 /**
  * 各种插件脚本
@@ -119,22 +121,9 @@ const ExternalPlugin = props => {
     null,
     NOTION_CONFIG
   )
+
+  const ENABLE_ICON_FONT = siteConfig('ENABLE_ICON_FONT', false)
   const THEME = siteConfig('THEME')
-
-  const router = useRouter()
-  useEffect(() => {
-    // 异步渲染谷歌广告
-    if (ADSENSE_GOOGLE_ID) {
-      setTimeout(() => {
-        initGoogleAdsense(ADSENSE_GOOGLE_ID)
-      }, 3000)
-    }
-
-    // setTimeout(() => {
-    //   // 将notion-id格式的url转成自定义slug
-    //   convertInnerUrl(props?.allNavPages)
-    // }, 500)
-  }, [router])
 
   useEffect(() => {
     // 自定义样式css和js引入
@@ -163,6 +152,26 @@ const ExternalPlugin = props => {
         loadExternalResource(url, 'css')
       }
     }
+  })
+
+
+  const router = useRouter()
+  useEffect(() => {
+    // 异步渲染谷歌广告
+    if (ADSENSE_GOOGLE_ID) {
+      setTimeout(() => {
+        initGoogleAdsense(ADSENSE_GOOGLE_ID)
+      }, 3000)
+    }
+
+    // setTimeout(() => {
+    //   // 将notion-id格式的url转成自定义slug
+    //   convertInnerUrl(props?.allNavPages)
+    // }, 500)
+  }, [router])
+
+
+  useEffect(() => {
     // 执行注入脚本
     // eslint-disable-next-line no-eval
     eval(GLOBAL_JS)
@@ -176,6 +185,7 @@ const ExternalPlugin = props => {
     <>
       {/* 全局样式嵌入 */}
       <GlobalStyle />
+      {ENABLE_ICON_FONT && <IconFont />}
       {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
