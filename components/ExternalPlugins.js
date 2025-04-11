@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 import { GlobalStyle } from './GlobalStyle'
 import Head from 'next/head'
 import ExternalScript from './ExternalScript'
-import WebWhiz from './Webwhiz'
 import IconFont from './IconFont'
 
 /**
@@ -154,7 +153,6 @@ const ExternalPlugin = props => {
     }
   })
 
-
   const router = useRouter()
   useEffect(() => {
     // 异步渲染谷歌广告
@@ -169,7 +167,6 @@ const ExternalPlugin = props => {
     //   convertInnerUrl(props?.allNavPages)
     // }, 500)
   }, [router])
-
 
   useEffect(() => {
     // 执行注入脚本
