@@ -8,6 +8,7 @@ import { isNotVercelProduction } from '@/lib/utils'
 import { generateRss } from '@/lib/rss'
 import { generateRedirectJson } from '@/lib/redirect'
 import { LayoutIndex } from '@theme-components/LayoutIndex'
+import { after } from 'next/server'
 
 /**
  * 首页布局
@@ -66,16 +67,16 @@ export async function getStaticProps(req) {
 
   if (isNotVercelProduction) {
     // 生成robotTxt
-    generateRobotsTxt(props)
+    after(generateRobotsTxt(props))
     // 生成Feed订阅
-    generateRss(props)
+    after(generateRss(props))
     // 生成
-    generateSitemapXml(props)
+    after(generateSitemapXml(props))
   }
 
   if (BLOG['UUID_REDIRECT']) {
     // 生成重定向 JSON
-    generateRedirectJson(props)
+    after(generateRedirectJson(props))
   }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
