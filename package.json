@@ -50,7 +50,8 @@
     "react-notion-x": "^7.2.6",
     "react-responsive": "^10.0.0",
     "react-share": "^5.2.2",
-    "react-tweet-embed": "~2.0.0"
+    "react-tweet-embed": "~2.0.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/react": "18.3.18",
