@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
 /**
  * 社交联系方式按钮组 可折叠的组件
@@ -12,25 +12,6 @@ const SocialButton = () => {
     setShow(!show)
   }
 
-  const CONTACT_GITHUB = siteConfig('CONTACT_GITHUB')
-  const CONTACT_TWITTER = siteConfig('CONTACT_TWITTER')
-  const CONTACT_TELEGRAM = siteConfig('CONTACT_TELEGRAM')
-  const CONTACT_LINKEDIN = siteConfig('CONTACT_LINKEDIN')
-  const CONTACT_WEIBO = siteConfig('CONTACT_WEIBO')
-  const CONTACT_INSTAGRAM = siteConfig('CONTACT_INSTAGRAM')
-  const CONTACT_EMAIL = siteConfig('CONTACT_EMAIL')
-  const ENABLE_RSS = siteConfig('ENABLE_RSS')
-  const CONTACT_BILIBILI = siteConfig('CONTACT_BILIBILI')
-  const CONTACT_YOUTUBE = siteConfig('CONTACT_YOUTUBE')
-
-  const emailIcon = useRef(null)
-  useEffect(() => {
-    if (CONTACT_EMAIL && emailIcon.current) {
-      emailIcon.current.href =
-        'mailto:' + decodeURIComponent(escape(atob(CONTACT_EMAIL)))
-    }
-  }, [CONTACT_EMAIL])
-
   return (
     <div className='flex flex-col transform hover:scale-105 duration-200 text-white text-center bg-indigo-700 rounded-full dark:bg-black cursor-pointer py-2.5'>
       {!show && (
@@ -41,71 +22,70 @@ const SocialButton = () => {
       )}
       {show && (
         <>
-          {CONTACT_GITHUB && (
+          {siteConfig('CONTACT_GITHUB') && (
             <a
               target='_blank'
               rel='noreferrer'
               title={'github'}
-              href={CONTACT_GITHUB}>
+              href={siteConfig('CONTACT_GITHUB')}>
               <i className='transform hover:scale-125 duration-150 fab fa-github ' />
             </a>
           )}
-          {CONTACT_TWITTER && (
+          {siteConfig('CONTACT_TWITTER') && (
             <a
               target='_blank'
               rel='noreferrer'
               title={'twitter'}
-              href={CONTACT_TWITTER}>
+              href={siteConfig('CONTACT_TWITTER')}>
               <i className='transform hover:scale-125 duration-150 fab fa-twitter ' />
             </a>
           )}
-          {CONTACT_TELEGRAM && (
+          {siteConfig('CONTACT_TELEGRAM') && (
             <a
               target='_blank'
               rel='noreferrer'
-              href={CONTACT_TELEGRAM}
+              href={siteConfig('CONTACT_TELEGRAM')}
               title={'telegram'}>
               <i className='transform hover:scale-125 duration-150 fab fa-telegram ' />
             </a>
           )}
-          {CONTACT_LINKEDIN && (
+          {siteConfig('CONTACT_LINKEDIN') && (
             <a
               target='_blank'
               rel='noreferrer'
-              href={CONTACT_LINKEDIN}
+              href={siteConfig('CONTACT_LINKEDIN')}
               title={'linkIn'}>
               <i className='transform hover:scale-125 duration-150 fab fa-linkedin ' />
             </a>
           )}
-          {CONTACT_WEIBO && (
+          {siteConfig('CONTACT_WEIBO') && (
             <a
               target='_blank'
               rel='noreferrer'
               title={'weibo'}
-              href={CONTACT_WEIBO}>
+              href={siteConfig('CONTACT_WEIBO')}>
               <i className='transform hover:scale-125 duration-150 fab fa-weibo ' />
             </a>
           )}
-          {CONTACT_INSTAGRAM && (
+          {siteConfig('CONTACT_INSTAGRAM') && (
             <a
               target='_blank'
               rel='noreferrer'
               title={'instagram'}
-              href={CONTACT_INSTAGRAM}>
+              href={siteConfig('CONTACT_INSTAGRAM')}>
               <i className='transform hover:scale-125 duration-150 fab fa-instagram ' />
             </a>
           )}
-          {CONTACT_EMAIL && (
+          {siteConfig('CONTACT_EMAIL') && (
             <a
-              ref={emailIcon}
               target='_blank'
               rel='noreferrer'
               title={'email'}
-              href={CONTACT_EMAIL}>
+              href={`mailto:${siteConfig('CONTACT_EMAIL')}`}>
               <i className='transform hover:scale-125 duration-150 fas fa-envelope ' />
             </a>
           )}
-          {ENABLE_RSS && (
+          {JSON.parse(siteConfig('ENABLE_RSS')) && (
             <a
               target='_blank'
               rel='noreferrer'
@@ -114,21 +94,21 @@ const SocialButton = () => {
               <i className='transform hover:scale-125 duration-150 fas fa-rss ' />
             </a>
           )}
-          {CONTACT_BILIBILI && (
+          {siteConfig('CONTACT_BILIBILI') && (
             <a
               target='_blank'
               rel='noreferrer'
               title={'bilibili'}
-              href={CONTACT_BILIBILI}>
+              href={siteConfig('CONTACT_BILIBILI')}>
               <i className='fab fa-bilibili transform hover:scale-125 duration-150' />
             </a>
           )}
-          {CONTACT_YOUTUBE && (
+          {siteConfig('CONTACT_YOUTUBE') && (
             <a
               target='_blank'
               rel='noreferrer'
               title={'youtube'}
-              href={CONTACT_YOUTUBE}>
+              href={siteConfig('CONTACT_YOUTUBE')}>
               <i className='fab fa-youtube transform hover:scale-125 duration-150' />
             </a>
           )}
