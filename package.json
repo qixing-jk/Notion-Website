@@ -47,13 +47,14 @@
     "react-dom": "^18.2.0",
     "react-facebook": "^8.1.4",
     "react-hotkeys-hook": "^4.5.0",
-    "react-notion-x": "^7.2.6",
+    "react-notion-x": "7.3.0",
     "react-responsive": "^10.0.0",
     "react-share": "^5.2.2",
     "react-tweet-embed": "~2.0.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@types/node": "22.15.3",
     "@types/react": "18.3.18",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
