@@ -53,7 +53,7 @@ export async function getStaticProps({ params: { keyword }, locale }) {
   }
 }
 
-export async function getStaticPaths() {
+export function getStaticPaths() {
   return {
     paths: [{ params: { keyword: 'NotionNext' } }],
     fallback: true
@@ -130,7 +130,7 @@ async function filterByMemCache(allPublishedPosts, keyword) {
     // console.log('全文搜索缓存', cacheKey, page != null)
     post.results = []
     let hitCount = 0
-    for (const i in indexContent) {
+    for (const i of indexContent) {
       const c = indexContent[i]
       if (!c) {
         continue
