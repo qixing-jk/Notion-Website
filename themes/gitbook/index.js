@@ -256,26 +256,24 @@ const LayoutIndex = props => {
         setHasRedirected(true) // 更新状态，防止多次执行
 
         // 重定向到指定文章
-        router.push(index).then(() => {
-          setTimeout(() => {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              console.log(
-                '请检查您的Notion数据库中是否包含此slug页面： ',
-                index
-              )
+        await router.push(index)
 
-              // 显示错误信息
-              const containerInner = document.querySelector(
-                '#theme-gitbook #container-inner'
-              )
-              const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
-              containerInner?.insertAdjacentHTML('afterbegin', newHTML)
-            }
-          }, 2000)
-        })
+        // 使用setTimeout检查页面加载情况
+        setTimeout(() => {
+          const article = document.querySelector(
+            '#article-wrapper #notion-article'
+          )
+          if (!article) {
+            console.log('请检查您的Notion数据库中是否包含此slug页面： ', index)
+
+            // 显示错误信息
+            const containerInner = document.querySelector(
+              '#theme-gitbook #container-inner'
+            )
+            const newHTML = `<h1 class="text-3xl pt-12 dark:text-gray-300">配置有误</h1><blockquote class="notion-quote notion-block-ce76391f3f2842d386468ff1eb705b92"><div>请在您的notion中添加一个slug为${index}的文章</div></blockquote>`
+            containerInner?.insertAdjacentHTML('afterbegin', newHTML)
+          }
+        }, 2000)
       }
     }
 
