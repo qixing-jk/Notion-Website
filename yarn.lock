@@ -3785,6 +3785,11 @@ notion-types@7.3.0:
   resolved "https://registry.npmmirror.com/notion-types/-/notion-types-7.3.0.tgz#2a6152eb7c72f1d019a734dd74d77c8cf867ad75"
   integrity sha512-XAS9vZPRPoPEs95UXEeuQp1OsfWeVSruG6qujnDOEHA7aRMHiuSv/Oqm2wZfpDHz+nnUyPIX3JZhcmNnjc3jlQ==
 
+notion-types@7.4.2:
+  version "7.4.2"
+  resolved "https://registry.yarnpkg.com/notion-types/-/notion-types-7.4.2.tgz#3fde1cfbb49c76b41ff1c0e6b2eef46afb3a117c"
+  integrity sha512-mCFra6z7DUcNXV11ypufmqcZL8poYAfSwSSyPBnuvzauGfH9MLDJ2Uv31H/0MFtn9qqddDdxV5lHkIzY1IRysg==
+
 notion-utils@7.3.0:
   version "7.3.0"
   resolved "https://registry.npmmirror.com/notion-utils/-/notion-utils-7.3.0.tgz#f52eae28c6879bbeddf98c4583e4146e8a34e8d2"
@@ -3794,6 +3799,17 @@ notion-utils@7.3.0:
     memoize "^10.1.0"
     normalize-url "^8.0.1"
     notion-types "7.3.0"
+    p-queue "^8.1.0"
+
+notion-utils@7.4.2:
+  version "7.4.2"
+  resolved "https://registry.yarnpkg.com/notion-utils/-/notion-utils-7.4.2.tgz#9a64b9d4d1c6bda206cccff368a84462de357c79"
+  integrity sha512-ga1+bhs9GLEpeYtP+gfc/PPgiVSTsyVtlZpArfjmNcPADMZdHCfZdVEjqW5NFMbVGsCMp7y7oabvuWqJvkAVnw==
+  dependencies:
+    is-url-superb "^6.1.0"
+    memoize "^10.1.0"
+    normalize-url "^8.0.1"
+    notion-types "7.4.2"
     p-queue "^8.1.0"
 
 object-assign@^4.0.1, object-assign@^4.1.1:
@@ -4741,7 +4757,16 @@ streamsearch@^1.1.0:
   resolved "https://registry.npmmirror.com/streamsearch/-/streamsearch-1.1.0.tgz#404dd1e2247ca94af554e841a8ef0eaa238da764"
   integrity sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.npmmirror.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0:
   version "4.2.3"
   resolved "https://registry.npmmirror.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -4834,7 +4859,14 @@ string_decoder@^1.1.1:
   dependencies:
     safe-buffer "~5.2.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.npmmirror.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.npmmirror.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
