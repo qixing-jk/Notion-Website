@@ -4,6 +4,7 @@ import { siteConfig } from '@/lib/config'
 import AISummary from '@/components/AISummary'
 import WWAds from '@/components/WWAds'
 import dynamic from 'next/dynamic'
+import ArticleExpirationNotice from '@/components/ArticleExpirationNotice'
 
 const PostLock = dynamic(() =>
   import('./components/PostLock').then(mod => mod.PostLock)
@@ -69,6 +70,7 @@ export const LayoutSlug = props => {
               <section
                 className='wow fadeInUp p-5 justify-center mx-auto'
                 data-wow-delay='.2s'>
+                <ArticleExpirationNotice post={post} />
                 <AISummary aiSummary={post.aiSummary} />
                 <WWAds orientation='horizontal' className='w-full' />
                 {
