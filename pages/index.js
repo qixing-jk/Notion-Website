@@ -8,6 +8,7 @@ import { isNotVercelProduction } from '@/lib/utils'
 import { generateRss } from '@/lib/rss'
 import { generateRedirectJson } from '@/lib/redirect'
 import { LayoutIndex } from '@theme-components/LayoutIndex'
+import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
 
 /**
  * 首页布局
@@ -72,8 +73,9 @@ export async function getStaticProps(req) {
     // 生成
     generateSitemapXml(props)
   }
-
-  if (BLOG['UUID_REDIRECT']) {
+  // 检查数据是否需要从algolia删除
+  checkDataFromAlgolia(props)
+  if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
     // 生成重定向 JSON
     generateRedirectJson(props)
   }
