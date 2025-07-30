@@ -1,7 +1,7 @@
 import { ArrowRightCircle } from '@/components/HeroIcons'
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import CONFIG from '../config'
@@ -50,16 +50,16 @@ export function InfoCard(props) {
           {/* 两个社交按钮 */}
           {url1 && (
             <div className='hover:text-indigo-400 dark:hover:text-white w-10 text-center bg-indigo-400 p-2 rounded-full  transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-              <Link href={url1}>
+              <SmartLink href={url1}>
                 <i className={icon1} />
-              </Link>
+              </SmartLink>
             </div>
           )}
           {url2 && (
             <div className='hover:text-indigo-400 dark:hover:text-white bg-indigo-400 p-2 rounded-full w-10 items-center flex justify-center transition-colors duration-200 dark:bg-yellow-500 dark:hover:bg-black hover:bg-white'>
-              <Link href={url2}>
+              <SmartLink href={url2}>
                 <i className={icon2} />
-              </Link>
+              </SmartLink>
             </div>
           )}
         </div>
@@ -81,7 +81,7 @@ function MoreButton() {
     return <></>
   }
   return (
-    <Link href={url3}>
+    <SmartLink href={url3}>
       <div
         className={
           'group bg-indigo-400 dark:bg-yellow-500 hover:bg-white dark:hover:bg-black hover:text-indigo-400 dark:hover:text-white flex items-center transition-colors duration-200 py-2 px-3 rounded-full space-x-1'
@@ -89,7 +89,7 @@ function MoreButton() {
         <ArrowRightCircle className={'w-6 h-6 transition-all duration-100'} />
         <div className='font-bold'>{text3}</div>
       </div>
-    </Link>
+    </SmartLink>
   )
 }
 

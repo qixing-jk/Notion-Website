@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
 import { HashTag } from '@/components/HeroIcons'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 标签列表
@@ -21,7 +21,7 @@ export const LayoutTagIndex = props => {
         className='duration-200 flex flex-wrap space-x-5 space-y-5 m-10 justify-center'>
         {tagOptions.map(tag => {
           return (
-            <Link
+            <SmartLink
               key={tag.name}
               href={`/tag/${tag.name}`}
               passHref
@@ -36,7 +36,7 @@ export const LayoutTagIndex = props => {
                   {tag.count}
                 </div>
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>

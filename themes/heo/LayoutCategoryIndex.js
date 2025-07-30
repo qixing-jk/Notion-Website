@@ -1,6 +1,6 @@
 import { useGlobal } from '@/lib/global'
-import Link from 'next/link'
 import { HashTag } from '@/components/HeroIcons'
+import SmartLink from '@/components/SmartLink'
 
 /**
  * 分类列表
@@ -21,7 +21,7 @@ export const LayoutCategoryIndex = props => {
         className='duration-200 flex flex-wrap m-10 justify-center'>
         {categoryOptions?.map(category => {
           return (
-            <Link
+            <SmartLink
               key={category.name}
               href={`/category/${category.name}`}
               passHref
@@ -36,7 +36,7 @@ export const LayoutCategoryIndex = props => {
                   {category.count}
                 </div>
               </div>
-            </Link>
+            </SmartLink>
           )
         })}
       </div>
