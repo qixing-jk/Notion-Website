@@ -1,5 +1,7 @@
 import QrCode from '@/components/QrCode'
 import { siteConfig } from '@/lib/config'
+import { useRef } from 'react'
+import { handleEmailClick } from '@/lib/plugins/mailEncrypt'
 import { useState } from 'react'
 
 /**
@@ -31,6 +33,8 @@ const SocialButton = () => {
   const closePopover = () => {
     setQrCodeShow(false)
   }
+
+  const emailIcon = useRef(null)
 
   return (
     <div className='w-full justify-center flex-wrap flex'>
@@ -91,11 +95,11 @@ const SocialButton = () => {
         )}
         {CONTACT_EMAIL && (
           <a
-            target='_blank'
-            rel='noreferrer'
-            title={'email'}
-            href={`mailto:${CONTACT_EMAIL}`}>
-            <i className='transform hover:scale-125 duration-150 fas fa-envelope dark:hover:text-green-400 hover:text-green-600' />
+            onClick={e => handleEmailClick(e, emailIcon, CONTACT_EMAIL)}
+            title='email'
+            className='cursor-pointer'
+            ref={emailIcon}>
+            <i className='fas fa-envelope transform hover:scale-125 duration-150 dark:hover:text-green-400 hover:text-green-600' />
           </a>
         )}
         {ENABLE_RSS && (
