@@ -1,9 +1,9 @@
 import { useGlobal } from '@/lib/global'
 import LazyImage from '@/components/LazyImage'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 import { siteConfig } from '@/lib/config'
 import config from '@/themes/heo/config'
+import SmartLink from '@/components/SmartLink'
 
 const Transition = dynamic(() =>
   import('@headlessui/react').then(mod => mod.Transition)
@@ -57,11 +57,11 @@ export const Layout404 = props => {
                   404
                 </h1>
                 <div className='dark:text-white'>{HEO_404_TITLE}</div>
-                <Link href='/'>
+                <SmartLink href='/'>
                   <button className='bg-blue-500 py-2 px-4 text-white shadow rounded-lg hover:bg-blue-600 hover:shadow-md duration-200 transition-all'>
                     {HEO_404_BACK}
                   </button>
-                </Link>
+                </SmartLink>
               </div>
             </div>
 

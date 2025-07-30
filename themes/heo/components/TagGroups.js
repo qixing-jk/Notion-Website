@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 
 /**
@@ -19,7 +19,7 @@ const TagGroups = ({ tags, className }) => {
       {tags.map((tag, index) => {
         const selected = currentTag === tag.name
         return (
-          <Link
+          <SmartLink
             passHref
             key={index}
             href={`/tag/${encodeURIComponent(tag.name)}`}
@@ -35,7 +35,7 @@ const TagGroups = ({ tags, className }) => {
                 <></>
               )}
             </div>
-          </Link>
+          </SmartLink>
         )
       })}
     </div>

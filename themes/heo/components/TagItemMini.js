@@ -1,9 +1,9 @@
 import { HashTag } from '@/components/HeroIcons'
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 
 const TagItemMini = ({ tag, selected = false }) => {
   return (
-    <Link
+    <SmartLink
       key={tag}
       prefetch={false}
       href={selected ? '/' : `/tag/${encodeURIComponent(tag.name)}`}
@@ -15,7 +15,7 @@ const TagItemMini = ({ tag, selected = false }) => {
         <HashTag className='stroke-2 mr-0.5 w-3 h-3' />{' '}
         {tag.name + (tag.count ? `(${tag.count})` : '')}{' '}
       </div>
-    </Link>
+    </SmartLink>
   )
 }
 
