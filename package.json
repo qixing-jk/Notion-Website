@@ -38,7 +38,7 @@
     "algoliasearch": "^4.18.0",
     "axios": "^1.7.2",
     "crypto-js": "^4.2.0",
-    "feed": "^4.2.2",
+    "feed": "^5.0.0",
     "ioredis": "^5.4.2",
     "lodash.throttle": "^4.1.1",
     "memory-cache": "^0.2.0",
