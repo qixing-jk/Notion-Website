@@ -179,11 +179,11 @@
     tslib "2.4.1"
 
 "@clerk/localizations@^3.0.4":
-  version "3.15.3"
-  resolved "https://registry.npmmirror.com/@clerk/localizations/-/localizations-3.15.3.tgz#ec76870d8f58702b6bdebabff21599c24af889b6"
-  integrity sha512-+818AHYFh8SDR/vqYWmkf9tOQyAQNjHc8/w3HJGjFfITvVdNiujYXUjrBNdPKV34aZyFXcvJbuVflCL3MdnhRA==
+  version "3.20.6"
+  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.20.6.tgz#71d9bb8843494322916d319fcac21699bf7549ea"
+  integrity sha512-HxbJr6R/Zf17C++UDuIrGbq81xgMv9MGstI8uIi9LtNZ3+tEfOAOs6b8L9u9fnQcYQCFn3vm9pm2sM5U0dYegw==
   dependencies:
-    "@clerk/types" "^4.58.1"
+    "@clerk/types" "^4.72.0"
 
 "@clerk/nextjs@^5.1.5":
   version "5.7.5"
@@ -216,10 +216,10 @@
   dependencies:
     csstype "3.1.1"
 
-"@clerk/types@^4.58.1":
-  version "4.58.1"
-  resolved "https://registry.npmmirror.com/@clerk/types/-/types-4.58.1.tgz#5b421050ecc2a79a3a8b7fdd535940e2202b927b"
-  integrity sha512-bs1jQF4Nxw4a34q8TZEqY2Jyuj8kcMgYHUDCP060XkdvKWUqbQZW7Hb3YBrxTqLFLawku9cWpgP3/41Os1584g==
+"@clerk/types@^4.72.0":
+  version "4.72.0"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.72.0.tgz#7731b68c333419d461e557676dd630241c5817b8"
+  integrity sha512-SEkgiQNeTstC0/mQjHCGBEyX0/ALyWAa5QZBBvVOok204r48MLipfIKsXQhyWE2Hk6FIo5WT6YyqD36jaxUEIw==
   dependencies:
     csstype "3.1.3"
 
