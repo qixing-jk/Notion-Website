@@ -55,7 +55,8 @@
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "declarationMap": false,
-    "sourceMap": false
+    "sourceMap": false,
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",
