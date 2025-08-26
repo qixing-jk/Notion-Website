@@ -158,8 +158,6 @@ const nextConfig = {
     // 图片缓存优化
     minimumCacheTTL: 60 * 60 * 24 * 7, // 7天
     // 危险的允许SVG
-    dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;"
   },
 
   // 默认将feed重定向至 /public/rss/feed.xml
@@ -328,11 +326,6 @@ const nextConfig = {
           }
         }
       }
-    }
-
-    // Enable source maps in development mode
-    if (dev || process.env.NODE_ENV_API === 'development') {
-      config.devtool = 'eval-source-map'
     }
 
     // 优化模块解析
