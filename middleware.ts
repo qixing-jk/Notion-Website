@@ -1,11 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextRequest, NextResponse } from 'next/server'
-import {
-  checkStrIsNotionId,
-  checkStrIsUuid,
-  getLastPartOfUrl
-} from '@/lib/utils'
-import { idToUuid } from 'notion-utils'
+import { checkStrIsNotionId, checkStrIsUuid, getLastPartOfUrl, idToUuid } from '@/lib/utils'
 import BLOG from './blog.config'
 import { upstashRedisClient } from '@/lib/cache/upstash_redis_cache'
 
