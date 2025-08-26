@@ -175,8 +175,8 @@ const ExternalPlugin = props => {
     // eslint-disable-next-line no-eval
     if (GLOBAL_JS && GLOBAL_JS.trim() !== '') {
       console.log('Inject JS:', GLOBAL_JS)
+      eval(GLOBAL_JS)
     }
-    eval(GLOBAL_JS)
   })
 
   if (DISABLE_PLUGIN) {
