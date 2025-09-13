@@ -305,12 +305,6 @@ const nextConfig = {
       THEME
     )
 
-    // 优化模块解析
-    config.resolve.modules = [
-      path.resolve(__dirname, 'node_modules'),
-      'node_modules'
-    ]
-
     // 添加 statoscope 包分析
     if (process.env.ANALYZE) {
       const StatoscopeWebpackPlugin =
