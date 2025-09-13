@@ -39,16 +39,18 @@ function deleteFileIfExists(relativePath) {
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath)
     // 通过路径生成文件名和目录
-    const fileName = path.basename(filePath)  // 获取文件名
-    const directory = path.dirname(filePath)  // 获取文件所在目录
-    const relativeDirectory = path.relative(__dirname, directory)  // 获取相对路径
+    const fileName = path.basename(filePath) // 获取文件名
+    const directory = path.dirname(filePath) // 获取文件所在目录
+    const relativeDirectory = path.relative(__dirname, directory) // 获取相对路径
     // 生成日志消息
-    console.log(`Deleted existing ${fileName} from ${relativeDirectory || 'root directory'}`)
+    console.log(
+      `Deleted existing ${fileName} from ${relativeDirectory || 'root directory'}`
+    )
   }
 }
 
 // 编译前执行
-(function () {
+;(function () {
   if (
     !process.env.npm_lifecycle_event === 'export' &&
     !process.env.npm_lifecycle_event === 'build'
@@ -155,7 +157,7 @@ const nextConfig = {
     // 图片加载器优化
     loader: 'default',
     // 图片缓存优化
-    minimumCacheTTL: 60 * 60 * 24 * 7, // 7天
+    minimumCacheTTL: 60 * 60 * 24 * 7 // 7天
     // 危险的允许SVG
   },
 
@@ -302,30 +304,6 @@ const nextConfig = {
       'themes',
       THEME
     )
-
-    // 性能优化配置
-    if (!dev) {
-      // 生产环境优化
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: 'vendors',
-              chunks: 'all'
-            },
-            common: {
-              name: 'common',
-              minChunks: 2,
-              chunks: 'all',
-              enforce: true
-            }
-          }
-        }
-      }
-    }
 
     // 优化模块解析
     config.resolve.modules = [
