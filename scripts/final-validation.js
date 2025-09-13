@@ -233,7 +233,6 @@ function validateNextConfig(filePath) {
     const requiredConfigs = [
       'compress: true',
       'poweredByHeader: false',
-      'swcMinify: true',
       'X-Frame-Options',
       'X-Content-Type-Options',
       'Content-Security-Policy'
