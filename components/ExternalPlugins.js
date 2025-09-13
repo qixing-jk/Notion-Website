@@ -126,6 +126,9 @@ const ExternalPlugin = props => {
   const ENABLE_ICON_FONT = siteConfig('ENABLE_ICON_FONT', false)
   const THEME = siteConfig('THEME')
 
+  const UMAMI_HOST = siteConfig('UMAMI_HOST', null, NOTION_CONFIG)
+  const UMAMI_ID = siteConfig('UMAMI_ID', null, NOTION_CONFIG)
+
   useEffect(() => {
     // 自定义样式css和js引入
     // loadExternalResource('/css/custom.css', 'css')
@@ -392,6 +395,11 @@ const ExternalPlugin = props => {
           `
           }}
         />
+      )}
+
+      {/* UMAMI 统计 */}
+      {UMAMI_ID && (
+        <script async defer src={UMAMI_HOST} data-website-id={UMAMI_ID}></script>
       )}
 
       {/* 谷歌统计 */}
