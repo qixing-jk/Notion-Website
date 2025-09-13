@@ -4,14 +4,7 @@ import { loadExternalResource } from '@/lib/utils'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Fragment, memo, useEffect } from 'react'
-import {
-  CDN_TRANSFORM,
-  CDNJS_CDN_BASE,
-  JSDELIVR_CDN_BASE,
-  LANG,
-  NOTION_PAGE_ID,
-  NPM_CDN_BASE
-} from '@/blog.config'
+import { CDN_TRANSFORM, CDNJS_CDN_BASE, JSDELIVR_CDN_BASE, LANG, NOTION_PAGE_ID, NPM_CDN_BASE } from '@/blog.config'
 import { extractLangPrefix } from '@/lib/utils/pageId'
 
 /**
@@ -131,7 +124,10 @@ const SEO = props => {
         name='viewport'
         content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0'
       />
-      <meta name='robots' content='follow, index' />
+      <meta
+        name='robots'
+        content='follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+      />
       <meta charSet='UTF-8' />
       {SEO_GOOGLE_SITE_VERIFICATION && (
         <meta
@@ -145,19 +141,30 @@ const SEO = props => {
           content={SEO_BAIDU_SITE_VERIFICATION}
         />
       )}
+
+      {/* 基础SEO元数据 */}
       <meta name='keywords' content={keywords} />
       <meta name='description' content={description} />
+      <meta name='author' content={AUTHOR} />
+
+      {/* Open Graph 元数据 */}
       <meta property='og:locale' content={lang} />
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
       <meta property='og:url' content={url} />
       <meta property='og:image' content={image} />
+      <meta property='og:image:alt' content={title} />
       <meta property='og:site_name' content={title} />
       <meta property='og:type' content={type} />
       <meta property='og:logo' content={BLOG_FAVICON} />
+
+      {/* Twitter Card 元数据 */}
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:title' content={title} />
+      <meta name='twitter:description' content={description} />
+      <meta name='twitter:image' content={image} />
+      <meta name='twitter:image:alt' content={title} />
 
       <link rel='icon' href={BLOG_FAVICON} />
       {CDN_PRECONNECT.map(transformCDNUrl => (
@@ -194,6 +201,7 @@ const SEO = props => {
       {ANALYTICS_BUSUANZI_ENABLE && (
         <meta name='referrer' content='no-referrer-when-downgrade' />
       )}
+      {/* 文章特定元数据 */}
       {meta?.type === 'Post' && (
         <>
           <meta property='article:published_time' content={post.publishDay} />
@@ -209,8 +217,83 @@ const SEO = props => {
           ))}
         </>
       )}
+
+      {/* 结构化数据 */}
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateStructuredData(meta, siteInfo, url, image, AUTHOR)
+          )
+        }}
+      />
     </Head>
   )
+}
+
+/**
+ * 生成结构化数据
+ * @param {*} meta
+ * @param {*} siteInfo
+ * @param {*} url
+ * @param {*} image
+ * @param {*} author
+ * @returns
+ */
+const generateStructuredData = (meta, siteInfo, url, image, author) => {
+  const baseData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteInfo?.title,
+    description: siteInfo?.description,
+    url: siteConfig('LINK'),
+    author: {
+      '@type': 'Person',
+      name: author
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: siteInfo?.title,
+      logo: {
+        '@type': 'ImageObject',
+        url: siteInfo?.icon
+      }
+    }
+  }
+
+  // 如果是文章页面，添加文章结构化数据
+  if (meta?.type === 'Post') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: meta.title,
+      description: meta.description,
+      image: image,
+      url: url,
+      datePublished: meta.publishDay,
+      dateModified: meta.lastEditedDay || meta.publishDay,
+      author: {
+        '@type': 'Person',
+        name: author
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: siteInfo?.title,
+        logo: {
+          '@type': 'ImageObject',
+          url: siteInfo?.icon
+        }
+      },
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': url
+      },
+      keywords: meta.tags?.join(', '),
+      articleSection: meta.category
+    }
+  }
+
+  return baseData
 }
 
 /**
