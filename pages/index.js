@@ -4,7 +4,7 @@ import { cleanDataBeforeReturn, getGlobalData, getPostBlocks } from '@/lib/db/ge
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
-import { isNotVercelProduction } from '@/lib/utils'
+import { canWriteFile } from '@/lib/utils'
 import { generateRss } from '@/lib/rss'
 import { generateRedirectJson } from '@/lib/redirect'
 import { LayoutIndex } from '@theme-components/LayoutIndex'
@@ -65,12 +65,13 @@ export async function getStaticProps(req) {
     }
   }
 
-  if (isNotVercelProduction) {
+  // 需要写文件的场景
+  if (canWriteFile) {
     // 生成robotTxt
     generateRobotsTxt(props)
     // 生成Feed订阅
     generateRss(props)
-    // 生成
+    // 生成Sitemap
     generateSitemapXml(props)
   }
   // 检查数据是否需要从algolia删除
