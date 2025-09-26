@@ -1,14 +1,10 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import {
-  cleanDataBeforeReturn,
-  getGlobalData,
-  getPostBlocks
-} from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
-import { isNotVercelEnvironment } from '@/lib/utils'
+import { canWriteFile } from '@/lib/utils'
 import { generateRss } from '@/lib/rss'
 import { generateRedirectJson } from '@/lib/redirect'
 import { LayoutIndex } from '@theme-components/LayoutIndex'
@@ -70,7 +66,7 @@ export async function getStaticProps(req) {
   }
 
   // 需要写文件的场景
-  if (isNotVercelEnvironment) {
+  if (canWriteFile) {
     // 生成robotTxt
     generateRobotsTxt(props)
     // 生成Feed订阅
