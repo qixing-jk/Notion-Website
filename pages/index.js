@@ -1,10 +1,14 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, getGlobalData, getPostBlocks } from '@/lib/db/getSiteData'
+import {
+  cleanDataBeforeReturn,
+  getGlobalData,
+  getPostBlocks
+} from '@/lib/db/getSiteData'
 import { generateRobotsTxt } from '@/lib/robots.txt'
 import { generateSitemapXml } from '@/lib/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
-import { isNotVercelProduction } from '@/lib/utils'
+import { isNotVercelEnvironment } from '@/lib/utils'
 import { generateRss } from '@/lib/rss'
 import { generateRedirectJson } from '@/lib/redirect'
 import { LayoutIndex } from '@theme-components/LayoutIndex'
@@ -65,12 +69,13 @@ export async function getStaticProps(req) {
     }
   }
 
-  if (isNotVercelProduction) {
+  // 需要写文件的场景
+  if (isNotVercelEnvironment) {
     // 生成robotTxt
     generateRobotsTxt(props)
     // 生成Feed订阅
     generateRss(props)
-    // 生成
+    // 生成Sitemap
     generateSitemapXml(props)
   }
   // 检查数据是否需要从algolia删除
