@@ -51,3 +51,5 @@ yarn-error.log*
 package-lock.json
 # yarn.lock
 .aider*
+
+.notion-api-lock
