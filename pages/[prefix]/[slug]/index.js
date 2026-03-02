@@ -1,8 +1,8 @@
 import BLOG from '@/blog.config'
-import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import Slug from '..'
 import { checkSlugHasOneSlash } from '@/lib/utils/post'
+import { getRevalidateTime } from '@/lib/utils/revalidate'
 
 /**
  * 根据notion的slug访问页面
@@ -47,12 +47,12 @@ export async function getStaticProps({ params: { prefix, slug }, locale }) {
   const props = await resolvePostProps({
     prefix,
     slug,
-    locale,
+    locale
   })
 
   return {
     props,
-    revalidate: getRevalidateTime(props, 1),
+    revalidate: getRevalidateTime(props, 1)
   }
 }
 
