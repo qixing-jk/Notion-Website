@@ -1,5 +1,5 @@
 import { siteConfig } from '@/lib/config'
-import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
+import { compressImage, mapImgUrl } from '@/lib/db/notion/mapImage'
 import { getLastPartOfUrl, isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
 import dynamic from 'next/dynamic'
@@ -188,6 +188,9 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
     return () => clearTimeout(timer)
   }, [post])
 
+  // const cleanBlockMap = cleanBlocksWithWarn(post?.blockMap);
+  // console.log('NotionPage render with post:', post);
+
   return (
     <div id='notion-article' className={`mx-auto ${className || ''}`}>
       <NotionRenderer
@@ -212,6 +215,7 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
     </div>
   )
 }
+
 
 /**
  * 页面的数据库链接禁止跳转，只能查看

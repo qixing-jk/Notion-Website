@@ -1,5 +1,5 @@
 // pages/sitemap.xml.js
-import { cleanDataBeforeReturn, getGlobalData } from '@/lib/db/getSiteData'
+import { fetchGlobalAllData,cleanDataBeforeReturn } from '@/lib/db/SiteDataApi'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -27,7 +27,7 @@ const UI = props => {
  */
 export const getServerSideProps = async ctx => {
   const from = `auth`
-  const props = await getGlobalData({ from })
+  const props = await fetchGlobalAllData({ from })
   const code = ctx.query.code
 
   let params = null

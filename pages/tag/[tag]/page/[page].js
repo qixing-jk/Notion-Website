@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, getGlobalData } from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 import { LayoutPostList } from '@theme-components/LayoutPostList'
 
@@ -18,7 +18,7 @@ const Tag = props => {
 
 export async function getStaticProps({ params: { tag, page }, locale }) {
   const from = 'tag-page-props'
-  const props = await getGlobalData({ from, locale })
+  const props = await fetchGlobalAllData({ from, locale })
   // 过滤状态、标签
   props.posts = props.allPages
     ?.filter(page => page.type === 'Post' && page.status === 'Published')
@@ -50,7 +50,7 @@ export async function getStaticProps({ params: { tag, page }, locale }) {
 
 export async function getStaticPaths() {
   const from = 'tag-page-static-path'
-  const { tagOptions, allPages, NOTION_CONFIG } = await getGlobalData({ from })
+  const { tagOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData({ from })
   const paths = []
   tagOptions?.forEach(tag => {
     // 过滤状态类型

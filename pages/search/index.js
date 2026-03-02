@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, getGlobalData } from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
 import { LayoutSearch } from '@theme-components/LayoutSearch'
@@ -48,7 +48,7 @@ const Search = props => {
  */
 export async function getStaticProps({ locale }) {
   const from = 'search-props'
-  const props = await getGlobalData({
+  const props = await fetchGlobalAllData({
     from,
     locale
   })
