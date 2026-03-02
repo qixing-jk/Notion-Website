@@ -312,6 +312,19 @@ const nextConfig = {
       config.plugins.push(new StatoscopeWebpackPlugin())
     }
 
+    // Enable source maps in development mode
+    if (dev || process.env.NODE_ENV_API === 'development') {
+      // config.devtool = 'source-map'
+      config.devtool = 'eval-source-map'
+      // console.log('启动调试 nextjs.config.devtool ', config.devtool)
+    }
+
+    // 优化模块解析
+    config.resolve.modules = [
+      path.resolve(__dirname, 'node_modules'),
+      'node_modules'
+    ]
+
     return config
   },
   experimental: {

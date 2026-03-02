@@ -2,7 +2,7 @@ import Image from 'next/image'
 import TagItem from './TagItem'
 import { siteConfig } from '@/lib/config'
 import NotionIcon from '@/components/NotionIcon'
-import { sha256Digest } from '@/lib/password'
+import { sha256Digest } from '@/lib/utils/password'
 
 export const ArticleInfo = props => {
   const { post } = props
