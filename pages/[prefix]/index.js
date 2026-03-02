@@ -1,21 +1,15 @@
 import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
 import { siteConfig } from '@/lib/config'
-import {
-  cleanDataBeforeReturn,
-  getGlobalData,
-  getPost
-} from '@/lib/db/getSiteData'
+import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import { useGlobal } from '@/lib/global'
-import { getPasswordQuery, sha256Digest } from '@/lib/password'
-import { checkSlugHasNoSlash, processPostData } from '@/lib/utils/post'
+import { getPasswordQuery, sha256Digest } from '@/lib/utils/password'
+import { checkSlugHasNoSlash } from '@/lib/utils/post'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import { idToUuid } from 'notion-utils'
 import { useEffect, useState } from 'react'
 import { getRevalidateTime } from '@/lib/utils/revalidate'
 import dynamic from 'next/dynamic'
-import { getOrSetDataWithCache } from '@/lib/cache/cache_manager'
 
 const OpenWrite = dynamic(() => import('@/components/OpenWrite'))
 
@@ -100,7 +94,7 @@ export async function getStaticPaths() {
   }
 
   const from = 'slug-paths'
-  const { allPages } = await getGlobalData({ from })
+  const { allPages } = await fetchGlobalAllData({ from })
   const paths = allPages
     ?.filter(row => checkSlugHasNoSlash(row))
     .map(row => ({ params: { prefix: row.slug } }))
@@ -111,47 +105,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix }, locale }) {
-  let fullSlug = prefix
-  const from = `slug-props-${fullSlug}`
-  let props = await getGlobalData({ from, locale })
-  if (siteConfig('PSEUDO_STATIC', false, props.NOTION_CONFIG)) {
-    if (!fullSlug.endsWith('.html')) {
-      fullSlug += '.html'
-    }
-  }
-
-  // 在列表内查找文章
-  props.post = props?.allPages?.find(p => {
-    return (
-      p.type.indexOf('Menu') < 0 &&
-      (p.slug === prefix || p.id === idToUuid(prefix))
-    )
+  const props = await resolvePostProps({
+    prefix,
+    locale
   })
-
-  // 处理非列表内文章的内信息
-  if (!props?.post) {
-    const pageId = prefix
-    if (pageId.length >= 32) {
-      props.post = await getPost(pageId)
-    }
-  }
-  if (!props?.post) {
-    // 无法获取文章
-    return {
-      notFound: true
-    }
-  } else {
-    props = await getOrSetDataWithCache(
-      `${props.post.id}_${props.post.lastEditedDay}`,
-      async (props, from) => {
-        await processPostData(props, from)
-        cleanDataBeforeReturn(props, from)
-        return props
-      },
-      props,
-      from
-    )
-  }
   return {
     props,
     revalidate: getRevalidateTime(props, 0)

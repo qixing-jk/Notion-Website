@@ -1,5 +1,6 @@
 import { siteConfig } from '@/lib/config'
-import { loadExternalResource } from '@/lib/utils'
+import { convertInnerUrl } from '@/lib/db/notion/convertInnerUrl'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -177,7 +178,7 @@ const ExternalPlugin = props => {
     // 执行注入脚本
     // eslint-disable-next-line no-eval
     if (GLOBAL_JS && GLOBAL_JS.trim() !== '') {
-      console.log('Inject JS:', GLOBAL_JS)
+      // console.log('Inject JS:', GLOBAL_JS)
       eval(GLOBAL_JS)
     }
   })

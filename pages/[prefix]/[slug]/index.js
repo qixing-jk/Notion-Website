@@ -1,10 +1,8 @@
 import BLOG from '@/blog.config'
-import { cleanDataBeforeReturn, getGlobalData, getPost } from '@/lib/db/getSiteData'
-import { checkSlugHasOneSlash, processPostData } from '@/lib/utils/post'
-import { idToUuid } from 'notion-utils'
+import { siteConfig } from '@/lib/config'
+import { fetchGlobalAllData, resolvePostProps } from '@/lib/db/SiteDataApi'
 import Slug from '..'
-import { getRevalidateTime } from '@/lib/utils/revalidate'
-import { getOrSetDataWithCache } from '@/lib/cache/cache_manager'
+import { checkSlugHasOneSlash } from '@/lib/utils/post'
 
 /**
  * 根据notion的slug访问页面
@@ -25,7 +23,7 @@ export async function getStaticPaths() {
   }
 
   const from = 'slug-paths'
-  const { allPages } = await getGlobalData({ from })
+  const { allPages } = await fetchGlobalAllData({ from })
 
   // 根据slug中的 / 分割成prefix和slug两个字段 ; 例如 article/test
   // 最终用户可以通过  [domain]/[prefix]/[slug] 路径访问，即这里的 [domain]/article/test
@@ -46,49 +44,15 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
-  const fullSlug = prefix + '/' + slug
-  const from = `slug-props-${fullSlug}`
-  let props = await getGlobalData({ from, locale })
-
-  // 在列表内查找文章
-  props.post = props?.allPages?.find(p => {
-    return (
-      p.type.indexOf('Menu') < 0 &&
-      (p.slug === slug ||
-        p.slug === fullSlug ||
-        p.id === slug ||
-        p.id === idToUuid(fullSlug))
-    )
+  const props = await resolvePostProps({
+    prefix,
+    slug,
+    locale,
   })
 
-  // 处理非列表内文章的内信息
-  if (!props?.post) {
-    const pageId = slug.slice(-1)[0]
-    if (pageId.length >= 32) {
-      props.post = await getPost(pageId)
-    }
-  }
-
-  if (!props?.post) {
-    // 无法获取文章
-    return {
-      notFound: true
-    }
-  } else {
-    props = await getOrSetDataWithCache(
-      `${props.post.id}_${props.post.lastEditedDay}`,
-      async (props, from) => {
-        await processPostData(props, from)
-        cleanDataBeforeReturn(props, from)
-        return props
-      },
-      props,
-      from
-    )
-  }
   return {
     props,
-    revalidate: getRevalidateTime(props, 1)
+    revalidate: getRevalidateTime(props, 1),
   }
 }
 

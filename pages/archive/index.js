@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, getGlobalData } from '@/lib/db/getSiteData'
+import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import { DynamicLayout } from '@/themes/theme'
@@ -32,7 +32,7 @@ const ArchiveIndex = props => {
 
 export async function getStaticProps({ locale }) {
   const from = 'archive-index'
-  const props = await getGlobalData({ from, locale })
+  const props = await fetchGlobalAllData({ from, locale })
   // 处理分页
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
