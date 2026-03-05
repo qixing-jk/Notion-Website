@@ -1072,9 +1072,9 @@
   integrity sha512-Z1Dh6lhFkxvBDH1FoW6OU/L6prYwPSlwjLiZkExIAh8fbP6iI/M7iGTQAJPYJ9YFlWobCZ1PHbchFhFYb2ADkw==
 
 "@next/third-parties@^15.1.4":
-  version "15.5.5"
-  resolved "https://registry.npmmirror.com/@next/third-parties/-/third-parties-15.5.5.tgz#f502b4db5a1c82df98e4c0f93afa5f1e441c00c9"
-  integrity sha512-cCEEzsdZc6kpfBahzeKtfFs9xNbYOMLm0cvar3BzG2IBynqD78G9wSMDi1wXVU1ABt2YzjBj/FbykvP2DXC8Mg==
+  version "15.5.12"
+  resolved "https://registry.yarnpkg.com/@next/third-parties/-/third-parties-15.5.12.tgz#016a632ef69004e617bc75fd7d5862918f428075"
+  integrity sha512-1wVoarmu7CHc2+lhHdMHqfenbIopkppTscgyVym6eUD78JBDp1VCYQif+LiSUKJL2xMUwN8GvnAqsSrDTamvtg==
   dependencies:
     third-party-capital "1.0.20"
 
@@ -7094,7 +7094,7 @@ thenify-all@^1.0.0:
 
 third-party-capital@1.0.20:
   version "1.0.20"
-  resolved "https://registry.npmmirror.com/third-party-capital/-/third-party-capital-1.0.20.tgz#e218a929a35bf4d2245da9addb8ab978d2f41685"
+  resolved "https://registry.yarnpkg.com/third-party-capital/-/third-party-capital-1.0.20.tgz#e218a929a35bf4d2245da9addb8ab978d2f41685"
   integrity sha512-oB7yIimd8SuGptespDAZnNkzIz+NWaJCu2RMsbs4Wmp9zSDUM8Nhi3s2OOcqYuv3mN4hitXc8DVx+LyUmbUDiA==
 
 tiny-invariant@^1.0.0:
