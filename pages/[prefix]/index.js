@@ -11,6 +11,8 @@ import { useEffect, useState } from 'react'
 import { getRevalidateTime } from '@/lib/utils/revalidate'
 import { LayoutSlug } from '@theme-components/LayoutSlug'
 import dynamic from 'next/dynamic'
+import { isExport } from '@/lib/utils/buildMode'
+import { getPriorityPages, prefetchAllBlockMaps } from '@/lib/build/prefetch'
 
 const OpenWrite = dynamic(() => import('@/components/OpenWrite'))
 
@@ -92,21 +94,29 @@ const Slug = props => {
 }
 
 export async function getStaticPaths() {
-  if (!BLOG.isProd) {
+  const from = 'slug-paths'
+  const { allPages } = await fetchGlobalAllData({ from })
+
+  // Export 模式：全量预生成
+  if (isExport()) {
+    await prefetchAllBlockMaps(allPages)
     return {
-      paths: [],
-      fallback: true
+      paths: allPages
+        ?.filter(row => checkSlugHasNoSlash(row))
+        .map(row => ({ params: { prefix: row.slug } })),
+      fallback: false
     }
   }
 
-  const from = 'slug-paths'
-  const { allPages } = await fetchGlobalAllData({ from })
-  const paths = allPages
-    ?.filter(row => checkSlugHasNoSlash(row))
-    .map(row => ({ params: { prefix: row.slug } }))
+  // ISR 模式：预生成最新10篇，其余按需渲染
+  const tops = getPriorityPages(allPages)
+  await prefetchAllBlockMaps(tops)
+
   return {
-    paths: paths,
-    fallback: true
+    paths: tops
+      .filter(row => checkSlugHasNoSlash(row))
+      .map(row => ({ params: { prefix: row.slug } })),
+    fallback: 'blocking'
   }
 }
 
@@ -115,9 +125,11 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     prefix,
     locale
   })
+
   return {
     props,
-    revalidate: getRevalidateTime(props, 0)
+    revalidate: getRevalidateTime(props, 0),
+    notFound: !props.post
   }
 }
 

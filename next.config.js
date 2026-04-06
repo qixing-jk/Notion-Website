@@ -1,8 +1,9 @@
 const { THEME } = require('./blog.config')
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 const BLOG = require('./blog.config')
 const { extractLangPrefix } = require('./lib/utils/pageId')
+const { isExport } = require('./lib/utils/buildMode')
 
 // 打包时是否分析代码
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -18,8 +19,7 @@ const locales = (function () {
   const langs = [BLOG.LANG]
   if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
     const siteIds = BLOG.NOTION_PAGE_ID.split(',')
-    for (let index = 0; index < siteIds.length; index++) {
-      const siteId = siteIds[index]
+    for (const siteId of siteIds) {
       const prefix = extractLangPrefix(siteId)
       // 如果包含前缀 例如 zh , en 等
       if (prefix) {
@@ -52,8 +52,8 @@ function deleteFileIfExists(relativePath) {
 // 编译前执行
 ;(function () {
   if (
-    !process.env.npm_lifecycle_event === 'export' &&
-    !process.env.npm_lifecycle_event === 'build'
+    process.env.npm_lifecycle_event !== 'export' &&
+    process.env.npm_lifecycle_event !== 'build'
   ) {
     return
   }
@@ -92,18 +92,20 @@ function scanSubdirectories(directory) {
  * @type {import('next').NextConfig}
  */
 
+function getOutput() {
+  if (isExport()) return 'export'
+  if (process.env.NEXT_BUILD_STANDALONE === 'true') return 'standalone'
+  return undefined
+}
+
 const nextConfig = {
   productionBrowserSourceMaps: process.env.VERCEL_ENV !== 'production',
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true
   },
-  output: process.env.EXPORT
-    ? 'export'
-    : process.env.NEXT_BUILD_STANDALONE === 'true'
-      ? 'standalone'
-      : undefined,
-  staticPageGenerationTimeout: 120,
+  output: getOutput(),
+  staticPageGenerationTimeout: 300,
 
   // 性能优化配置
   compress: true,
@@ -123,10 +125,10 @@ const nextConfig = {
   i18n: process.env.EXPORT
     ? undefined
     : {
-        defaultLocale: BLOG.LANG,
-        // 支持的所有多语言,按需填写即可
-        locales: locales
-      },
+      defaultLocale: BLOG.LANG,
+      // 支持的所有多语言,按需填写即可
+      locales: locales
+    },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'www.notion.so' },
@@ -165,133 +167,132 @@ const nextConfig = {
   redirects: process.env.EXPORT
     ? undefined
     : () => {
-        return [
-          {
-            source: '/feed',
-            destination: '/rss/feed.xml',
-            permanent: true
-          }
-        ]
-      },
+      return [
+        {
+          source: '/feed',
+          destination: '/rss/feed.xml',
+          permanent: true
+        }
+      ]
+    },
   // 重写url
   rewrites: process.env.EXPORT
     ? undefined
     : () => {
-        // 处理多语言重定向
-        const langsRewrites = []
-        if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
-          const siteIds = BLOG.NOTION_PAGE_ID.split(',')
-          const langs = []
-          for (let index = 0; index < siteIds.length; index++) {
-            const siteId = siteIds[index]
-            const prefix = extractLangPrefix(siteId)
-            // 如果包含前缀 例如 zh , en 等
-            if (prefix) {
-              langs.push(prefix)
-            }
-            console.log('[Locales]', siteId)
+      // 处理多语言重定向
+      const langsRewrites = []
+      if (BLOG.NOTION_PAGE_ID.indexOf(',') > 0) {
+        const siteIds = BLOG.NOTION_PAGE_ID.split(',')
+        const langs = []
+        for (const siteId of siteIds) {
+          const prefix = extractLangPrefix(siteId)
+          // 如果包含前缀 例如 zh , en 等
+          if (prefix) {
+            langs.push(prefix)
           }
-
-          // 映射多语言
-          // 示例： source: '/:locale(zh|en)/:path*' ; :locale() 会将语言放入重写后的 `?locale=` 中。
-          langsRewrites.push(
-            {
-              source: `/:locale(${langs.join('|')})/:path*`,
-              destination: '/:path*'
-            },
-            // 匹配没有路径的情况，例如 [domain]/zh 或 [domain]/en
-            {
-              source: `/:locale(${langs.join('|')})`,
-              destination: '/'
-            },
-            // 匹配没有路径的情况，例如 [domain]/zh/ 或 [domain]/en/
-            {
-              source: `/:locale(${langs.join('|')})/`,
-              destination: '/'
-            }
-          )
+          console.log('[Locales]', siteId)
         }
 
-        return [
-          ...langsRewrites,
-          // 伪静态重写
+        // 映射多语言
+        // 示例： source: '/:locale(zh|en)/:path*' ; :locale() 会将语言放入重写后的 `?locale=` 中。
+        langsRewrites.push(
           {
-            source: '/:path*.html',
+            source: `/:locale(${langs.join('|')})/:path*`,
             destination: '/:path*'
+          },
+          // 匹配没有路径的情况，例如 [domain]/zh 或 [domain]/en
+          {
+            source: `/:locale(${langs.join('|')})`,
+            destination: '/'
+          },
+          // 匹配没有路径的情况，例如 [domain]/zh/ 或 [domain]/en/
+          {
+            source: `/:locale(${langs.join('|')})/`,
+            destination: '/'
           }
-        ]
-      },
+        )
+      }
+
+      return [
+        ...langsRewrites,
+        // 伪静态重写
+        {
+          source: '/:path*.html',
+          destination: '/:path*'
+        }
+      ]
+    },
   headers: process.env.EXPORT
     ? undefined
     : () => {
-        return [
-          {
-            source: '/:path*{/}?',
-            headers: [
-              // 为了博客兼容性，不做过多安全限制
-              { key: 'Access-Control-Allow-Credentials', value: 'true' },
-              { key: 'Access-Control-Allow-Origin', value: '*' },
-              {
-                key: 'Access-Control-Allow-Methods',
-                value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
-              },
-              {
-                key: 'Access-Control-Allow-Headers',
-                value:
-                  'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-              }
-              // 安全头部 相关配置，谨慎开启
-              //   { key: 'X-Frame-Options', value: 'DENY' },
-              //   { key: 'X-Content-Type-Options', value: 'nosniff' },
-              //   { key: 'X-XSS-Protection', value: '1; mode=block' },
-              //   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-              //   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-              //   {
-              //     key: 'Strict-Transport-Security',
-              //     value: 'max-age=31536000; includeSubDomains; preload'
-              //   },
-              //   {
-              //     key: 'Content-Security-Policy',
-              //     value: [
-              //       "default-src 'self'",
-              //       "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com *.google-analytics.com *.googletagmanager.com",
-              //       "style-src 'self' 'unsafe-inline' *.googleapis.com *.gstatic.com",
-              //       "img-src 'self' data: blob: *.notion.so *.unsplash.com *.githubusercontent.com *.gravatar.com",
-              //       "font-src 'self' *.googleapis.com *.gstatic.com",
-              //       "connect-src 'self' *.google-analytics.com *.googletagmanager.com",
-              //       "frame-src 'self' *.youtube.com *.vimeo.com",
-              //       "object-src 'none'",
-              //       "base-uri 'self'",
-              //       "form-action 'self'"
-              //     ].join('; ')
-              //   },
+      return [
+        {
+          source: '/:path*{/}?',
+          headers: [
+            // 为了博客兼容性，不做过多安全限制
+            { key: 'Access-Control-Allow-Credentials', value: 'true' },
+            { key: 'Access-Control-Allow-Origin', value: '*' },
+            {
+              key: 'Access-Control-Allow-Methods',
+              value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT'
+            },
+            {
+              key: 'Access-Control-Allow-Headers',
+              value:
+                'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+            }
+            // 安全头部 相关配置，谨慎开启
+            //   { key: 'X-Frame-Options', value: 'DENY' },
+            //   { key: 'X-Content-Type-Options', value: 'nosniff' },
+            //   { key: 'X-XSS-Protection', value: '1; mode=block' },
+            //   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+            //   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+            //   {
+            //     key: 'Strict-Transport-Security',
+            //     value: 'max-age=31536000; includeSubDomains; preload'
+            //   },
+            //   {
+            //     key: 'Content-Security-Policy',
+            //     value: [
+            //       "default-src 'self'",
+            //       "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googleapis.com *.gstatic.com *.google-analytics.com *.googletagmanager.com",
+            //       "style-src 'self' 'unsafe-inline' *.googleapis.com *.gstatic.com",
+            //       "img-src 'self' data: blob: *.notion.so *.unsplash.com *.githubusercontent.com *.gravatar.com",
+            //       "font-src 'self' *.googleapis.com *.gstatic.com",
+            //       "connect-src 'self' *.google-analytics.com *.googletagmanager.com",
+            //       "frame-src 'self' *.youtube.com *.vimeo.com",
+            //       "object-src 'none'",
+            //       "base-uri 'self'",
+            //       "form-action 'self'"
+            //     ].join('; ')
+            //   },
 
-              //   // CORS 配置（更严格）
-              //   { key: 'Access-Control-Allow-Credentials', value: 'false' },
-              //   {
-              //     key: 'Access-Control-Allow-Origin',
-              //     value: process.env.NODE_ENV === 'production'
-              //       ? siteConfig('LINK') || 'https://yourdomain.com'
-              //       : '*'
-              //   },
-              //   { key: 'Access-Control-Max-Age', value: '86400' }
-            ]
-          }
-          //   {
-          //     source: '/api/:path*',
-          //     headers: [
-          //       // API 特定的安全头部
-          //       { key: 'X-Frame-Options', value: 'DENY' },
-          //       { key: 'X-Content-Type-Options', value: 'nosniff' },
-          //       { key: 'Cache-Control', value: 'no-store, max-age=0' },
-          //       {
-          //         key: 'Access-Control-Allow-Methods',
-          //         value: 'GET,POST,PUT,DELETE,OPTIONS'
-          //       }
-          //     ]
-          //   }
-        ]
-      },
+            //   // CORS 配置（更严格）
+            //   { key: 'Access-Control-Allow-Credentials', value: 'false' },
+            //   {
+            //     key: 'Access-Control-Allow-Origin',
+            //     value: process.env.NODE_ENV === 'production'
+            //       ? siteConfig('LINK') || 'https://yourdomain.com'
+            //       : '*'
+            //   },
+            //   { key: 'Access-Control-Max-Age', value: '86400' }
+          ]
+        },
+        //   {
+        //     source: '/api/:path*',
+        //     headers: [
+        //       // API 特定的安全头部
+        //       { key: 'X-Frame-Options', value: 'DENY' },
+        //       { key: 'X-Content-Type-Options', value: 'nosniff' },
+        //       { key: 'Cache-Control', value: 'no-store, max-age=0' },
+        //       {
+        //         key: 'Access-Control-Allow-Methods',
+        //         value: 'GET,POST,PUT,DELETE,OPTIONS'
+        //       }
+        //     ]
+        //   }
+      ]
+    },
   webpack: (config, { dev, isServer }) => {
     // 动态主题：添加 resolve.alias 配置，将动态路径映射到实际路径
     config.resolve.alias['@'] = path.resolve(__dirname)
@@ -325,8 +326,10 @@ const nextConfig = {
     ]
 
     return config
-  },
+  }
+  ,
   experimental: {
+    // cpus: 1,
     scrollRestoration: true,
     // 性能优化实验性功能
     optimizePackageImports: ['@heroicons/react', 'lodash']
