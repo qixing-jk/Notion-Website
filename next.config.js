@@ -312,10 +312,9 @@ const nextConfig = {
       config.plugins.push(new StatoscopeWebpackPlugin())
     }
 
-    // Enable source maps in development mode
+    // Avoid eval-based source maps because Vercel Edge runtime rejects them.
     if (dev || process.env.NODE_ENV_API === 'development') {
-      // config.devtool = 'source-map'
-      config.devtool = 'eval-source-map'
+      config.devtool = 'source-map'
       // console.log('启动调试 nextjs.config.devtool ', config.devtool)
     }
 
