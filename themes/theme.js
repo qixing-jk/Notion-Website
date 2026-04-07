@@ -9,50 +9,57 @@ import { siteConfig } from '@/lib/config'
 // 在next.config.js中扫描所有主题
 export const { THEMES = [] } = getConfig()?.publicRuntimeConfig || {}
 
+export const isThemeAvailable = theme => {
+  return typeof theme === 'string' && THEMES.includes(theme.trim())
+}
+
+export const resolveTheme = theme => {
+  if (typeof theme !== 'string') {
+    return BLOG.THEME
+  }
+
+  const themeName = theme.split(',')[0].trim()
+  if (!themeName || themeName === BLOG.THEME) {
+    return BLOG.THEME
+  }
+
+  return isThemeAvailable(themeName) ? themeName : BLOG.THEME
+}
+
 /**
  * 获取主题配置
  * @param {string} themeQuery - 主题查询参数（支持多个主题用逗号分隔）
  * @returns {Promise<object>} 主题配置对象
  */
 export const getThemeConfig = async themeQuery => {
-  // 如果 themeQuery 存在且不等于默认主题，处理多主题情况
-  if (typeof themeQuery === 'string' && themeQuery.trim()) {
-    // 取 themeQuery 中第一个主题（以逗号为分隔符）
-    const themeName = themeQuery.split(',')[0].trim()
+  const themeName = resolveTheme(themeQuery)
 
-    // 如果 themeQuery 不等于当前默认主题，则加载指定主题的配置
-    if (themeName !== BLOG.THEME) {
-      try {
-        // 动态导入主题配置
-        const THEME_CONFIG = await import(`@/themes/${themeName}`)
-          .then(m => m.THEME_CONFIG)
-          .catch(err => {
-            console.error(`Failed to load theme ${themeName}:`, err)
-            return null // 主题加载失败时返回 null 或者其他默认值
-          })
+  if (themeName !== BLOG.THEME) {
+    try {
+      const THEME_CONFIG = await import(`@/themes/${themeName}`)
+        .then(m => m.THEME_CONFIG)
+        .catch(err => {
+          console.error(`Failed to load theme ${themeName}:`, err)
+          return null
+        })
 
-        // 如果主题配置加载成功，返回配置
-        if (THEME_CONFIG) {
-          return THEME_CONFIG
-        } else {
-          // 如果加载失败，返回默认主题配置
-          console.warn(
-            `Loading ${themeName} failed. Falling back to default theme.`
-          )
-          return ThemeComponents?.THEME_CONFIG
-        }
-      } catch (error) {
-        // 如果 import 过程中出现异常，返回默认主题配置
-        console.error(
-          `Error loading theme configuration for ${themeName}:`,
-          error
+      if (THEME_CONFIG) {
+        return THEME_CONFIG
+      } else {
+        console.warn(
+          `Loading ${themeName} failed. Falling back to default theme.`
         )
         return ThemeComponents?.THEME_CONFIG
       }
+    } catch (error) {
+      console.error(
+        `Error loading theme configuration for ${themeName}:`,
+        error
+      )
+      return ThemeComponents?.THEME_CONFIG
     }
   }
 
-  // 如果没有 themeQuery 或 themeQuery 与默认主题相同，返回默认主题配置
   return ThemeComponents?.THEME_CONFIG
 }
 
@@ -63,10 +70,14 @@ export const getThemeConfig = async themeQuery => {
  */
 export const getBaseLayoutByTheme = theme => {
   const LayoutBase = ThemeComponents['LayoutBase']
-  const isDefaultTheme = !theme || theme === BLOG.THEME
+  const resolvedTheme = resolveTheme(theme)
+  const isDefaultTheme = resolvedTheme === BLOG.THEME
   if (!isDefaultTheme) {
     return dynamic(
-      () => import(`@/themes/${theme}/LayoutBase`).then(m => m['LayoutBase']),
+      () =>
+        import(`@/themes/${resolvedTheme}/LayoutBase`).then(
+          m => m['LayoutBase']
+        ),
       { ssr: true }
     )
   }
@@ -94,8 +105,10 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
     ThemeComponents[layoutName] || ThemeComponents['LayoutSlug']
   if (siteConfig('THEME_SWITCH')) {
     const router = useRouter()
-    const themeQuery = getQueryParam(router?.asPath, 'theme') || theme
-    const isDefaultTheme = !themeQuery || themeQuery === BLOG.THEME
+    const themeQuery = resolveTheme(
+      getQueryParam(router?.asPath, 'theme') || theme
+    )
+    const isDefaultTheme = themeQuery === BLOG.THEME
     // 加载非当前默认主题
     if (!isDefaultTheme) {
       return dynamic(
@@ -106,12 +119,12 @@ export const useLayoutByTheme = ({ layoutName, theme }) => {
               return m[layoutName]
             })
             .catch(err => {
-              import(`@/themes/${themeQuery || BLOG.THEME}/LayoutSlug`).then(
-                m => {
-                  setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
-                  return m[layoutName]
-                }
-              )
+              return import(
+                `@/themes/${themeQuery || BLOG.THEME}/LayoutSlug`
+              ).then(m => {
+                setTimeout(fixThemeDOM, isDefaultTheme ? 100 : 500)
+                return m[layoutName]
+              })
             }),
         { ssr: true }
       )
