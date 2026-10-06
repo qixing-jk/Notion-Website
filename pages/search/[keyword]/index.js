@@ -1,21 +1,14 @@
 import BLOG from '@/blog.config'
 import { getDataFromCache } from '@/lib/cache/cache_manager'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
-import { LayoutSearch } from '@theme-components/LayoutSearch'
 import { getPageContentText } from '@/lib/db/notion/getPageContentText'
+import { getPageBlockCacheKey } from '@/lib/db/notion/getPostBlocks'
 
 const Index = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutSearch'
-      layout={LayoutSearch}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
 }
 
 /**
@@ -24,16 +17,15 @@ const Index = props => {
  * @returns
  */
 export async function getStaticProps({ params: { keyword }, locale }) {
-  const from = 'search-props'
   const props = await fetchGlobalAllData({
-    from,
+    from: 'search-props',
     locale
   })
   const { allPages } = props
-  const allPublishedPosts = allPages?.filter(
+  const allPosts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
-  props.posts = await filterByMemCache(allPublishedPosts, keyword)
+  props.posts = await filterByMemCache(allPosts, keyword)
   props.postCount = props.posts.length
   const POST_LIST_STYLE = siteConfig(
     'POST_LIST_STYLE',
@@ -49,7 +41,6 @@ export async function getStaticProps({ params: { keyword }, locale }) {
     props.posts = props.posts?.slice(0, POSTS_PER_PAGE)
   }
   props.keyword = keyword
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT
@@ -71,17 +62,17 @@ export function getStaticPaths() {
 
 /**
  * 在内存缓存中进行全文索引
- * @param {*} allPublishedPosts
+ * @param {*} allPosts
  * @param keyword 关键词
  * @returns
  */
-async function filterByMemCache(allPublishedPosts, keyword) {
+async function filterByMemCache(allPosts, keyword) {
   const filterPosts = []
   if (keyword) {
     keyword = keyword.trim().toLowerCase()
   }
-  for (const post of allPublishedPosts) {
-    const cacheKey = 'page_block_' + post.id
+  for (const post of allPosts) {
+    const cacheKey = getPageBlockCacheKey(post.id, post.lastEditedDate)
     const page = await getDataFromCache(cacheKey, true)
     const tagContent =
       post?.tags && Array.isArray(post?.tags) ? post?.tags.join(' ') : ''

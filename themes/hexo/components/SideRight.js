@@ -12,7 +12,7 @@ import LatestPostsGroup from './LatestPostsGroup'
 import TagGroups from './TagGroups'
 
 const HexoRecentComments = dynamic(() => import('./HexoRecentComments'))
-const Live2D = dynamic(() => import('@/components/Live2D'),{ ssr: false })
+const Live2D = dynamic(() => import('@/components/Live2D'), { ssr: false })
 const FaceBookPage = dynamic(
   () => {
     let facebook = <></>

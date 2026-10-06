@@ -1,9 +1,8 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import { LayoutTagIndex } from '@theme-components/LayoutTagIndex'
 
 /**
  * 标签首页
@@ -13,14 +12,7 @@ import { LayoutTagIndex } from '@theme-components/LayoutTagIndex'
 const TagIndex = props => {
   const router = useRouter()
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutTagIndex'
-      layout={LayoutTagIndex}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutTagIndex' {...props} />
 }
 
 export async function getStaticProps(req) {
@@ -28,8 +20,7 @@ export async function getStaticProps(req) {
 
   const from = 'tag-index-props'
   const props = await fetchGlobalAllData({ from, locale })
-
-  cleanDataBeforeReturn(props, from)
+  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT
@@ -38,7 +29,7 @@ export async function getStaticProps(req) {
           'NEXT_REVALIDATE_SECOND',
           BLOG.NEXT_REVALIDATE_SECOND,
           props.NOTION_CONFIG
-        ) * 3
+        )
   }
 }
 

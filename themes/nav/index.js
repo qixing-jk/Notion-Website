@@ -6,11 +6,7 @@
  * 开启方式 在blog.config.js 将主题配置为 `NAV`
  */
 
-import Comment from '@/components/Comment'
-import { AdSlot } from '@/components/GoogleAdsense'
-import Live2D from '@/components/Live2D'
 import NotionIcon from '@/components/NotionIcon'
-import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { isBrowser } from '@/lib/utils'
@@ -19,25 +15,60 @@ import dynamic from 'next/dynamic'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect, useState } from 'react'
-import Announcement from './components/Announcement'
 import { ArticleLock } from './components/ArticleLock'
-import BlogArchiveItem from './components/BlogArchiveItem'
-import BlogPostCard from './components/BlogPostCard'
-import BlogPostListAll from './components/BlogPostListAll'
-import CategoryItem from './components/CategoryItem'
-import FloatButtonCatalog from './components/FloatButtonCatalog'
-import Footer from './components/Footer'
-import JumpToTopButton from './components/JumpToTopButton'
-import LogoBar from './components/LogoBar'
-import { MenuItem } from './components/MenuItem'
-import PageNavDrawer from './components/PageNavDrawer'
-import TagItemMini from './components/TagItemMini'
-import TocDrawer from './components/TocDrawer'
-import TopNavBar from './components/TopNavBar'
 import CONFIG from './config'
 import { Style } from './style'
 
 const WWAds = dynamic(() => import('@/components/WWAds'), { ssr: false })
+const AdSlot = dynamic(
+  () => import('@/components/GoogleAdsense').then(mod => mod.AdSlot),
+  {
+    ssr: false
+  }
+)
+const Comment = dynamic(() => import('@/components/Comment'), { ssr: false })
+const Live2D = dynamic(() => import('@/components/Live2D'), { ssr: false })
+const NotionPage = dynamic(() => import('@/components/NotionPage'), {
+  ssr: true
+})
+const Announcement = dynamic(() => import('./components/Announcement'), {
+  ssr: true
+})
+const BlogArchiveItem = dynamic(() => import('./components/BlogArchiveItem'), {
+  ssr: true
+})
+const BlogPostCard = dynamic(() => import('./components/BlogPostCard'), {
+  ssr: true
+})
+const BlogPostListAll = dynamic(() => import('./components/BlogPostListAll'), {
+  ssr: true
+})
+const CategoryItem = dynamic(() => import('./components/CategoryItem'), {
+  ssr: true
+})
+const FloatButtonCatalog = dynamic(
+  () => import('./components/FloatButtonCatalog'),
+  { ssr: true }
+)
+const Footer = dynamic(() => import('./components/Footer'), { ssr: false })
+const JumpToTopButton = dynamic(() => import('./components/JumpToTopButton'), {
+  ssr: false
+})
+const LogoBar = dynamic(() => import('./components/LogoBar'), { ssr: true })
+const MenuItem = dynamic(
+  () => import('./components/MenuItem').then(mod => mod.MenuItem),
+  {
+    ssr: true
+  }
+)
+const PageNavDrawer = dynamic(() => import('./components/PageNavDrawer'), {
+  ssr: true
+})
+const TagItemMini = dynamic(() => import('./components/TagItemMini'), {
+  ssr: true
+})
+const TocDrawer = dynamic(() => import('./components/TocDrawer'), { ssr: true })
+const TopNavBar = dynamic(() => import('./components/TopNavBar'), { ssr: true })
 
 // 主题全局变量
 const ThemeGlobalNav = createContext()
@@ -255,7 +286,6 @@ const LayoutPostList = props => {
 const LayoutSlug = props => {
   const { post, lock, validPassword } = props
 
-  
   return (
     <>
       {/* 文章锁 */}
@@ -362,16 +392,21 @@ const Layout404 = props => {
     }, 3000)
   }, [])
 
-  return <>
-        <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
-            <div className='dark:text-gray-200'>
-                <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'><i className='mr-2 fas fa-spinner animate-spin' />404</h2>
-                <div className='inline-block text-left h-32 leading-10 items-center'>
-                    <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
-                </div>
-            </div>
+  return (
+    <>
+      <div className='md:-mt-20 text-black w-full h-screen text-center justify-center content-center items-center flex flex-col'>
+        <div className='dark:text-gray-200'>
+          <h2 className='inline-block border-r-2 border-gray-600 mr-2 px-3 py-2 align-top'>
+            <i className='mr-2 fas fa-spinner animate-spin' />
+            404
+          </h2>
+          <div className='inline-block text-left h-32 leading-10 items-center'>
+            <h2 className='m-0 p-0'>页面无法加载，即将返回首页</h2>
+          </div>
         </div>
+      </div>
     </>
+  )
 }
 
 /**

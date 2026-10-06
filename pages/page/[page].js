@@ -1,8 +1,9 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData, getPostBlocks } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData, getPostBlocks } from '@/lib/db/SiteDataApi'
+import { formatNotionBlock } from '@/lib/db/notion/getPostBlocks'
+import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
 import { DynamicLayout } from '@/themes/theme'
-import { LayoutPostList } from '@theme-components/LayoutPostList'
 
 /**
  * 文章列表分页
@@ -11,14 +12,7 @@ import { LayoutPostList } from '@theme-components/LayoutPostList'
  */
 const Page = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutPostList'
-      layout={LayoutPostList}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
 }
 
 export async function getStaticPaths({ locale }) {
@@ -46,12 +40,12 @@ export async function getStaticProps({ params: { page }, locale }) {
     props?.NOTION_CONFIG
   )
 
-  const allPublishedPosts = allPages?.filter(
+  const allPosts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
   const POSTS_PER_PAGE = siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
   // 处理分页
-  props.posts = allPublishedPosts.slice(
+  props.posts = allPosts.slice(
     POSTS_PER_PAGE * (page - 1),
     POSTS_PER_PAGE * page
   )
@@ -64,11 +58,15 @@ export async function getStaticProps({ params: { page }, locale }) {
       if (post.password && post.password !== '') {
         continue
       }
-      post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
+      const rawBlockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
+      post.blockMap = adapterNotionBlockMap(rawBlockMap)
+      if (post.blockMap?.block) {
+        post.blockMap.block = formatNotionBlock(post.blockMap.block)
+      }
     }
   }
 
-  cleanDataBeforeReturn(props, from)
+  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT

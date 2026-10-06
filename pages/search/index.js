@@ -1,9 +1,8 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import { LayoutSearch } from '@theme-components/LayoutSearch'
 
 /**
  * 搜索路由
@@ -30,33 +29,29 @@ const Search = props => {
     filteredPosts = []
   }
 
-  props = { ...props, posts: filteredPosts }
+  props = {
+    ...props,
+    posts: filteredPosts,
+    postCount: filteredPosts.length,
+    keyword: keyword || ''
+  }
 
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutSearch'
-      layout={LayoutSearch}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutSearch' {...props} />
 }
 
 /**
  * 浏览器前端搜索
  */
 export async function getStaticProps({ locale }) {
-  const from = 'search-props'
   const props = await fetchGlobalAllData({
-    from,
+    from: 'search-props',
     locale
   })
   const { allPages } = props
   props.posts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT

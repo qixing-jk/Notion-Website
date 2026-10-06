@@ -1,8 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
-import { LayoutSignUp } from '@theme-components/LayoutSignUp'
 
 /**
  * 注册
@@ -11,14 +10,7 @@ import { LayoutSignUp } from '@theme-components/LayoutSignUp'
  */
 const SignUp = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutSignUp'
-      layout={LayoutSignUp}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutSignUp' {...props} />
 }
 
 export async function getStaticProps(req) {
@@ -27,7 +19,7 @@ export async function getStaticProps(req) {
   const from = 'SignIn'
   const props = await fetchGlobalAllData({ from, locale })
 
-  cleanDataBeforeReturn(props, from)
+  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT

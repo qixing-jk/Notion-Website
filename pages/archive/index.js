@@ -1,11 +1,10 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import { DynamicLayout } from '@/themes/theme'
 import { useEffect } from 'react'
-import { LayoutArchive } from '@theme-components/LayoutArchive'
 
 /**
  * 归档首页
@@ -28,23 +27,16 @@ const ArchiveIndex = props => {
   }, [])
 
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutArchive'
-      layout={LayoutArchive}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutArchive' {...props} />
 }
 
 export async function getStaticProps({ locale }) {
-  const from = 'archive-index'
-  const props = await fetchGlobalAllData({ from, locale })
+  const props = await fetchGlobalAllData({ from: 'archive-index', locale })
   // 处理分页
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
+  delete props.allPages
 
   const postsSortByDate = Object.create(props.posts)
 
@@ -64,8 +56,8 @@ export async function getStaticProps({ locale }) {
   })
 
   props.archivePosts = archivePosts
+  delete props.allPages
 
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT

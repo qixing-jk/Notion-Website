@@ -1,8 +1,7 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
-import { LayoutPostList } from '@theme-components/LayoutPostList'
 
 /**
  * 分类页
@@ -12,14 +11,7 @@ import { LayoutPostList } from '@theme-components/LayoutPostList'
 
 export default function Category(props) {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutPostList'
-      layout={LayoutPostList}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutPostList' {...props} />
 }
 
 export async function getStaticProps({ params: { category, page } }) {
@@ -39,11 +31,11 @@ export async function getStaticProps({ params: { category, page } }) {
     POSTS_PER_PAGE * page
   )
 
+  delete props.allPages
   props.page = page
 
   props = { ...props, category, page }
 
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT
@@ -58,11 +50,9 @@ export async function getStaticProps({ params: { category, page } }) {
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData(
-    {
-      from
-    }
-  )
+  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData({
+    from
+  })
   const paths = []
 
   categoryOptions?.forEach(category => {

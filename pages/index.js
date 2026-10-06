@@ -1,18 +1,19 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import {
-  cleanDataBeforeReturn,
+  cleanPostSummaries,
   fetchGlobalAllData,
   getPostBlocks
 } from '@/lib/db/SiteDataApi'
+import { formatNotionBlock } from '@/lib/db/notion/getPostBlocks'
 import { generateRobotsTxt } from '@/lib/utils/robots.txt'
-import { generateRss } from '@/lib/utils/rss'
+import { generateRss, shouldGenerateRssForLocale } from '@/lib/utils/rss'
 import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
-import { canWriteFile } from '@/lib/utils'
 import { generateRedirectJson } from '@/lib/utils/redirect'
-import { LayoutIndex } from '@theme-components/LayoutIndex'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
+import pLimit from 'p-limit'
+import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
 
 /**
  * 首页布局
@@ -21,14 +22,7 @@ import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
  */
 const Index = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <DynamicLayout
-      theme={theme}
-      layoutName='LayoutIndex'
-      layout={LayoutIndex}
-      {...props}
-    />
-  )
+  return <DynamicLayout theme={theme} layoutName='LayoutIndex' {...props} />
 }
 
 /**
@@ -39,9 +33,35 @@ export async function getStaticProps(req) {
   const { locale } = req
   const from = 'index'
   const props = await fetchGlobalAllData({ from, locale })
+  if (process.env.NODE_ENV === 'development') {
+    const configTheme = BLOG.THEME
+    const notionTheme = props?.NOTION_CONFIG?.THEME || null
+    const finalTheme = siteConfig('THEME', BLOG.THEME, props?.NOTION_CONFIG)
+    const source = notionTheme ? 'notion:config' : 'blog/env:config'
+    console.log(
+      '[ThemeResolver][server-static-props]',
+      JSON.stringify({
+        route: '/',
+        configTheme,
+        notionTheme,
+        finalTheme,
+        source
+      })
+    )
+  }
   const POST_PREVIEW_LINES = siteConfig(
     'POST_PREVIEW_LINES',
-    12,
+    8,
+    props?.NOTION_CONFIG
+  )
+  const POST_PREVIEW_MAX_COUNT = siteConfig(
+    'POST_PREVIEW_MAX_COUNT',
+    4,
+    props?.NOTION_CONFIG
+  )
+  const POST_LIST_PREVIEW = siteConfig(
+    'POST_LIST_PREVIEW',
+    false,
     props?.NOTION_CONFIG
   )
   props.posts = props.allPages?.filter(
@@ -49,9 +69,14 @@ export async function getStaticProps(req) {
   )
 
   // 处理分页
-  if (siteConfig('POST_LIST_STYLE') === 'scroll') {
+  const POST_LIST_STYLE = siteConfig(
+    'POST_LIST_STYLE',
+    'page',
+    props?.NOTION_CONFIG
+  )
+  if (POST_LIST_STYLE === 'scroll') {
     // 滚动列表默认给前端返回所有数据
-  } else if (siteConfig('POST_LIST_STYLE') === 'page') {
+  } else if (POST_LIST_STYLE === 'page') {
     props.posts = props.posts?.slice(
       0,
       siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
@@ -59,35 +84,53 @@ export async function getStaticProps(req) {
   }
 
   // 预览文章内容
-  if (siteConfig('POST_LIST_PREVIEW', false, props?.NOTION_CONFIG)) {
-    for (const i in props.posts) {
-      const post = props.posts[i]
-      if (post.password && post.password !== '') {
-        continue
-      }
-      post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
-    }
+  if (POST_LIST_PREVIEW) {
+    const previewLimit = pLimit(
+      siteConfig('POST_PREVIEW_CONCURRENCY', 5, props?.NOTION_CONFIG)
+    )
+    const previewTargets = props.posts.filter(
+      post => !post.password || post.password === ''
+    ).slice(0, POST_PREVIEW_MAX_COUNT)
+    await Promise.all(
+      previewTargets.map(post =>
+        previewLimit(async () => {
+          const rawBlockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
+          post.blockMap = adapterNotionBlockMap(rawBlockMap)
+          if (post.blockMap?.block) {
+            post.blockMap.block = formatNotionBlock(post.blockMap.block)
+          }
+        })
+      )
+    )
   }
-
-  // 需要写文件的场景
-  if (canWriteFile) {
+  const isBuildLifecycle = ['build', 'export'].includes(
+    process.env.npm_lifecycle_event
+  )
+  if (isBuildLifecycle) {
     // 生成robotTxt
     generateRobotsTxt(props)
     // 生成Feed订阅
-    generateRss(props)
-    // 生成Sitemap
+    if (shouldGenerateRssForLocale({ locale })) {
+      await generateRss(props)
+    }
+    // 生成
     generateSitemapXml(props)
-  }
-  // 检查数据是否需要从algolia删除
-  checkDataFromAlgolia(props)
-  if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
-    // 生成重定向 JSON
-    generateRedirectJson(props)
+    // 检查数据是否需要从algolia删除
+    await checkDataFromAlgolia(props)
+    if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {
+      // 生成重定向 JSON
+      generateRedirectJson(props)
+    }
   }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
 
-  cleanDataBeforeReturn(props, from)
+  if (!POST_LIST_PREVIEW) {
+    props.posts = cleanPostSummaries(props.posts)
+  }
+  props.latestPosts = cleanPostSummaries(props.latestPosts)
+  delete props.allPages
+
   return {
     props,
     revalidate: process.env.EXPORT

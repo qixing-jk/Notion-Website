@@ -1,5 +1,6 @@
 import useWindowSize from '@/hooks/useWindowSize'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
 import { THEMES } from '@/themes/theme'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
@@ -14,6 +15,7 @@ import { useTheme } from 'next-themes'
 export default function CustomContextMenu(props) {
   const [position, setPosition] = useState({ x: '0px', y: '0px' })
   const [show, setShow] = useState(false)
+  const { locale } = useGlobal()
   const { resolvedTheme, setTheme } = useTheme()
   const isDarkMode = resolvedTheme === 'dark'
 
@@ -150,7 +152,7 @@ export default function CustomContextMenu(props) {
   const CUSTOM_RIGHT_CLICK_CONTEXT_MENU_TAG = siteConfig(
     'CUSTOM_RIGHT_CLICK_CONTEXT_MENU_TAG'
   )
-  const CAN_COPY = siteConfig('CAN_COPY')
+  const CAN_COPY = props.canCopy ?? siteConfig('CAN_COPY')
   const CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK = siteConfig(
     'CUSTOM_RIGHT_CLICK_CONTEXT_MENU_SHARE_LINK'
   )
@@ -171,16 +173,16 @@ export default function CustomContextMenu(props) {
         <div className='flex justify-between'>
           <i
             onClick={handleBack}
-            className='hover:bg-blue-600 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-arrow-left'></i>
+            className='hover:bg-blue-600 hover:text-white h-8 w-8 flex items-center justify-center leading-none rounded cursor-pointer fa-solid fa-arrow-left'></i>
           <i
             onClick={handleForward}
-            className='hover:bg-blue-600 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-arrow-right'></i>
+            className='hover:bg-blue-600 hover:text-white h-8 w-8 flex items-center justify-center leading-none rounded cursor-pointer fa-solid fa-arrow-right'></i>
           <i
             onClick={handleRefresh}
-            className='hover:bg-blue-600 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-rotate-right'></i>
+            className='hover:bg-blue-600 hover:text-white h-8 w-8 flex items-center justify-center leading-none rounded cursor-pointer fa-solid fa-rotate-right'></i>
           <i
             onClick={handleScrollTop}
-            className='hover:bg-blue-600 hover:text-white px-2 py-2 text-center w-8 rounded cursor-pointer fa-solid fa-arrow-up'></i>
+            className='hover:bg-blue-600 hover:text-white h-8 w-8 flex items-center justify-center leading-none rounded cursor-pointer fa-solid fa-arrow-up'></i>
         </div>
 
         <hr className='my-2 border-dashed' />
