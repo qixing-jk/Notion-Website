@@ -13,6 +13,7 @@ jobs:
         id: vercel_action
         uses: amondnet/vercel-action@v41.1.4
         with:
+          vercel-version: '62.4.0'
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}

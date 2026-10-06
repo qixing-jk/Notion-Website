@@ -24,6 +24,8 @@ concurrency:
 
 jobs:
   deploy:
+    # Forks opt in by configuring their own Cloudflare Pages project.
+    if: github.event_name == 'workflow_dispatch' || github.repository == 'notionnext-org/NotionNext' || vars.CLOUDFLARE_PAGES_PROJECT_NAME != ''
     runs-on: ubuntu-latest
     permissions:
       contents: read
