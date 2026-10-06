@@ -273,7 +273,9 @@ export default function AlgoliaSearchModal({ cRef }) {
         <input
           type='text'
           placeholder='在这里输入搜索关键词...'
-          onChange={e => handleInputChange(e)}
+          onChange={e => {
+            void handleInputChange(e)
+          }}
           onFocus={() => setIsInputFocused(true)} // 聚焦时
           onBlur={() => setIsInputFocused(false)} // 失去焦点时
           className='text-black dark:text-gray-200 bg-gray-50 dark:bg-gray-600 outline-blue-500 w-full px-4 my-2 py-1 mb-4 border rounded-md'
