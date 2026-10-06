@@ -4,7 +4,7 @@
  */
 import { memo } from 'react'
 
-export const Moon = memo(() => {
+export const Moon = memo(function MoonIcon() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -21,7 +21,7 @@ export const Moon = memo(() => {
   )
 })
 
-export const Sun = memo(() => {
+export const Sun = memo(function SunIcon() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -38,7 +38,7 @@ export const Sun = memo(() => {
   )
 })
 
-export const Home = memo(({ className }) => {
+export const Home = memo(function HomeIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -56,7 +56,7 @@ export const Home = memo(({ className }) => {
   )
 })
 
-export const User = memo(({ className }) => {
+export const User = memo(function UserIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -74,7 +74,7 @@ export const User = memo(({ className }) => {
   )
 })
 
-export const ArrowPath = memo(({ className }) => {
+export const ArrowPath = memo(function ArrowPathIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -92,7 +92,7 @@ export const ArrowPath = memo(({ className }) => {
   )
 })
 
-export const ChevronLeft = memo(({ className }) => {
+export const ChevronLeft = memo(function ChevronLeftIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -110,7 +110,7 @@ export const ChevronLeft = memo(({ className }) => {
   )
 })
 
-export const ChevronRight = memo(({ className }) => {
+export const ChevronRight = memo(function ChevronRightIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -128,7 +128,7 @@ export const ChevronRight = memo(({ className }) => {
   )
 })
 
-export const ChevronDoubleLeft = memo(({ className }) => {
+export const ChevronDoubleLeft = memo(function ChevronDoubleLeftIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -146,7 +146,7 @@ export const ChevronDoubleLeft = memo(({ className }) => {
   )
 })
 
-export const ChevronDoubleRight = memo(({ className }) => {
+export const ChevronDoubleRight = memo(function ChevronDoubleRightIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -164,7 +164,7 @@ export const ChevronDoubleRight = memo(({ className }) => {
   )
 })
 
-export const InformationCircle = memo(({ className }) => {
+export const InformationCircle = memo(function InformationCircleIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -182,7 +182,7 @@ export const InformationCircle = memo(({ className }) => {
   )
 })
 
-export const HashTag = memo(({ className }) => {
+export const HashTag = memo(function HashTagIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -200,7 +200,7 @@ export const HashTag = memo(({ className }) => {
   )
 })
 
-export const GlobeAlt = memo(({ className }) => {
+export const GlobeAlt = memo(function GlobeAltIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -218,7 +218,7 @@ export const GlobeAlt = memo(({ className }) => {
   )
 })
 
-export const ArrowRightCircle = memo(({ className }) => {
+export const ArrowRightCircle = memo(function ArrowRightCircleIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -236,7 +236,7 @@ export const ArrowRightCircle = memo(({ className }) => {
   )
 })
 
-export const PlusSmall = memo(({ className }) => {
+export const PlusSmall = memo(function PlusSmallIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -250,7 +250,7 @@ export const PlusSmall = memo(({ className }) => {
   )
 })
 
-export const ArrowSmallRight = memo(({ className }) => {
+export const ArrowSmallRight = memo(function ArrowSmallRightIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -268,7 +268,7 @@ export const ArrowSmallRight = memo(({ className }) => {
   )
 })
 
-export const ArrowSmallUp = memo(({ className }) => {
+export const ArrowSmallUp = memo(function ArrowSmallUpIcon({ className }) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
