@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
 
@@ -20,8 +20,7 @@ export async function getStaticProps(req) {
 
   const from = 'tag-index-props'
   const props = await fetchGlobalAllData({ from, locale })
-
-  cleanDataBeforeReturn(props, from)
+  delete props.allPages
   return {
     props,
     revalidate: process.env.EXPORT
@@ -30,7 +29,7 @@ export async function getStaticProps(req) {
           'NEXT_REVALIDATE_SECOND',
           BLOG.NEXT_REVALIDATE_SECOND,
           props.NOTION_CONFIG
-        ) * 3
+        )
   }
 }
 

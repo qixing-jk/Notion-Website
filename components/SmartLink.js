@@ -11,6 +11,26 @@ const filterDOMProps = props => {
     scroll,
     shallow,
     locale,
+    placeholderSrc,
+    fallbackSrc,
+    ...rest
+  } = props
+  return rest
+}
+
+// 过滤不应该透传给 next/link 的非链接属性
+const filterLinkProps = props => {
+  const {
+    placeholderSrc,
+    fallbackSrc,
+    src,
+    alt,
+    width,
+    height,
+    loading,
+    decoding,
+    onLoad,
+    onError,
     ...rest
   } = props
   return rest
@@ -47,6 +67,49 @@ const SmartLink = ({ href, children, ...rest }) => {
   const isExternal =
     urlString.startsWith('http') && (!LINK || !urlString.startsWith(LINK))
 
+  const getPersistedQuery = () => {
+    if (typeof window === 'undefined') return {}
+    const queryString = window.location.search?.slice(1) || ''
+    const params = new URLSearchParams(queryString)
+    const preserved = {}
+    for (const [key, value] of params.entries()) {
+      if (value !== '') preserved[key] = value
+    }
+    return preserved
+  }
+
+  const mergePreservedQueryForStringHref = value => {
+    if (typeof value !== 'string' || !value || value.startsWith('#'))
+      return value
+    const preservedQuery = getPersistedQuery()
+    if (Object.keys(preservedQuery).length === 0) return value
+
+    const isAbsolute =
+      value.startsWith('http://') || value.startsWith('https://')
+    const url = new URL(value, LINK)
+    Object.entries(preservedQuery).forEach(([key, paramValue]) => {
+      if (!url.searchParams.has(key)) {
+        url.searchParams.set(key, paramValue)
+      }
+    })
+
+    if (isAbsolute) return url.toString()
+    return `${url.pathname}${url.search}${url.hash}`
+  }
+
+  const mergePreservedQueryForObjectHref = value => {
+    if (!value || typeof value !== 'object') return value
+    const preservedQuery = getPersistedQuery()
+    if (Object.keys(preservedQuery).length === 0) return value
+    return {
+      ...value,
+      query: {
+        ...preservedQuery,
+        ...(value.query || {})
+      }
+    }
+  }
+
   if (isExternal) {
     // 对于外部链接，必须是 string 类型
     const externalUrl =
@@ -68,8 +131,13 @@ const SmartLink = ({ href, children, ...rest }) => {
   }
 
   // 内部链接（可为对象形式）
+  const mergedHref =
+    typeof href === 'string'
+      ? mergePreservedQueryForStringHref(href)
+      : mergePreservedQueryForObjectHref(href)
+
   return (
-    <Link href={href} {...rest}>
+    <Link href={mergedHref} {...filterLinkProps(rest)}>
       {children}
     </Link>
   )

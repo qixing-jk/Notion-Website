@@ -1,12 +1,14 @@
 import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/db/notion/mapImage'
-import { getLastPartOfUrl, isBrowser, loadExternalResource } from '@/lib/utils'
+import NotionEmbed from '@/components/NotionEmbed'
+import NotionLink from '@/components/NotionLink'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
+import 'katex/dist/katex.min.css'
 import dynamic from 'next/dynamic'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
-import Image from 'next/image' // or import Image from 'next/legacy/image' if you use legacy Image
-import Link from 'next/link'
+import OriginalityProof from './OriginalityProof'
 
 /**
  * 整个站点的核心组件
@@ -14,80 +16,31 @@ import Link from 'next/link'
  * @param {*} param0
  * @returns
  */
-const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
-  // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
-  // useAdjustStyle()
+const NotionPage = ({ post, className }) => {
   // 是否关闭数据库和画册的点击跳转
   const GALLERY_BEAUTIFICATION = siteConfig('GALLERY_BEAUTIFICATION')
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
   const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
-  const LINK = siteConfig('LINK')
-
-  const SmartLink = useCallback(
-    ({ href, children, ...rest }) => {
-      const isExternal = !href.startsWith(LINK) || rest.target === '_blank'
-      if (isExternal) {
-        const shouldShowArrow =
-          !rest.className.includes('notion-bookmark') &&
-          !rest.className.includes('notion-file-link')
-        return (
-          <a href={href} target='_blank' rel='noopener noreferrer' {...rest}>
-            {children}
-            &nbsp;
-            {shouldShowArrow && (
-              <i className='fas fa-arrow-up-right-from-square'></i>
-            )}
-          </a>
-        )
-      }
-      return (
-        <Link href={href} {...rest}>
-          {children}
-        </Link>
-      )
-    },
-    [LINK]
-  )
-
-  const [isCodeLoaded, setIsCodeLoaded] = useState(false)
 
   useEffect(() => {
-    setTimeout(() => {
-      if (document.querySelector('.notion-code')) {
-        setIsCodeLoaded(true)
-      }
-    }, 300)
-  }, [])
-
-  const zoom =
-    isBrowser &&
-    mediumZoom({
-      //   container: '.notion-viewport',
-      background: 'rgba(0, 0, 0, 0.2)',
-      margin: getMediumZoomMargin()
+    if (
+      !GALLERY_BEAUTIFICATION ||
+      !Object.keys(post?.blockMap?.collection || {}).length
+    )
+      return
+    let cancelled = false
+    loadExternalResource('/css/gallery.css', 'css')
+    import('@/lib/GalleryBeautification').then(module => {
+      if (!cancelled) module.GalleryBeautification(post)
     })
+    return () => {
+      cancelled = true
+    }
+  }, [GALLERY_BEAUTIFICATION, post])
 
-  const zoomRef = useRef(zoom ? zoom.clone() : null)
+  const zoomRef = useRef(null)
   const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
-
-  const customMapPageUrl = (allNavPages, uuidSlugMap) => pageId => {
-    let slugPage
-    if (uuidSlugMap) {
-      slugPage = uuidSlugMap?.find(page => {
-        return pageId.indexOf(page.id) === 0
-      })
-    } else {
-      slugPage = allNavPages?.find(page => {
-        return pageId.indexOf(page.short_id) === 14
-      })
-    }
-    if (slugPage) {
-      return getLastPartOfUrl(slugPage?.slug)
-    }
-    return `/${pageId}`
-  }
-
   // 页面首次打开时执行的勾子
   useEffect(() => {
     // 检测当前的url并自动滚动到对应目标
@@ -96,33 +49,33 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
 
   // 页面文章发生变化时会执行的勾子
   useEffect(() => {
-    if (GALLERY_BEAUTIFICATION && post.shouldLoadCollection) {
-      loadExternalResource('/css/gallery.css', 'css')
-      import('@/lib/GalleryBeautification').then(module => {
-        module.GalleryBeautification(post)
-      })
-    }
-  }, [post])
-
-  useEffect(() => {
     // 相册视图点击禁止跳转，只能放大查看图片
-    if (POST_DISABLE_GALLERY_CLICK && post.shouldLoadCollection) {
+    if (POST_DISABLE_GALLERY_CLICK) {
+      if (!zoomRef.current && isBrowser) {
+        zoomRef.current = mediumZoom({
+          background: 'rgba(0, 0, 0, 0.2)',
+          margin: getMediumZoomMargin()
+        })
+      }
       // 针对页面中的gallery视图，点击后是放大图片还是跳转到gallery的内部页面
       processGalleryImg(zoomRef?.current)
     }
-  }, [post])
 
-  useEffect(() => {
     // 页内数据库点击禁止跳转，只能查看
     if (POST_DISABLE_DATABASE_CLICK) {
       processDisableDatabaseUrl()
     }
-  }, [post])
 
-  useEffect(() => {
     /**
      * 放大查看图片时替换成高清图像
      */
+    const articleRoot =
+      document.getElementById('notion-article') || document.body
+    const hasAnyImage = Boolean(articleRoot.querySelector('img'))
+    if (!hasAnyImage) {
+      return
+    }
+
     const observer = new MutationObserver((mutationsList, observer) => {
       mutationsList.forEach(mutation => {
         if (
@@ -145,8 +98,8 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
       })
     })
 
-    // 监视页面元素和属性变化
-    observer.observe(document.body, {
+    // 监视正文容器，避免对整个 document.body 做高开销监听
+    observer.observe(articleRoot, {
       attributes: true,
       subtree: true,
       attributeFilter: ['class']
@@ -170,52 +123,44 @@ const NotionPage = ({ post, className, allNavPages, uuidSlugMap }) => {
         })
       })
     }
-
-    // 查找所有具有 'notion-collection-page-properties' 类的元素,删除notion自带的页面properties
-    const timer = setTimeout(() => {
-      // 查找所有具有 'notion-collection-page-properties' 类的元素
-      const elements = document.querySelectorAll(
-        '.notion-collection-page-properties'
-      )
-
-      // 遍历这些元素并将其从 DOM 中移除
-      elements?.forEach(element => {
-        element?.remove()
-      })
-    }, 1000) // 1000 毫秒 = 1 秒
-
-    // 清理定时器，防止组件卸载时执行
-    return () => clearTimeout(timer)
   }, [post])
 
   // const cleanBlockMap = cleanBlocksWithWarn(post?.blockMap);
   // console.log('NotionPage render with post:', post);
 
   return (
-    <div id='notion-article' className={`mx-auto ${className || ''}`}>
+    <div
+      id='notion-article'
+      className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
-        mapPageUrl={customMapPageUrl(allNavPages, uuidSlugMap)}
+        mapPageUrl={mapPageUrl}
         mapImageUrl={mapImgUrl}
         components={{
-          Link: SmartLink,
-          nextImage: Image,
-          nextLink: Link,
           Code,
-          Collection: post?.shouldLoadCollection ? Collection : null,
+          Collection,
+          Embed: NotionEmbed,
           Equation,
+          Link: NotionLink,
           Modal,
           Pdf,
+          Quote: NotionQuote,
           Tweet
         }}
       />
 
       <AdEmbed />
-      {isCodeLoaded && <PrismMac />}
+      <OriginalityProof proof={post?.originalityProof} />
+      {hasCodeBlock(post?.blockMap) && <PrismMac />}
     </div>
   )
 }
 
+const hasCodeBlock = blockMap => {
+  const blocks = blockMap?.block
+  if (!blocks) return false
+  return Object.values(blocks).some(item => item?.value?.type === 'code')
+}
 
 /**
  * 页面的数据库链接禁止跳转，只能查看
@@ -271,6 +216,16 @@ const autoScrollToHash = () => {
 }
 
 /**
+ * 将id映射成博文内部链接。
+ * @param {*} id
+ * @returns
+ */
+const mapPageUrl = id => {
+  // return 'https://www.notion.so/' + id.replace(/-/g, '')
+  return '/' + id.replace(/-/g, '')
+}
+
+/**
  * 缩放
  * @returns
  */
@@ -292,24 +247,21 @@ function getMediumZoomMargin() {
   }
 }
 
-// 代码 是按需加载的
+// 代码
 const Code = dynamic(
   () =>
     import('react-notion-x/build/third-party/code').then(m => {
       return m.Code
     }),
-  { ssr: true }
+  { ssr: false }
 )
 
-// 公式 是按需加载的
+// 公式
 const Equation = dynamic(
   () =>
     import('@/components/Equation').then(async m => {
       // 化学方程式
-      await Promise.all([
-        import('katex/dist/katex.min.css'),
-        import('@/lib/plugins/mhchem')
-      ])
+      await import('@/lib/plugins/mhchem')
       return m.Equation
     }),
   { ssr: true }
@@ -322,7 +274,6 @@ const Equation = dynamic(
 //     ssr: false
 //   }
 // )
-// PDF 是按需加载的
 const Pdf = dynamic(() => import('@/components/Pdf').then(m => m.Pdf), {
   ssr: false
 })
@@ -336,7 +287,7 @@ const PrismMac = dynamic(() => import('@/components/PrismMac'), {
  * tweet嵌入
  */
 const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
-  ssr: true
+  ssr: false
 })
 
 /**
@@ -347,26 +298,52 @@ const AdEmbed = dynamic(
   { ssr: true }
 )
 
-// 不是按需加载的
-const Collection = dynamic(
-  () =>
-    import('react-notion-x/build/third-party/collection').then(
-      m => m.Collection
-    ),
-  {
-    ssr: true
-  }
-)
+const Collection = dynamic(() => import('@/components/NotionCollection'), {
+  ssr: true
+})
 
-// 是按需加载的
 const Modal = dynamic(
   () => import('react-notion-x/build/third-party/modal').then(m => m.Modal),
   { ssr: false }
 )
 
-// 是按需加载的
 const Tweet = ({ id }) => {
   return <TweetEmbed tweetId={id} />
+}
+
+// Custom Quote override: react-notion-x drops quotes without properties.title
+// (returns null from early guard). This renders them correctly — fixes #4140.
+const NotionQuote = ({ block, children }) => {
+  const title = block?.properties?.title
+  return (
+    <blockquote className='notion-quote'>
+      {title && <NotionText value={title} />}
+      {children}
+    </blockquote>
+  )
+}
+
+// Minimal inline text renderer for Notion rich-text arrays.
+// Each segment is [plainText, [[formatType, optionalValue], ...]].
+const NotionText = ({ value }) => {
+  if (!Array.isArray(value)) return null
+  return value.map((segment, i) => {
+    if (!Array.isArray(segment) || !segment[0]) return null
+    const [text, formats] = segment
+    let element = <>{text}</>
+    if (Array.isArray(formats)) {
+      for (const fmt of formats) {
+        const type = Array.isArray(fmt) ? fmt[0] : fmt
+        if (type === 'b') element = <strong>{element}</strong>
+        else if (type === 'i') element = <em>{element}</em>
+        else if (type === 's') element = <s>{element}</s>
+        else if (type === 'c') element = <code>{element}</code>
+        else if (type === 'a')
+          element = <a href={Array.isArray(fmt) ? fmt[1] : '#'}>{element}</a>
+      }
+    }
+    return <span key={i}>{element}</span>
+  })
 }
 
 export default NotionPage

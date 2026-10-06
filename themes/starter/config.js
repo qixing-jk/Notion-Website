@@ -1,7 +1,14 @@
+import { siteConfig } from '@/lib/config'
+
 /**
  * 另一个落地页主题
  */
 const CONFIG = {
+  STARTER_COLOR_PRIMARY: '#3758f9',
+  STARTER_COLOR_PRIMARY_HOVER: '#1b44c8',
+  STARTER_COLOR_DARK: '#111928',
+  STARTER_COLOR_TEXT_MUTED: '#637381',
+
   // 默认只展示Logo文字，如果设置了logo图片，会在文字左侧显示图标
   STARTER_LOGO: 'favicon.ico', // 普通logo图片 示例：/images/starter/logo/logo.svg
   STARTER_LOGO_WHITE: 'favicon.ico', // 透明底浅色logo 示例： /images/starter/logo/logo-white.svg
@@ -14,8 +21,7 @@ const CONFIG = {
   STARTER_HERO_TITLE_2: '通过NoTrans 无感知地翻译您的一切，让你的内容全球化', // 英雄区文字
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: '开始体验', // 英雄区按钮
-  STARTER_HERO_BUTTON_1_URL:
-    '/quick-start', // 英雄区按钮
+  STARTER_HERO_BUTTON_1_URL: '/quick-start', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: '了解更多', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: '/about', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
@@ -35,19 +41,19 @@ const CONFIG = {
   STARTER_FEATURE_ENABLE: true, // 特性区块开关
   STARTER_FEATURE_TITLE: '主要特性', // 特性
   STARTER_FEATURE_TEXT_1: 'NoTrans ', // 特性
-  STARTER_FEATURE_TEXT_2:
-    '帮助您简单、无感知地稳定地翻译文章，扩大受众范围 ', // 特性
+  STARTER_FEATURE_TEXT_2: '帮助您简单、无感知地稳定地翻译文章，扩大受众范围 ', // 特性
 
   STARTER_FEATURE_1_TITLE_1: '无缝集成', // 特性1
-  STARTER_FEATURE_1_TEXT_1: '无缝嵌入Notion，无需额外插件或扩展，免配置即可使用', // 特性1
+  STARTER_FEATURE_1_TEXT_1:
+    '无缝嵌入Notion，无需额外插件或扩展，免配置即可使用', // 特性1
   STARTER_FEATURE_1_BUTTON_TEXT: '', // 特性1
   STARTER_FEATURE_1_BUTTON_URL: '', // 特性1
 
   STARTER_FEATURE_2_TITLE_1: '全类型支持', // 特性2
-  STARTER_FEATURE_2_TEXT_1: '全面兼容Notion的每种类型，内容一键翻译，自动适配格式', // 特性2
+  STARTER_FEATURE_2_TEXT_1:
+    '全面兼容Notion的每种类型，内容一键翻译，自动适配格式', // 特性2
   STARTER_FEATURE_2_BUTTON_TEXT: '', // 特性2
-  STARTER_FEATURE_2_BUTTON_URL:
-    '', // 特性2
+  STARTER_FEATURE_2_BUTTON_URL: '', // 特性2
 
   STARTER_FEATURE_3_TITLE_1: '便捷的写作体验', // 特性3
   STARTER_FEATURE_3_TEXT_1: '只需在Notion笔记中编辑修改，自动进行翻译操作', // 特性3
@@ -76,8 +82,7 @@ const CONFIG = {
   STARTER_PRICING_ENABLE: true, // 价格区块开关
   STARTER_PRICING_TITLE: '价格表',
   STARTER_PRICING_TEXT_1: '很棒的定价计划',
-  STARTER_PRICING_TEXT_2:
-    '我们制定了灵活的付费模式，您可以按需选择。',
+  STARTER_PRICING_TEXT_2: '我们制定了灵活的付费模式，您可以按需选择。',
 
   STARTER_PRICING_1_TITLE: '入门版',
   STARTER_PRICING_1_PRICE: '4.9',
@@ -86,8 +91,7 @@ const CONFIG = {
   STARTER_PRICING_1_HEADER: '功能点',
   STARTER_PRICING_1_FEATURES: '全部类型翻译,帮助手册', // 英文逗号隔开
   STARTER_PRICING_1_BUTTON_TEXT: '立即购买',
-  STARTER_PRICING_1_BUTTON_URL:
-    '/contact',
+  STARTER_PRICING_1_BUTTON_URL: '/contact',
 
   STARTER_PRICING_2_TAG: '推荐',
   STARTER_PRICING_2_TITLE: '基础版',
@@ -97,8 +101,7 @@ const CONFIG = {
   STARTER_PRICING_2_HEADER: '功能点',
   STARTER_PRICING_2_FEATURES: '包含入门版,自动化翻译,人工客服', // 英文逗号隔开
   STARTER_PRICING_2_BUTTON_TEXT: '立即购买',
-  STARTER_PRICING_2_BUTTON_URL:
-    '/contact',
+  STARTER_PRICING_2_BUTTON_URL: '/contact',
 
   STARTER_PRICING_3_TITLE: '高级版',
   STARTER_PRICING_3_PRICE: '15.9',
@@ -107,8 +110,7 @@ const CONFIG = {
   STARTER_PRICING_3_HEADER: '功能点',
   STARTER_PRICING_3_FEATURES: '包含基础版,AI翻译优化,功能定制开发', // 英文逗号隔开
   STARTER_PRICING_3_BUTTON_TEXT: '立即购买',
-  STARTER_PRICING_3_BUTTON_URL:
-    '/contact',
+  STARTER_PRICING_3_BUTTON_URL: '/contact',
 
   // 首页用户测评区块
   STARTER_TESTIMONIALS_ENABLE: false, // 测评区块开关
@@ -190,8 +192,7 @@ const CONFIG = {
     '当然！自动翻译不仅内容精准，还能完美保留原有排版与格式。',
 
   STARTER_FAQ_3_QUESTION: '文章内部分内容未成功翻译？',
-  STARTER_FAQ_3_ANSWER:
-    '通常是Notion API尚未支持处理此类格式导致',
+  STARTER_FAQ_3_ANSWER: '通常是Notion API尚未支持处理此类格式导致',
 
   STARTER_FAQ_4_QUESTION: '我的数据会被保存吗？',
   STARTER_FAQ_4_ANSWER:
@@ -207,11 +208,10 @@ const CONFIG = {
   // 这里不支持CONFIG和环境变量，需要一一修改此处代码。
   STARTER_TEAM_ITEMS: [
     {
-      STARTER_TEAM_ITEM_AVATAR:
-        '/avatar.webp',
+      STARTER_TEAM_ITEM_AVATAR: '/avatar.webp',
       STARTER_TEAM_ITEM_NICKNAME: 'Qi Xing',
       STARTER_TEAM_ITEM_DESCRIPTION: 'Developer'
-    },
+    }
   ],
 
   // 博客文章区块
@@ -289,9 +289,9 @@ const CONFIG = {
         {
           TITLE: '帮助支持',
           URL: '/contact'
-        },
+        }
       ]
-    },
+    }
     // {
     //   TITLE: '功能特性',
     //   LINK_GROUP: [
@@ -331,12 +331,15 @@ const CONFIG = {
   STARTER_CTA_DESCRIPTION:
     '访问的NoTrans 操作文档，我们提供了详细的教程，帮助你即刻翻译您的内容',
   STARTER_CTA_BUTTON: true, // 是否显示按钮
-  STARTER_CTA_BUTTON_URL:
-    '/quick-start',
+  STARTER_CTA_BUTTON_URL: '/quick-start',
   STARTER_CTA_BUTTON_TEXT: '开始体验',
 
   STARTER_POST_REDIRECT_ENABLE: false, // 默認開啟重定向
   STARTER_POST_REDIRECT_URL: 'https://blog.qixing1217.top', // 重定向域名
   STARTER_NEWSLETTER: process.env.NEXT_PUBLIC_THEME_STARTER_NEWSLETTER || false // 是否开启邮件订阅 请先配置mailchimp功能 https://docs.tangly1024.com/article/notion-next-mailchimp
 }
+
+export const starterConfig = (key, defaultVal = null) =>
+  siteConfig(key, defaultVal, CONFIG)
+
 export default CONFIG

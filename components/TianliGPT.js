@@ -29,13 +29,13 @@ const TianLiGPT = () => {
       return
     }
 
-    window.tianliGPT_postSelector = '#notion-article';
-    window.tianliGPT_key = tianliKey;
+    window.tianliGPT_postSelector = '#notion-article'
+    window.tianliGPT_key = tianliKey
 
     await Promise.all([
       loadExternalResource(tianliCss, 'css'),
       loadExternalResource(tianliJs, 'js')
-    ]);
+    ])
   }
   return <></>
 }

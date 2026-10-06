@@ -1,27 +1,32 @@
 /* 基础字体定义 */
 @font-face {
-    font-family: 'Font Awesome 6 Brands';
-    font-style: normal;
-    font-weight: 400;
-    font-display: block;
-    src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.ttf") format("truetype");
-}
-
-
-@font-face {
-    font-family: 'Font Awesome 6 Free';
-    font-style: normal;
-    font-weight: 400;
-    font-display: block;
-    src: url("../webfonts/fa-regular-400.woff2") format("woff2"), url("../webfonts/fa-regular-400.ttf") format("truetype");
+  font-family: 'Font Awesome 6 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src:
+    url('../webfonts/fa-brands-400.woff2') format('woff2'),
+    url('../webfonts/fa-brands-400.ttf') format('truetype');
 }
 
 @font-face {
-    font-family: 'Font Awesome 6 Free';
-    font-style: normal;
-    font-weight: 900;
-    font-display: block;
-    src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype");
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src:
+    url('../webfonts/fa-regular-400.woff2') format('woff2'),
+    url('../webfonts/fa-regular-400.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src:
+    url('../webfonts/fa-solid-900.woff2') format('woff2'),
+    url('../webfonts/fa-solid-900.ttf') format('truetype');
 }
 
 .fa,
@@ -39,118 +44,124 @@
   font-style: normal;
   font-variant: normal;
   line-height: 1;
-  text-rendering: auto; }
+  text-rendering: auto;
+}
 
 .fas,
 .fa-classic,
 .fa-solid,
 .far,
 .fa-regular {
-  font-family: 'Font Awesome 6 Free'; }
+  font-family: 'Font Awesome 6 Free';
+}
 
 .fab,
 .fa-brands {
-  font-family: 'Font Awesome 6 Brands'; }
+  font-family: 'Font Awesome 6 Brands';
+}
 
 .fas,
 .fa-solid {
-  font-weight: 900; }
+  font-weight: 900;
+}
 
 .far,
 .fa-regular {
-  font-weight: 400; }
+  font-weight: 400;
+}
 
 .fab,
 .fa-brands {
-  font-weight: 400; }
+  font-weight: 400;
+}
 
 /* 图标 */
 /* 图标样式 */
 
 /* Info Circle */
 .fa-info-circle::before {
-  content: "\f05a";
+  content: '\f05a';
 }
 
 /* Link */
 .fa-link::before {
-  content: "\f0c1";
+  content: '\f0c1';
 }
 
 /* Home */
 .fa-home::before {
-  content: "\f015";
+  content: '\f015';
 }
 
 /* Search */
 .fa-search::before {
-  content: "\f002";
+  content: '\f002';
 }
 
 /* Archive */
 .fa-archive::before {
-  content: "\f187";
+  content: '\f187';
 }
 
 /* Clock Rotate Left */
 .fa-clock-rotate-left::before {
-  content: "\f1da";
+  content: '\f1da';
 }
 
 /* Th */
 .fa-th::before {
-  content: "\f00a";
+  content: '\f00a';
 }
 
 /* Tag */
 .fa-tag::before {
-  content: "\f02b";
+  content: '\f02b';
 }
 
 /* Info */
 .fa-info::before {
-  content: "\f129";
+  content: '\f129';
 }
 
 /* Train Subway */
 .fa-train-subway::before {
-  content: "\f239";
+  content: '\f239';
 }
 
 /* Regular 图标 - Comments */
 .fa-comments::before {
-  content: "\f086";
+  content: '\f086';
 }
 
 /* Regular 图标 - Calendar Check */
 .fa-calendar-check::before {
-    content: "\f274";
+  content: '\f274';
 }
 
 /* Brand 图标 - Telegram */
 .fa-telegram::before {
-    content: "\f2c6";
+  content: '\f2c6';
 }
 
 .fa-language::before {
-    content: "\f1ab";
+  content: '\f1ab';
 }
 
 /* 文章字数图标 */
 .fa-file-word::before {
-    content: "\f1c2";
+  content: '\f1c2';
 }
 
 /* 阅读时长图标 */
 .fa-clock::before {
-    content: "\f017";
+  content: '\f017';
 }
 /* 文章时间 */
 .fa-calendar::before {
-    content: "\f133";
+  content: '\f133';
 }
 
 /* 公告区域个人简介 */
 .fa-user::before {
-    content: "\f007";
+  content: '\f007';
 }

@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -31,11 +31,11 @@ export async function getStaticProps({ params: { category, page } }) {
     POSTS_PER_PAGE * page
   )
 
+  delete props.allPages
   props.page = page
 
   props = { ...props, category, page }
 
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT
@@ -50,11 +50,9 @@ export async function getStaticProps({ params: { category, page } }) {
 
 export async function getStaticPaths() {
   const from = 'category-paths'
-  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData(
-    {
-      from
-    }
-  )
+  const { categoryOptions, allPages, NOTION_CONFIG } = await fetchGlobalAllData({
+    from
+  })
   const paths = []
 
   categoryOptions?.forEach(category => {

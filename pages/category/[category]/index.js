@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { cleanDataBeforeReturn, fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 
 /**
@@ -25,21 +25,28 @@ export async function getStaticProps({ params: { category }, locale }) {
   props.posts = props.posts.filter(
     post => post && post.category && post.category.includes(category)
   )
+
   // 处理文章页数
   props.postCount = props.posts.length
   // 处理分页
-  if (siteConfig('POST_LIST_STYLE') === 'scroll') {
+  const POST_LIST_STYLE = siteConfig(
+    'POST_LIST_STYLE',
+    'page',
+    props?.NOTION_CONFIG
+  )
+  if (POST_LIST_STYLE === 'scroll') {
     // 滚动列表 给前端返回所有数据
-  } else if (siteConfig('POST_LIST_STYLE') === 'page') {
+  } else if (POST_LIST_STYLE === 'page') {
     props.posts = props.posts?.slice(
       0,
       siteConfig('POSTS_PER_PAGE', 12, props?.NOTION_CONFIG)
     )
   }
 
+  delete props.allPages
+
   props = { ...props, category }
 
-  cleanDataBeforeReturn(props, from)
   return {
     props,
     revalidate: process.env.EXPORT
@@ -48,16 +55,17 @@ export async function getStaticProps({ params: { category }, locale }) {
           'NEXT_REVALIDATE_SECOND',
           BLOG.NEXT_REVALIDATE_SECOND,
           props.NOTION_CONFIG
-        ) * 2
+        )
   }
 }
 
 export async function getStaticPaths() {
   const from = 'category-paths'
   const { categoryOptions } = await fetchGlobalAllData({ from })
+  const categories = Array.isArray(categoryOptions) ? categoryOptions : []
   return {
-    paths: Object.keys(categoryOptions).map(category => ({
-      params: { category: categoryOptions[category]?.name }
+    paths: categories.map(category => ({
+      params: { category: category?.name }
     })),
     fallback: true
   }

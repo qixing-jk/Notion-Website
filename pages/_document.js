@@ -1,5 +1,8 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
+import BLOG from '@/blog.config'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
+
+const isLocalFontAwesome = BLOG.FONT_AWESOME?.startsWith('/vendor/fontawesome/')
 
 // 预先设置深色模式的脚本内容
 // const darkModeScript = `
@@ -42,12 +45,76 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-          <link rel="shortcut icon" href="/favicon.ico" />
-          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-          <meta name="apple-mobile-web-app-title" content="NoTrans" />
-          <link rel="manifest" href="/site.webmanifest" />
+          <link
+            rel='icon'
+            type='image/png'
+            href='/favicon-96x96.png'
+            sizes='96x96'
+          />
+          <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+          <link rel='shortcut icon' href='/favicon.ico' />
+          <link
+            rel='apple-touch-icon'
+            sizes='180x180'
+            href='/apple-touch-icon.png'
+          />
+          <meta name='apple-mobile-web-app-title' content='NoTrans' />
+          <link rel='manifest' href='/site.webmanifest' />
+          <link rel='preconnect' href='https://images.unsplash.com' />
+          <link rel='dns-prefetch' href='//images.unsplash.com' />
+
+          {/* 预加载字体 */}
+          {BLOG.FONT_AWESOME && (
+            <>
+              {isLocalFontAwesome && (
+                <>
+                  <link
+                    rel='preload'
+                    href='/vendor/fontawesome/webfonts/fa-solid-900.woff2'
+                    as='font'
+                    type='font/woff2'
+                    crossOrigin='anonymous'
+                  />
+                  <link
+                    rel='preload'
+                    href='/vendor/fontawesome/webfonts/fa-regular-400.woff2'
+                    as='font'
+                    type='font/woff2'
+                    crossOrigin='anonymous'
+                  />
+                  <link
+                    rel='preload'
+                    href='/vendor/fontawesome/webfonts/fa-brands-400.woff2'
+                    as='font'
+                    type='font/woff2'
+                    crossOrigin='anonymous'
+                  />
+                </>
+              )}
+              <style
+                dangerouslySetInnerHTML={{
+                  __html:
+                    '.fa,.fas,.far,.fab,.fa-solid,.fa-regular,.fa-brands{display:inline-flex;width:1.25em;min-width:1.25em;height:1em;align-items:center;justify-content:center;text-align:center;line-height:1}'
+                }}
+              />
+              <link
+                id='font-awesome-css'
+                rel='preload'
+                as='style'
+                href={BLOG.FONT_AWESOME}
+              />
+              <script
+                dangerouslySetInnerHTML={{
+                  __html:
+                    "requestAnimationFrame(function(){var l=document.getElementById('font-awesome-css');if(l)l.rel='stylesheet'})"
+                }}
+              />
+              <noscript>
+                <link rel='stylesheet' href={BLOG.FONT_AWESOME} />
+              </noscript>
+            </>
+          )}
+
           {/* 预先设置深色模式，避免闪烁 */}
           {/*<script dangerouslySetInnerHTML={{ __html: darkModeScript }} />*/}
         </Head>

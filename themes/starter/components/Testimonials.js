@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
 
-import { siteConfig } from '@/lib/config'
+import { starterConfig } from '../config'
 import { loadExternalResource } from '@/lib/utils'
 import { useEffect } from 'react'
 import { SVGLeftArrow } from './svg/SVGLeftArrow'
@@ -20,7 +20,7 @@ const loadExternal = async () => {
       'https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.js',
       'js'
     )
-  ]);
+  ])
 
   const Swiper = window.Swiper
   if (!Swiper) {
@@ -61,7 +61,7 @@ export const Testimonials = () => {
   }, [])
   // 用户评分
   const ratings = [1, 2, 3, 4, 5]
-  const STARTER_TESTIMONIALS_ITEMS = siteConfig('STARTER_TESTIMONIALS_ITEMS')
+  const STARTER_TESTIMONIALS_ITEMS = starterConfig('STARTER_TESTIMONIALS_ITEMS')
   return (
     <>
       {/* <!-- ====== Testimonial Section Start --> */}
@@ -73,13 +73,13 @@ export const Testimonials = () => {
             <div className='w-full px-4'>
               <div className='mx-auto mb-[60px] max-w-[485px] text-center'>
                 <span className='mb-2 block text-lg font-semibold text-primary'>
-                  {siteConfig('STARTER_TESTIMONIALS_TITLE')}
+                  {starterConfig('STARTER_TESTIMONIALS_TITLE')}
                 </span>
                 <h2 className='mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]'>
-                  {siteConfig('STARTER_TESTIMONIALS_TEXT_1')}
+                  {starterConfig('STARTER_TESTIMONIALS_TEXT_1')}
                 </h2>
                 <p className='text-base text-body-color dark:text-dark-6'>
-                  {siteConfig('STARTER_TESTIMONIALS_TEXT_2')}
+                  {starterConfig('STARTER_TESTIMONIALS_TEXT_2')}
                 </p>
               </div>
             </div>
@@ -98,7 +98,9 @@ export const Testimonials = () => {
                             <img
                               key={index}
                               alt='star icon' // 为每个图片设置唯一的 key 属性
-                              src={siteConfig('STARTER_TESTIMONIALS_STAR_ICON')}
+                              src={starterConfig(
+                                'STARTER_TESTIMONIALS_STAR_ICON'
+                              )}
                             />
                           ))}
                         </div>
