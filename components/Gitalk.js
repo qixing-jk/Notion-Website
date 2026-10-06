@@ -17,11 +17,11 @@ const Gitalk = ({ frontMatter }) => {
   const admin = siteConfig('COMMENT_GITALK_ADMIN').split(',')
   const distractionFreeMode = siteConfig('COMMENT_GITALK_DISTRACTION_FREE_MODE')
 
-  const loadGitalk = async() => {
+  const loadGitalk = async () => {
     await Promise.all([
       loadExternalResource(gitalkCSSCDN, 'css'),
       loadExternalResource(gitalkJSCDN, 'js')
-    ]);
+    ])
 
     const Gitalk = window.Gitalk
     if (!Gitalk) {
@@ -46,7 +46,7 @@ const Gitalk = ({ frontMatter }) => {
     loadGitalk()
   }, [])
 
-  return <div id="gitalk-container"></div>
+  return <div id='gitalk-container'></div>
 }
 
 export default Gitalk

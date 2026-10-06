@@ -1,39 +1,62 @@
 // import '@/styles/animate.css' // @see https://animate.style/
 import '@/styles/globals.css'
 import '@/styles/utility-patterns.css'
-import { GlobalContextProvider } from '@/lib/global'
-import { getBaseLayoutByTheme, shouldDefaultDarkMode } from '@/themes/theme'
-import { useRouter } from 'next/router'
-import { useCallback, useInsertionEffect, useMemo } from 'react'
-import { getQueryParam } from '../lib/utils'
+
 // core styles shared by all of react-notion-x (required)
 import 'react-notion-x/src/styles.css' // 原版的react-notion-x
 import '@/styles/notion.css' //  重写部分notion样式
+
+import useAdjustStyle from '@/hooks/useAdjustStyle'
+import { GlobalContextProvider } from '@/lib/global'
+import { ThemeProvider } from 'next-themes'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { getBaseLayoutByTheme, shouldDefaultDarkMode } from '@/themes/theme'
+import { useRouter } from 'next/router'
+import { useCallback, useEffect, useMemo } from 'react'
+import { getQueryParam } from '../lib/utils'
+import ErrorHandler from '@/lib/utils/errorHandler'
+
 // 各种扩展插件 这个要阻塞引入
 import BLOG from '@/blog.config'
+import ExternalPlugins from '@/components/ExternalPlugins'
+import PWAInstaller from '@/components/PWAInstaller'
 import SEO from '@/components/SEO'
+import { zhCN } from '@clerk/localizations'
 import dynamic from 'next/dynamic'
-import { ThemeProvider } from 'next-themes'
-
-const ExternalPlugins = dynamic(() => import('@/components/ExternalPlugins'))
-
-const SpeedInsights = dynamic(
-  () =>
-    import('@vercel/speed-insights/next').then(module => module.SpeedInsights),
-)
-
-const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-
-const enableVercelSpeedInsight = process.env.NEXT_PUBLIC_VERCEL_SPEED_INSIGHT
-
+// import { ClerkProvider } from '@clerk/nextjs'
 const ClerkProvider = dynamic(() =>
   import('@clerk/nextjs').then(m => m.ClerkProvider)
 )
-const zhCN = enableClerk
-  ? dynamic(() => import('@clerk/localizations').then(m => m.zhCN))
-  : null
-
-const defaultTheme = BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE
+const AppErrorBoundary = ErrorHandler.createErrorBoundary(
+  <div
+    style={{
+      padding: '2rem',
+      textAlign: 'center',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
+    <h1 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>
+      Something went wrong
+    </h1>
+    <p style={{ color: '#666', marginBottom: '1.5rem' }}>
+      An unexpected error occurred. Please refresh the page.
+    </p>
+    <button
+      onClick={() => window.location.reload()}
+      style={{
+        padding: '0.5rem 1.5rem',
+        cursor: 'pointer',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        background: 'transparent'
+      }}>
+      Refresh
+    </button>
+  </div>
+)
 
 /**
  * App挂载DOM 入口文件
@@ -41,14 +64,39 @@ const defaultTheme = BLOG.APPEARANCE === 'auto' ? 'system' : BLOG.APPEARANCE
  * @returns
  */
 const MyApp = ({ Component, pageProps }) => {
+  // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
+  useAdjustStyle()
+
   const route = useRouter()
+  const queryTheme = getQueryParam(route.asPath, 'theme')
+  const notionTheme = pageProps?.NOTION_CONFIG?.THEME
+  const configTheme = BLOG.THEME
   const theme = useMemo(() => {
-    return (
-      getQueryParam(route.asPath, 'theme') ||
-      pageProps?.NOTION_CONFIG?.THEME ||
-      BLOG.THEME
+    return queryTheme || notionTheme || configTheme
+  }, [queryTheme, notionTheme, configTheme])
+
+  useEffect(() => {
+    const source = queryTheme
+      ? 'url:theme'
+      : notionTheme
+        ? 'notion:config'
+        : 'blog/env:config'
+    console.log(
+      '[ThemeResolver][runtime-final]',
+      JSON.stringify(
+        {
+          note: 'This is the final theme used for rendering.',
+          configTheme,
+          notionTheme: notionTheme || null,
+          queryTheme: queryTheme || null,
+          finalTheme: theme,
+          source
+        },
+        null,
+        2
+      )
     )
-  }, [route])
+  }, [configTheme, notionTheme, queryTheme, theme])
 
   // 整体布局
   const GLayout = useCallback(
@@ -59,42 +107,30 @@ const MyApp = ({ Component, pageProps }) => {
     [theme]
   )
 
-  // 加载 font-awesome
-  useInsertionEffect(() => {
-    const link = document.createElement('link')
-    link.rel = 'stylesheet'
-    link.href = BLOG.FONT_AWESOME
-    link.id = 'font-awesome'
-    document.head.appendChild(link)
-    // cleanup function
-    return () => {
-      const linkElm = document.getElementById('font-awesome')
-      if (linkElm) {
-        linkElm.remove()
-      }
-    }
-  })
-
+  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const appearance = pageProps?.NOTION_CONFIG?.APPEARANCE || BLOG.APPEARANCE
+  const defaultAppearance = appearance === 'auto' ? 'system' : appearance
   const content = (
-    <>
+    <AppErrorBoundary>
       <ThemeProvider
-        defaultTheme={shouldDefaultDarkMode() ? 'dark' : defaultTheme}
         attribute='class'
-        enableSystem={true}
+        enableSystem
+        defaultTheme={shouldDefaultDarkMode() ? 'dark' : defaultAppearance}
         forcedTheme={Component.theme || undefined}>
         <GlobalContextProvider {...pageProps}>
-          <SEO {...pageProps} />
           <GLayout {...pageProps}>
+            <SEO {...pageProps} />
             <Component {...pageProps} />
           </GLayout>
+          <PWAInstaller NOTION_CONFIG={pageProps?.NOTION_CONFIG} />
           <ExternalPlugins {...pageProps} />
         </GlobalContextProvider>
       </ThemeProvider>
-      {enableVercelSpeedInsight && <SpeedInsights />}
-    </>
+    </AppErrorBoundary>
   )
   return (
     <>
+      {BLOG.ANALYTICS_VERCEL && <SpeedInsights />}
       {enableClerk ? (
         <ClerkProvider localization={zhCN}>{content}</ClerkProvider>
       ) : (

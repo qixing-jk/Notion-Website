@@ -35,6 +35,16 @@ const LayoutTagIndex = dynamic(() =>
   import('./LayoutTagIndex').then(mod => mod.LayoutTagIndex)
 )
 
+const LayoutDashboard = dynamic(() =>
+  import('./LayoutDashboard').then(mod => mod.LayoutDashboard)
+)
+const LayoutSignIn = dynamic(() =>
+  import('./LayoutSignIn').then(mod => mod.LayoutSignIn)
+)
+const LayoutSignUp = dynamic(() =>
+  import('./LayoutSignUp').then(mod => mod.LayoutSignUp)
+)
+
 export {
   CONFIG as THEME_CONFIG,
   LayoutBase,
@@ -45,5 +55,8 @@ export {
   Layout404,
   LayoutPostList,
   LayoutCategoryIndex,
-  LayoutTagIndex
+  LayoutTagIndex,
+  LayoutDashboard,
+  LayoutSignIn,
+  LayoutSignUp
 }

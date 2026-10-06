@@ -1,12 +1,12 @@
 /* 静态文件导入 自定义样式*/
 
-#theme-fukasawa .sideLeft hr{
-    opacity: .04;
+#theme-fukasawa .sideLeft hr {
+  opacity: 0.04;
 }
 .fa-info:before {
-    content: "\f05a";
+  content: '\f05a';
 }
 
-.notion-gallery .nested-form-link{
-    text-decoration: none;
+.notion-gallery .nested-form-link {
+  text-decoration: none;
 }

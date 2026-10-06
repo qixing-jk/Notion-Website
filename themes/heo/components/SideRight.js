@@ -33,7 +33,7 @@ const FaceBookPage = dynamic(
  * @returns
  */
 export default memo(function SideRight(props) {
-  const { post, tagOptions, currentTag, rightAreaSlot } = props
+  const { post, lock, tagOptions, currentTag, rightAreaSlot } = props
   const FACEBOOK_PAGE = siteConfig('FACEBOOK_PAGE')
   const FACEBOOK_APP_ID = siteConfig('FACEBOOK_APP_ID')
   const showPet = siteConfig('WIDGET_PET')
@@ -53,7 +53,7 @@ export default memo(function SideRight(props) {
 
         <div className='sticky top-20 space-y-4'>
           {/* 文章页显示目录 */}
-          {post && post.toc && post.toc.length > 0 && (
+          {!lock && post && post.toc && post.toc.length > 0 && (
             <Card className='bg-white dark:bg-[#1e1e1e] wow fadeInUp'>
               <Catalog toc={post.toc} />
             </Card>
